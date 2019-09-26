@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iterator>
 #include <stack>
+#include <chrono>
 
 using namespace std;
 
@@ -13,8 +14,9 @@ vector<string> read_available_cities();
 int write_to_file(vector<string> cities_list);
 
 typedef struct _vertex_t{
-    uint16_t depth;
+    string path_to_end;
     uint16_t value;
+    char name;
 }vertex_t;
 
 typedef vector<vertex_t> row_t;
@@ -22,12 +24,12 @@ typedef vector<row_t> adjacency_matrix_t;
 
 typedef struct _frame_t{
     adjacency_matrix_t &matrix;
-    char target;
+    char next;
 } frame_t;
 
 adjacency_matrix_t build_adjacency_matrix(vector<string> &cities);
 void print_matrix(adjacency_matrix_t &matrix);
-void dfs(stack<frame_t> &stk, string &result);
+void dfs(adjacency_matrix_t &matrix, char target);
 
 int main() 
 {
@@ -40,21 +42,21 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities) {
   // TODO replace with your solution!
-    vector<string> test_list(35);
+    size_t size;
+    cin >> size;
+    vector<string> test_list(size == 1 ? 25 : size);
     for(string &i : test_list) i.append({char('A'+rand()%('Z'-'A'+1)), char('a'+rand()%('z'-'a'+1))});
     for(size_t i = test_list.size() - 1; i > 0; i--)
         for(int j = i - 1; j >= 0; j--)
             if(test_list[i].front() < test_list[j].front())
                 swap(test_list[i], test_list[j]);
-    for(string &i : test_list) cout << i << endl;
+//    for(string &i : test_list) cout << i << endl;
 
     adjacency_matrix_t matrix = build_adjacency_matrix(test_list);
-//    print_matrix(matrix);
-    stack<frame_t> stack;
-    stack.push({matrix, 'v'});
-    string str;
-    dfs(stack, str);
-
+    auto ts = chrono::high_resolution_clock().now();
+    dfs(matrix, 'v'-97);
+    auto te = chrono::high_resolution_clock().now();
+    cout << chrono::duration<double, milli>(te-ts).count() / 1000 << " secs" << endl;
   return vector<string>();
 }
 
@@ -71,28 +73,50 @@ vector<string> read_available_cities() {
   return available_cities;
 }
 
-void dfs(stack<frame_t> &stk, string &result){
+static size_t counter = 0;
+
+void dfs(adjacency_matrix_t &matrix, char target){
+    stack<frame_t> stk;
+    stk.push({matrix, target});
+    string result;
+
     while(!stk.empty())
     {
         for(char i = 0; i < 26; i++)
         {
-            uint8_t indx = stk.top().target - 97;
-            if(stk.top().matrix[indx][i].value)
+            char next = stk.top().next;
+            adjacency_matrix_t &mtrx_ref = stk.top().matrix;
+
+            if(mtrx_ref[next][i].path_to_end.size()){
+//                mtrx_ref[next][i].path_to_end.push_back('#');
+                cout << char(next+65) << char(i+97) << " = " << (mtrx_ref[next][i].path_to_end) << endl;
+                next = i;
+                continue;
+            }
+            else if(mtrx_ref[next][i].value)
             {
-                char new_target = i + 97;
-                stk.top().matrix[indx][i].value--;
-                stk.push({stk.top().matrix, new_target});
-                result.append({char(indx+65), new_target});
-                cout << result << endl;
+                mtrx_ref[next][i].value--;
+                stk.push({mtrx_ref, i}); // need ref
+                result.append({char(next+65), char(i + 97)});
+
                 break;
             }
             else if(i == 25)
             {
-                if(!result.empty()){
+                char prev = 0;
+                char cur =  0;
+                if(result.size()){
                     result.pop_back();
+                    cur = result.back() - 65;
                     result.pop_back();
+                    prev = *(result.end() - 2) - 65;
                 }
-//                cout << "POP! " << stk.top().target << endl;
+
+//                cout << char(prev+65) << char(cur+65) << char(next + 65)<<endl;
+                if(prev > 0) {
+                    mtrx_ref[cur][next].path_to_end.insert(mtrx_ref[cur][next].path_to_end.begin(), {char(cur+65), char(next+97)});
+                    mtrx_ref[prev][cur].path_to_end.append(mtrx_ref[cur][next].path_to_end);
+                }
                 stk.pop();
             }
         }
@@ -117,6 +141,7 @@ adjacency_matrix_t build_adjacency_matrix(vector<string> &cities){
 
     for(vector<string>::iterator word = cities.begin(); word != cities.end(); word++){
         matrix[size_t(word->front() - 65)][size_t(word->back() - 97)].value++;
+        matrix[size_t(word->front() - 65)][size_t(word->back() - 97)].name = word->back();
     }
     return matrix;
 }
@@ -124,7 +149,7 @@ adjacency_matrix_t build_adjacency_matrix(vector<string> &cities){
 void print_matrix(adjacency_matrix_t &matrix){
     for(uint8_t i = 'A'; i <= 'Z'; i++){
         for(uint8_t j = 'a'; j <= 'z'; j++){
-            cout << i << ":" << j << ":" << matrix[i-65][j-97].value << (matrix[i-65][j-97].value > 9 ? " " : "  ");
+            cout << matrix[i-65][j-97].value << (matrix[i-65][j-97].value > 9 ? " " : "  ");
         }
         cout << endl;
     }
