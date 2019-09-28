@@ -6,9 +6,6 @@
 #include <iterator>
 #include <stack>
 #include <chrono>
-#include <windows.h>
-
-HANDLE Out;
 
 using namespace std;
 
@@ -16,7 +13,7 @@ vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
 int write_to_file(vector<string> cities_list);
 
-typedef struct _vertex_t{ uint16_t value; }vertex_t;
+typedef struct _vertex_t{ uint16_t value; } vertex_t;
 
 typedef vector<vertex_t> row_t;
 typedef vector<row_t> adjacency_matrix_t;
@@ -24,7 +21,6 @@ typedef vector<row_t> incidence_matrix_t;
 
 typedef struct _frame_t{
     adjacency_matrix_t &matrix;
-    uint8_t first;
     uint8_t last;
 } frame_t;
 
@@ -32,7 +28,7 @@ adjacency_matrix_t build_adjacency_matrix(vector<string> &cities);
 incidence_matrix_t build_incidence_matrix();
 
 void print_matrix(adjacency_matrix_t &matrix);
-void dfs(adjacency_matrix_t &matrix, uint8_t first, uint8_t next);
+string dfs(adjacency_matrix_t &matrix, uint8_t next);
 
 int main() 
 {
@@ -43,9 +39,24 @@ int main()
   return write_to_file(cities_list);
 }
 
+void foo(vector<string> &available_cities, string &str){
+    uint32_t n = 0;
+    uint32_t l = 0;
+
+    while(n < str.size()){
+        for(vector<string>::iterator it = available_cities.begin(); it != available_cities.end(); it++){
+            if(it->front() == str[n] && it->back() == str[n+1]){
+//                strs.push_back(*it);
+                l += it->length();
+                it = available_cities.erase(it);
+                n += 2;
+            }
+        }
+    }
+}
+
 vector<string> combine_cities(vector<string> available_cities) {
   // TODO replace with your solution!
-    Out = GetStdHandle(STD_OUTPUT_HANDLE);
 
     size_t size;
     cin >> size;
@@ -56,14 +67,23 @@ vector<string> combine_cities(vector<string> available_cities) {
             if(test_list[i].front() < test_list[j].front())
                 swap(test_list[i], test_list[j]);
 //    for(string &i : test_list) cout << i << endl;
+    string str;
+    int counter = 0;
+    vector<string> strs;
+    adjacency_matrix_t matrix;
+    strs.push_back(available_cities.back());
 
-    adjacency_matrix_t matrix = build_adjacency_matrix(test_list);
+    matrix = build_adjacency_matrix(test_list);
 
-    auto ts = chrono::high_resolution_clock().now();
-    dfs(matrix, 'z'-97, 'v'-97);
-    auto te = chrono::high_resolution_clock().now();
-    cout << chrono::duration<double, milli>(te-ts).count() / 1000 << " secs" << endl;
-  return vector<string>();
+    str = dfs(matrix, 'v' - 97);
+
+    cout << str << endl;
+
+//    foo(available_cities, str);
+
+//    cout << available_cities.size() << endl;
+
+    return strs;
 }
 
 vector<string> read_available_cities() {
@@ -94,56 +114,50 @@ string find_existing_edges(incidence_matrix_t &inc_mtrx, uint8_t target){
     return existing_edges;
 }
 
-void dfs(adjacency_matrix_t &matrix, uint8_t first, uint8_t next){
+string dfs(adjacency_matrix_t &matrix, uint8_t next){
     stack<frame_t> stk;
     incidence_matrix_t inc_mtrx = build_incidence_matrix();
-    stk.push({matrix, first, next});
+    stk.push({matrix, next});
     string result;
-
-
-    uint16_t counter = 0;
+    string comp;
 
     while(!stk.empty())
     {
-        uint8_t previous = 0;
         uint8_t current  = 0;
 
-        for(uint8_t next = 0; next < 26; next++)
-        {
-            previous = stk.top().first;
+        for(uint8_t next = 0; next < 26; next++){
             current = stk.top().last;
             adjacency_matrix_t &mtrx_ref = stk.top().matrix;
 
-            if(inc_mtrx[current][next].value){
-                cout << ++counter << " " << result << "..." << char(current+65) << char(next+97) << "<-FINDED...";
-
-                incidence_matrix_t tmp_inc_mtrx = inc_mtrx;
-                string target = find_existing_edges(tmp_inc_mtrx, next);
-                cout << target << " " << target.length() + result.length() << endl;
-
-//                current = *(target.end()-2) - 97;
-//                next = *(target.end()-1) - 65;
-            }
-            else if(mtrx_ref[current][next].value)
+            if(mtrx_ref[current][next].value)
             {
-//                cout << "PUSH" << endl;
                 mtrx_ref[current][next].value--;
-                stk.push({mtrx_ref, current, next});
-
                 inc_mtrx[current][next].value++;
-                result.append({char(current+65), char(next+97)});
+                stk.push({mtrx_ref, next});
 
+                result.append({char(current+65), char(next + 97)});
                 next = 0;
             }
         }
 
         if(result.size()){
+            incidence_matrix_t tmp_inc_mtrx = inc_mtrx; // just for local changes
+            for(size_t i = 0; i < result.size(); i += 2)
+                    tmp_inc_mtrx[result[i] - 65][result[i + 1] - 97].value = 0;
+
+            string target = find_existing_edges(tmp_inc_mtrx, result.back() - 97);
+//            if(comp.length() < result.length() + target.length())
+//                comp = result + target;
+            cout << result << "..." << target << " " << result.length() + target.length() << endl;
+
            result.pop_back();
            result.pop_back();
         }
         stk.pop();
     }
-//    print_matrix(inc_mtrx);
+//    cout << comp.length() << endl;
+//    cout << counter << endl;
+    return comp;
 }
 
 int write_to_file(vector<string> cities_list) {
@@ -182,8 +196,8 @@ incidence_matrix_t build_incidence_matrix(){
 void print_matrix(adjacency_matrix_t &matrix){
     for(uint8_t i = 'A'; i <= 'Z'; i++){
         for(uint8_t j = 'a'; j <= 'z'; j++){
-            cout << i << j << matrix[i-65][j-97].value << (matrix[i-65][j-97].value > 9 ? " " : "  ");
+            cout << i << j << " " << matrix[i-65][j-97].value << (matrix[i-65][j-97].value > 9 ? " " : "  ");
         }
-        cout << endl;
+        cout << endl << endl;
     }
 }
