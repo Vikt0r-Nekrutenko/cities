@@ -11,7 +11,6 @@ using namespace std;
 
 typedef struct _vertex_t{
     uint16_t value;
-    uint16_t edges_to_end;
 } vertex_t;
 
 typedef struct _edge_t{
@@ -37,6 +36,7 @@ void print_matrix(incidence_matrix_t &matrix);
 string dfs(adjacency_matrix_t &mtrx, incidence_matrix_t &inc_mtrx, uint8_t target);
 string find_existing_edges(incidence_matrix_t &inc_mtrx, string &result);
 uint8_t find_max_edges_to_end(incidence_matrix_t &inc_mtrx, uint8_t row);
+uint8_t find_max_vertex(adjacency_matrix_t &mtrx, uint8_t target, uint8_t &next);
 
 int main() 
 {
@@ -70,13 +70,6 @@ void sort_row(incidence_matrix_t &mtrx, uint8_t index){
                 swap(mtrx[index][y], mtrx[index][x]);
 }
 
-void sort_row(adjacency_matrix_t &mtrx, uint8_t index){
-    for(uint8_t y = 0; y < 26; y++)
-        for(uint8_t x = 0; x < 26; x++)
-            if(mtrx[index][y].edges_to_end > mtrx[index][x].edges_to_end)
-                swap(mtrx[index][y], mtrx[index][x]);
-}
-
 void full_sort(incidence_matrix_t &mtrx){
     for(uint8_t index = 0; index < 26; index++)
         sort_row(mtrx, index);
@@ -96,7 +89,7 @@ vector<string> combine_cities(vector<string> available_cities) {
         matrix = build_adjacency_matrix(available_cities);
         str = dfs(matrix, inc_mtrx, 'e' - 97);
         cout << str << " " << str.size() << endl;
-//        foo(available_cities, str);
+        foo(available_cities, str);
 
 //        matrix = build_adjacency_matrix(available_cities);
 //        str += "...SPLEAT HERE!!!..." + dfs(matrix, inc_mtrx, 'g' - 97);
@@ -113,8 +106,8 @@ vector<string> combine_cities(vector<string> available_cities) {
 //        cout << str << " " << str.size() << endl;
 //        foo(available_cities, str);
 
-//        matrix = build_adjacency_matrix(available_cities);
-//        print_matrix(matrix);
+        matrix = build_adjacency_matrix(available_cities);
+        print_matrix(matrix);
 
 //        cout << available_cities.size() << endl;
     }
@@ -156,6 +149,7 @@ string dfs(adjacency_matrix_t &mtrx, incidence_matrix_t &inc_mtrx, uint8_t targe
 
     do{
         for(uint8_t next = 0; next < 26; next++){
+            next = find_max_vertex(stk.top().matrix, stk.top().target, next);
             if(stk.top().matrix[stk.top().target][next].value){
                 result.append({char(stk.top().target + 65), char(next + 97)});
                 stk.top().matrix[stk.top().target][next].value--;
@@ -179,14 +173,22 @@ string dfs(adjacency_matrix_t &mtrx, incidence_matrix_t &inc_mtrx, uint8_t targe
     return comp;
 }
 
-uint8_t find_max_edges_to_end(incidence_matrix_t &inc_mtrx, uint8_t row){
+uint8_t find_max_edges_to_end(incidence_matrix_t &inc_mtrx, uint8_t target){
     uint8_t max = 0;
     for(uint8_t i = 0; i < 26; i++){
-        if(inc_mtrx[row][i].vrtx_to_end >= inc_mtrx[row][max].vrtx_to_end && inc_mtrx[row][i].value){
+        if(inc_mtrx[target][i].vrtx_to_end >= inc_mtrx[target][max].vrtx_to_end && inc_mtrx[target][i].value){
             max = i;
         }
     }
     return max;
+}
+
+uint8_t find_max_vertex(adjacency_matrix_t &mtrx, uint8_t target, uint8_t &next){
+    for(uint8_t max = 0; max < 26; max++){
+        if(mtrx[target][max].value >= mtrx[target][next].value)
+            next = max;
+    }
+    return next;
 }
 
 string find_existing_edges(incidence_matrix_t &inc_mtrx, string &result){
@@ -253,7 +255,7 @@ incidence_matrix_t build_incidence_matrix(){
 void print_matrix(adjacency_matrix_t &mtrx){
     for(uint8_t i = 'A'; i <= 'Z'; i++){
         for(uint8_t j = 'a'; j <= 'z'; j++){
-            cout << i << j << " " << mtrx[i-65][j-97].value << ":" << mtrx[i-65][j-97].edges_to_end << " ";
+            cout << i << j << " " << mtrx[i-65][j-97].value  << (mtrx[i-65][j-97].value > 9 ? " " : "  ");
         }
         cout << endl;
     }
