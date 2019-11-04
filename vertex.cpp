@@ -1,20 +1,38 @@
 #include "vertex.hpp"
-#include <algorithm>
 #include <iostream>
 
-void vertex::print() const {
-    for_each(begin(), end(), [](const edge_t &edge){
-        std::cout << edge.index << " " << edge.word << " " << edge.pheromone << std::endl;
-    });
+void vertex::print()
+{
+    for(auto i : m_outgoing_edges){
+        std::cout << i.get_index() << " " << i.get_word() << " " << i.get_pheromone() << std::endl;
+    }
 }
 
-void vertex::sort() {
-    uint16_t index = 0;
-    for(vertex::iterator it = begin(); it != end() - 1; it++){
-        for(vertex::iterator sub_it = it + 1; sub_it != end(); sub_it++)
-            if(it->word.length() > sub_it->word.length())
+void vertex::sort()
+{
+    uint16_t index = 0u;
+    for(std::vector<edge>::iterator it = m_outgoing_edges.begin(); it != m_outgoing_edges.end() - 1; it++){
+        for(std::vector<edge>::iterator sub_it = it + 1; sub_it != m_outgoing_edges.end(); sub_it++)
+            if(it->get_word().length() > sub_it->get_word().length()) {
                 std::swap(*it, *sub_it);
-        it->index = index++;
+            }
+        it->set_index(index++);
     }
-    back().index = index;
+    m_outgoing_edges.back().set_index(index);
 }
+
+void vertex::add_edge(edge ed)
+{
+    m_outgoing_edges.push_back(ed);
+}
+
+bool vertex::empty() const
+{
+    return m_outgoing_edges.empty() ? true : false;
+}
+
+size_t vertex::size() const
+{
+    return m_outgoing_edges.size();
+}
+

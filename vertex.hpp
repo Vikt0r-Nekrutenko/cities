@@ -1,23 +1,21 @@
 #ifndef VERTEX_HPP
 #define VERTEX_HPP
 
+#include "edge.hpp"
 #include <vector>
-#include <string>
 
-using std::vector;
-using std::string;
-
-typedef struct _edge_t{
-    string word;
-    uint16_t index;
-    float pheromone;
-} edge_t;
-
-class vertex : public vector<edge_t>
+class vertex
 {
 public:
-    void print() const;
+    void print();
     void sort();
+
+    void add_edge(edge ed);
+    bool empty() const;
+    size_t size() const;
+
+private:
+    std::vector<edge> m_outgoing_edges;
 };
 
 #endif // VERTEX_HPP

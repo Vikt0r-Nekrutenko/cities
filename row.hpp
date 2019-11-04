@@ -2,18 +2,17 @@
 #define ROW_HPP
 
 #include "vertex.hpp"
-#include <array>
 
-using std::array;
-
-const uint16_t MATRIX_SIZE = 26U;
-
-class row : public array<vertex, MATRIX_SIZE>
+class row
 {
 public:
-
-    void print() const;
+    row();
+    vertex &operator[](char index);
+    void print();
     void sort();
+
+private:
+    std::vector<vertex> m_columns;
 };
 
 #endif // ROW_HPP

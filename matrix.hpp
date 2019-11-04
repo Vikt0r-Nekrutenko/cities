@@ -3,13 +3,17 @@
 
 #include "row.hpp"
 
-class matrix : public array<row, MATRIX_SIZE>
+class matrix
 {
 public:
-    matrix(vector<string> source_list);
-    void print() const;
+    matrix(std::vector<std::string> &strs);
+    row &operator[](char index);
+    void print();
     void sort();
-    void evaporation();
+
+private:
+
+    std::vector<row> m_rows;
 };
 
 #endif // MATRIX_HPP

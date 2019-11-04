@@ -1,16 +1,26 @@
 #include "row.hpp"
-#include <algorithm>
 #include <iostream>
 
-void row::print() const {
-    for_each(begin(), end(), [](const vertex &vrtx){
-        std::cout << vrtx.size() << (vrtx.size() > 9 ? " " : "  ");
-    });
+row::row() :
+    m_columns(26u)
+{
+
 }
 
-void row::sort() {
-    for_each(begin(), end(), [](vertex &vrtx){
-        if(!vrtx.empty())
-            vrtx.sort();
-    });
+vertex &row::operator[](char index)
+{
+    return m_columns[index - 97];
+}
+
+void row::print()
+{
+    for(std::vector<vertex>::iterator col = m_columns.begin(); col != m_columns.end(); col++)
+        std::cout << col->size() << (col->size() > 9 ? " " : "  ");
+}
+
+void row::sort()
+{
+    for(std::vector<vertex>::iterator col = m_columns.begin(); col != m_columns.end(); col++)
+        if(!col->empty())
+            col->sort();
 }
