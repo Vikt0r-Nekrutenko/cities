@@ -6,15 +6,6 @@ edge::edge(std::string *word, uint16_t index, float pheromone) :
 
 }
 
-edge &edge::operator=(const edge &ed)
-{
-    m_word = ed.m_word;
-    m_index = ed.m_index;
-    m_pheromone = ed.m_pheromone;
-
-    return *this;
-}
-
 const std::string &edge::get_word() const
 {
     return m_word;

@@ -7,7 +7,6 @@ class edge
 {
 public:
     edge(std::string *word = nullptr, uint16_t index = 0u, float pheromone = 0.f);
-    edge &operator=(const edge &ed);
 
     const std::string &get_word() const;
     uint16_t get_index() const;

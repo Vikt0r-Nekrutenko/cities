@@ -7,9 +7,10 @@ class row
 {
 public:
     row();
-    vertex &operator[](char index);
+    vertex &operator[](uint8_t indx);
     void print();
     void sort();
+    void restore();
 
 private:
     std::vector<vertex> m_columns;

@@ -22,11 +22,12 @@ int main()
 
   return write_to_file(cities_list);
 }
+#include "path.hpp"
 
 vector<string> combine_cities(vector<string> available_cities) {
     matrix mtrx(available_cities);
     mtrx.sort();
-    mtrx['A']['a'].print();
+
     return vector<string>();
 }
 

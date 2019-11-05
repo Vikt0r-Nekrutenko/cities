@@ -7,8 +7,9 @@ class matrix
 {
 public:
     matrix(std::vector<std::string> &strs);
-    row &operator[](char index);
+    row &operator[](uint8_t indx);
     void print();
+    void restore();
     void sort();
 
 private:

@@ -7,7 +7,7 @@
 std::mt19937 roulette::gen;
 
 void roulette::add_sector(float probability, vertex *vrtx) {
-    push_back(make_pair(vrtx, (total_probability += probability) ));
+    push_back(std::make_pair(vrtx, (total_probability += probability) ));
 //    std::cout << vrtx->back().word << (vrtx->back().word.length() > 7 ? "\t\t" : "\t\t\t") << probability << " " << total_probability << std::endl;
 }
 
