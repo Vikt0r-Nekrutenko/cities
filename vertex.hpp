@@ -13,9 +13,10 @@ public:
     void add_edge(edge ed);
     void rm_edge();
     void restore();
+    void evaporation();
     bool empty() const;
     size_t size() const;
-    const edge &longest_edge() const;
+    edge &longest_edge();
 
 private:
     std::vector<edge> m_outgoing_edges;

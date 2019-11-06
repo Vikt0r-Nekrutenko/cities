@@ -27,3 +27,13 @@ void row::restore()
         if(col->size())
             col->restore();
 }
+
+std::vector<vertex>::iterator row::begin()
+{
+    return m_columns.begin();
+}
+
+std::vector<vertex>::iterator row::end()
+{
+    return m_columns.end();
+}

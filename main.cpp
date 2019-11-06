@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "matrix.hpp"
+#include "ant.hpp"
 
 using namespace std;
 
@@ -22,12 +23,22 @@ int main()
 
   return write_to_file(cities_list);
 }
-#include "path.hpp"
 
 vector<string> combine_cities(vector<string> available_cities) {
     matrix mtrx(available_cities);
     mtrx.sort();
 
+    ant *a1 = new ant(mtrx, 4, available_cities.size());
+    while(1)
+    {
+        while(a1->can_move())
+            a1->step_forward();
+        a1->update_pheromone();
+        cout << a1->passed_path().length() << " ";
+
+        delete a1;
+        a1 = new ant(mtrx, 4, available_cities.size());
+    }
     return vector<string>();
 }
 

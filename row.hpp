@@ -12,6 +12,9 @@ public:
     void sort();
     void restore();
 
+    std::vector<vertex>::iterator begin();
+    std::vector<vertex>::iterator end();
+
 private:
     std::vector<vertex> m_columns;
 };

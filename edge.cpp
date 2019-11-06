@@ -31,6 +31,16 @@ uint8_t edge::next_vertex() const
     return m_word.back() - 97;
 }
 
+bool edge::is_loop() const
+{
+    return m_word.front() == m_word.back() - 32;
+}
+
+void edge::evaporation()
+{
+    m_pheromone *= m_evaporation_k;
+}
+
 void edge::set_index(uint16_t new_index)
 {
     m_index = new_index;

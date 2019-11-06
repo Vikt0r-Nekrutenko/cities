@@ -35,6 +35,12 @@ void vertex::restore()
     m_iterator = m_outgoing_edges.size() - 1;
 }
 
+void vertex::evaporation()
+{
+    for(std::vector<edge>::iterator it = m_outgoing_edges.begin(); it != m_outgoing_edges.end(); it++)
+        it->evaporation();
+}
+
 bool vertex::empty() const
 {
     return m_iterator == -1;
@@ -45,7 +51,7 @@ size_t vertex::size() const
     return m_outgoing_edges.size();
 }
 
-const edge &vertex::longest_edge() const
+edge &vertex::longest_edge()
 {
     return m_outgoing_edges[m_iterator];
 }

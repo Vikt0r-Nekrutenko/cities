@@ -4,12 +4,13 @@
 #include "vertex.hpp"
 #include <random>
 
-class roulette : private std::vector<std::pair<vertex*, float>>
+class roulette
 {
 public:
     void add_sector(float pobability, vertex *vrtx);
     vertex *spin_and_win();
 private:
+    std::vector<std::pair<vertex *, float>> m_weel;
     float total_probability;
     static std::mt19937 gen;
 };
