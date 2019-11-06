@@ -2,14 +2,25 @@
 #include <algorithm>
 #include <iostream>
 
-explorer::explorer(matrix *map, uint8_t location) : ant(map, location) {  }
+explorer::explorer(const matrix &map, uint8_t location, size_t max_length_path) : ant(map, location, max_length_path) {  }
 
-vertex *explorer::choose_next_vertex()
+void explorer::move()
 {
-    uint8_t next_location = m_path.back().word.back() - 97;
-    vector<vertex*> row_except_empty_vrtx;
-    for(vertex &i : personal_map[next_location])
-        if(!i.empty())
-            row_except_empty_vrtx.push_back(&i);
-    return row_except_empty_vrtx.empty() ? nullptr : row_except_empty_vrtx[rand() % row_except_empty_vrtx.size()];
+    path tmp(1);
+    while (can_move()) {
+        step_forward();
+
+        if(m_passed_path.length() > tmp.length())
+            tmp = m_passed_path;
+
+        while (m_location == nullptr && m_passed_path.length() > m_passed_path.last_edge()->get_word().length())
+            step_back();
+    }
+    m_passed_path = tmp;
+}
+
+void explorer::step_back()
+{
+    m_passed_path.rm_last_edge();
+    m_location = choose_next_vertex();
 }

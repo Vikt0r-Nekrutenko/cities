@@ -25,6 +25,20 @@ void ant::update_pheromone()
     });
 }
 
+void ant::forget_path()
+{
+    m_personal_map.restore();
+    m_passed_path.clear();
+    m_location = &m_personal_map[4][0];
+}
+
+void ant::move()
+{
+    while(can_move())
+        step_forward();
+    update_pheromone();
+}
+
 bool ant::can_move() const
 {
     return m_location == nullptr ? false : true;

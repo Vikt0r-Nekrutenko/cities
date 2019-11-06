@@ -11,6 +11,7 @@ public:
     void print();
     void clear();
     void add_passed_edge(edge &ed);
+    void rm_last_edge();
 
     std::vector<edge *>::iterator begin();
     std::vector<edge *>::iterator end();

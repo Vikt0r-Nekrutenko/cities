@@ -20,6 +20,12 @@ void path::add_passed_edge(edge &ed)
     m_length += m_passed_edges.back()->get_word().length();
 }
 
+void path::rm_last_edge()
+{
+    m_length -= m_passed_edges.back()->get_word().length();
+    m_passed_edges.pop_back();
+}
+
 std::vector<edge *>::iterator path::begin()
 {
     return m_passed_edges.begin();

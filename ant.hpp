@@ -8,8 +8,11 @@ class ant
 {
 public:
     ant(const matrix &map, uint8_t location, size_t max_length_path);
+    virtual ~ant() { }
     void step_forward();
     void update_pheromone();
+    void forget_path();
+    virtual void move();
     bool can_move() const;
     const path &passed_path() const;
 

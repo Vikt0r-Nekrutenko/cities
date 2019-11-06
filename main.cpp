@@ -4,10 +4,10 @@
 #include <fstream>
 #include <sstream>
 #include <iterator>
-#include <algorithm>
+#include <thread>
 
 #include "matrix.hpp"
-#include "ant.hpp"
+#include "explorer.hpp"
 
 using namespace std;
 
@@ -23,22 +23,25 @@ int main()
 
   return write_to_file(cities_list);
 }
-
+#include <atomic>
 vector<string> combine_cities(vector<string> available_cities) {
     matrix mtrx(available_cities);
     mtrx.sort();
 
-    ant *a1 = new ant(mtrx, 4, available_cities.size());
+    atomic<size_t> max_path(0U);
+
+    explorer a1(mtrx, 4, available_cities.size());
     while(1)
     {
-        while(a1->can_move())
-            a1->step_forward();
-        a1->update_pheromone();
-        cout << a1->passed_path().length() << " ";
-
-        delete a1;
-        a1 = new ant(mtrx, 4, available_cities.size());
+        a1.move();
+//        if(a1.passed_path().length() > max_path)
+        {
+            max_path = a1.passed_path().length();
+            cout << max_path << "\t";
+        }
+        a1.forget_path();
     }
+
     return vector<string>();
 }
 
