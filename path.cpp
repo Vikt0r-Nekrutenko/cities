@@ -2,7 +2,7 @@
 #include <iostream>
 path::path(size_t size) : m_passed_edges() { }
 
-void path::print()
+void path::print() const
 {
     for(size_t i = 0; i < m_passed_edges.size(); i++)
         std::cout << m_passed_edges[i]->get_word() << "...";

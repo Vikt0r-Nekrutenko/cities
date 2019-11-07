@@ -7,7 +7,7 @@
 class ant
 {
 public:
-    ant(const matrix &map, uint8_t location, size_t max_length_path);
+    ant(matrix &map, uint8_t location, size_t max_length_path);
     virtual ~ant() { }
     void step_forward();
     void update_pheromone();
@@ -17,9 +17,10 @@ public:
     const path &passed_path() const;
 
 protected:
-    vertex *choose_next_vertex();
+    virtual vertex *choose_next_vertex();
     float calculate_summary_probability(uint8_t nxt);
 
+    matrix *m_global_map;
     matrix m_personal_map;
     vertex *m_location;
     path   m_passed_path;

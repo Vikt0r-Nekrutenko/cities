@@ -11,6 +11,7 @@ public:
     void print();
     void restore();
     void sort();
+    void evaporation();
 
 private:
 

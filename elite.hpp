@@ -6,7 +6,7 @@
 class elite : public ant
 {
 public:
-    elite(matrix *map, uint8_t location = 0);
+    elite(matrix &map, uint8_t location, size_t max_length_path);
     vertex *choose_next_vertex() override;
 };
 

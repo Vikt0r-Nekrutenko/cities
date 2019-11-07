@@ -3,7 +3,8 @@
 #include <math.h>
 #include <algorithm>
 
-ant::ant(const matrix &map, uint8_t location, size_t max_length_path) :
+ant::ant(matrix &map, uint8_t location, size_t max_length_path) :
+    m_global_map(&map),
     m_personal_map(map),
     m_location(&m_personal_map[location][0]),
     m_passed_path(max_length_path) { }
@@ -21,7 +22,11 @@ void ant::step_forward()
 void ant::update_pheromone()
 {
     for_each(m_passed_path.begin(), m_passed_path.end(), [&](edge *ed){
-        ed->set_pheromone(ed->get_pheromone() + 0.1f - 1.f / m_passed_path.length());
+        edge &global_edge = (*m_global_map)[ed->current_vertex()][ed->next_vertex()][ed->get_index()];
+        float new_pheromone = global_edge.get_pheromone() + 0.1f - 1.f / m_passed_path.length();
+
+        global_edge.set_pheromone(new_pheromone);
+        ed->set_pheromone(new_pheromone);
     });
 }
 

@@ -28,6 +28,13 @@ void row::restore()
             col->restore();
 }
 
+void row::evaporation()
+{
+    for(std::vector<vertex>::iterator col = m_columns.begin(); col != m_columns.end(); col++)
+        if(col->size())
+            col->evaporation();
+}
+
 std::vector<vertex>::iterator row::begin()
 {
     return m_columns.begin();

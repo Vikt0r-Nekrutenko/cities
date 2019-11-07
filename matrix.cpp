@@ -31,3 +31,9 @@ void matrix::sort()
     for(std::vector<row>::iterator row = m_rows.begin(); row != m_rows.end(); row++)
         row->sort();
 }
+
+void matrix::evaporation()
+{
+    for(std::vector<row>::iterator row = m_rows.begin(); row != m_rows.end(); row++)
+        row->evaporation();
+}

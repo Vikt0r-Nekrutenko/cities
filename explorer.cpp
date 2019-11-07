@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-explorer::explorer(const matrix &map, uint8_t location, size_t max_length_path) : ant(map, location, max_length_path) {  }
+explorer::explorer(matrix &map, uint8_t location, size_t max_length_path) : ant(map, location, max_length_path) {  }
 
 void explorer::move()
 {
@@ -17,6 +17,7 @@ void explorer::move()
             step_back();
     }
     m_passed_path = tmp;
+    update_pheromone();
 }
 
 void explorer::step_back()

@@ -11,6 +11,7 @@ public:
     void print();
     void sort();
     void restore();
+    void evaporation();
 
     std::vector<vertex>::iterator begin();
     std::vector<vertex>::iterator end();

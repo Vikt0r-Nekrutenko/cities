@@ -7,6 +7,8 @@
 class vertex
 {
 public:
+    edge &operator[](uint16_t indx);
+
     void print();
     void sort();
 

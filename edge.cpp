@@ -33,7 +33,7 @@ uint8_t edge::next_vertex() const
 
 bool edge::is_loop() const
 {
-    return m_word.front() == m_word.back() - 32;
+    return current_vertex() == next_vertex();
 }
 
 void edge::evaporation()

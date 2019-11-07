@@ -8,7 +8,7 @@ class path
 {
 public:
     path(size_t size);
-    void print();
+    void print() const;
     void clear();
     void add_passed_edge(edge &ed);
     void rm_last_edge();

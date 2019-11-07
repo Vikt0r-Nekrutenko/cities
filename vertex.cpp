@@ -1,6 +1,11 @@
 #include "vertex.hpp"
 #include <iostream>
 
+edge &vertex::operator[](uint16_t indx)
+{
+    return m_outgoing_edges[indx];
+}
+
 void vertex::print()
 {
     for(auto i = m_outgoing_edges.begin(); i != m_outgoing_edges.begin() + m_iterator + 1; i++){
