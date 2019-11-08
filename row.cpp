@@ -1,17 +1,20 @@
 #include "row.hpp"
-#include <iostream>
 
-row::row() : m_columns(26u) { }
+row::row(uint8_t size) : m_columns(size) { }
 
 vertex &row::operator[](uint8_t indx)
 {
     return m_columns[indx];
 }
 
-void row::print()
+std::vector<vertex>::iterator row::begin()
 {
-    for(std::vector<vertex>::iterator col = m_columns.begin(); col != m_columns.end(); col++)
-        std::cout << col->size() << (col->size() > 9 ? " " : "  ");
+    return m_columns.begin();
+}
+
+std::vector<vertex>::iterator row::end()
+{
+    return m_columns.end();
 }
 
 void row::sort()
@@ -33,14 +36,4 @@ void row::evaporation()
     for(std::vector<vertex>::iterator col = m_columns.begin(); col != m_columns.end(); col++)
         if(col->size())
             col->evaporation();
-}
-
-std::vector<vertex>::iterator row::begin()
-{
-    return m_columns.begin();
-}
-
-std::vector<vertex>::iterator row::end()
-{
-    return m_columns.end();
 }

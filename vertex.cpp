@@ -1,28 +1,23 @@
 #include "vertex.hpp"
-#include <iostream>
 
 edge &vertex::operator[](uint16_t indx)
 {
     return m_outgoing_edges[indx];
 }
 
-void vertex::print()
+bool vertex::empty() const
 {
-    for(auto i = m_outgoing_edges.begin(); i != m_outgoing_edges.begin() + m_iterator + 1; i++){
-        std::cout << i->get_index() << " " << i->get_word() << " " << i->get_pheromone() << std::endl;
-    }
+    return m_iterator == -1;
 }
 
-void vertex::sort()
+size_t vertex::size() const
 {
-    for(std::vector<edge>::iterator it = m_outgoing_edges.begin(); it != m_outgoing_edges.end() - 1; it++){
-        for(std::vector<edge>::iterator sub_it = it + 1; sub_it != m_outgoing_edges.end(); sub_it++)
-            if(it->get_word().length() > sub_it->get_word().length()) {
-                std::swap(*it, *sub_it);
-            }
-        it->set_index(++m_iterator);
-    }
-    m_outgoing_edges.back().set_index(++m_iterator);
+    return m_outgoing_edges.size();
+}
+
+edge &vertex::longest_edge()
+{
+    return m_outgoing_edges[m_iterator];
 }
 
 void vertex::add_edge(edge ed)
@@ -46,18 +41,14 @@ void vertex::evaporation()
         it->evaporation();
 }
 
-bool vertex::empty() const
+void vertex::sort()
 {
-    return m_iterator == -1;
+    for(std::vector<edge>::iterator it = m_outgoing_edges.begin(); it != m_outgoing_edges.end() - 1; it++){
+        for(std::vector<edge>::iterator sub_it = it + 1; sub_it != m_outgoing_edges.end(); sub_it++)
+            if(it->get_word().length() > sub_it->get_word().length()) {
+                std::swap(*it, *sub_it);
+            }
+        it->set_index(++m_iterator);
+    }
+    m_outgoing_edges.back().set_index(++m_iterator);
 }
-
-size_t vertex::size() const
-{
-    return m_outgoing_edges.size();
-}
-
-edge &vertex::longest_edge()
-{
-    return m_outgoing_edges[m_iterator];
-}
-

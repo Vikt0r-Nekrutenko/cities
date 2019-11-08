@@ -6,10 +6,10 @@
 class explorer : public ant
 {
 public:
-    explorer(matrix &map, uint8_t location, size_t max_length_path);
+    explorer(matrix &map, uint8_t location);
     ~explorer() final { }
-    void move() override;
-    void step_back();
+    void move() final;
+    vertex *step_back();
 };
 
 #endif // EXPLORER_HPP

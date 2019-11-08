@@ -9,9 +9,8 @@ public:
     edge(std::string *word = nullptr, uint16_t index = 0u, float pheromone = 0.f);
 
     const std::string &get_word() const;
+    const float &get_pheromone() const;
     uint16_t get_index() const;
-    float get_pheromone() const;
-
     uint8_t current_vertex() const;
     uint8_t next_vertex() const;
     bool is_loop() const;
@@ -25,7 +24,7 @@ private:
     uint16_t m_index;
     float m_pheromone;
 
-    float m_evaporation_k = 0.8f;
+    float m_evaporation_k = 0.35f;
 };
 
 #endif // EDGE_HPP

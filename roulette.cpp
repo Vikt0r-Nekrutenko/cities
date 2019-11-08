@@ -4,11 +4,13 @@
 
 std::mt19937 roulette::gen(time(nullptr));
 
-void roulette::add_sector(float probability, vertex *vrtx) {
+void roulette::add_sector(float probability, vertex *vrtx)
+{
     m_weel.push_back(std::make_pair(vrtx, (total_probability += probability) ));
 }
 
-vertex *roulette::spin_and_win() {
+vertex *roulette::spin_and_win()
+{
     std::uniform_real_distribution<float> urd(0.f, 100.f);
     float rand_n = urd(gen);
 

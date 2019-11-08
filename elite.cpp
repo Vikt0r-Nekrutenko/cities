@@ -1,9 +1,7 @@
 #include "elite.hpp"
+#include <algorithm>
 
-elite::elite(matrix &map, uint8_t location, size_t max_length_path) : ant(map, location, max_length_path)
-{
-
-}
+elite::elite(matrix &map, uint8_t location) : ant(map, location) { }
 
 vertex *elite::choose_next_vertex()
 {
@@ -11,10 +9,11 @@ vertex *elite::choose_next_vertex()
 
     vertex *highest_vrtx = nullptr;
     float max_tao = 0.f;
-    for(vertex &i : m_personal_map[next_location])
-        if(!i.empty() && i.longest_edge().get_pheromone() > max_tao){
-            highest_vrtx = &i;
-            max_tao = i.longest_edge().get_pheromone();
+    for_each(m_personal_map[next_location].begin(), m_personal_map[next_location].end(), [&](vertex &vrtx){
+        if(!vrtx.empty() && vrtx.longest_edge().get_pheromone() > max_tao){
+            highest_vrtx = &vrtx;
+            max_tao = vrtx.longest_edge().get_pheromone();
         }
+    });
     return highest_vrtx;
 }

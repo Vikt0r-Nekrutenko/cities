@@ -1,12 +1,5 @@
 #include "path.hpp"
-#include <iostream>
-path::path(size_t size) : m_passed_edges() { }
-
-void path::print() const
-{
-    for(size_t i = 0; i < m_passed_edges.size(); i++)
-        std::cout << m_passed_edges[i]->get_word() << "...";
-}
+#include <algorithm>
 
 void path::clear()
 {
@@ -44,4 +37,12 @@ const size_t &path::length() const
 const edge *path::last_edge() const
 {
     return m_passed_edges.back();
+}
+
+std::vector<std::string> path::get_words() const
+{
+    std::vector<std::string> words;
+    for(edge *edge : m_passed_edges)
+        words.push_back(edge->get_word());
+    return words;
 }

@@ -6,8 +6,9 @@
 class elite : public ant
 {
 public:
-    elite(matrix &map, uint8_t location, size_t max_length_path);
-    vertex *choose_next_vertex() override;
+    elite(matrix &map, uint8_t location);
+private:
+    vertex *choose_next_vertex() final;
 };
 
 #endif // ELITE_HPP

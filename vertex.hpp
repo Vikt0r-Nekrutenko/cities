@@ -9,14 +9,14 @@ class vertex
 public:
     edge &operator[](uint16_t indx);
 
-    void print();
     void sort();
-
     void add_edge(edge ed);
     void rm_edge();
     void restore();
     void evaporation();
+
     bool empty() const;
+
     size_t size() const;
     edge &longest_edge();
 

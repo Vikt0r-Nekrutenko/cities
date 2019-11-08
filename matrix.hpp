@@ -6,15 +6,13 @@
 class matrix
 {
 public:
-    matrix(std::vector<std::string> &strs);
+    matrix(std::vector<std::string> &strs, uint8_t size);
     row &operator[](uint8_t indx);
-    void print();
     void restore();
     void sort();
     void evaporation();
 
 private:
-
     std::vector<row> m_rows;
 };
 

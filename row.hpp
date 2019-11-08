@@ -6,9 +6,8 @@
 class row
 {
 public:
-    row();
+    row(uint8_t size = 0);
     vertex &operator[](uint8_t indx);
-    void print();
     void sort();
     void restore();
     void evaporation();
