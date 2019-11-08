@@ -24,7 +24,7 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities) {
     colony ants_colony(available_cities);
-    return ants_colony.find_longest_path();
+    return ants_colony.find_longest_path(1000).get_words();
 }
 
 vector<string> read_available_cities() {

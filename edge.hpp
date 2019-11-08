@@ -21,10 +21,10 @@ public:
 
 private:
     std::string m_word;
-    uint16_t m_index;
+    uint16_t m_index; // needed for easy access
     float m_pheromone;
 
-    float m_evaporation_k = 0.35f;
+    float m_evaporation_k = 0.35f; // coefficient determining the evaporation rate
 };
 
 #endif // EDGE_HPP

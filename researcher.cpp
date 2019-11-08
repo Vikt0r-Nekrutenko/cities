@@ -1,10 +1,14 @@
-#include "explorer.hpp"
+#include "researcher.hpp"
 
-explorer::explorer(matrix &map, uint8_t location) : ant(map, location) {  }
-
-void explorer::move()
+researcher::researcher(matrix &map, edge &start_location) :
+    ant(map, start_location)
 {
-    path tmp;
+
+}
+
+void researcher::move()
+{
+    path tmp; // for storing just longest path;
     while (can_move()) {
         m_location = step_forward();
 
@@ -17,7 +21,7 @@ void explorer::move()
     m_passed_path = tmp;
 }
 
-vertex *explorer::step_back()
+vertex *researcher::step_back()
 {
     m_passed_path.rm_last_edge();
     return choose_next_vertex();

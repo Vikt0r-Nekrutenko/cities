@@ -1,5 +1,4 @@
 #include "path.hpp"
-#include <algorithm>
 
 void path::clear()
 {

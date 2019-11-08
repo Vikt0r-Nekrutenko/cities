@@ -3,10 +3,12 @@
 
 #include "row.hpp"
 
+/* presents adjacency matrix
+ * cells which stor outgoing edges */
 class matrix
 {
 public:
-    matrix(std::vector<std::string> &strs, uint8_t size);
+    matrix(std::vector<std::string> &cities_list, uint8_t size);
     row &operator[](uint8_t indx);
     void restore();
     void sort();

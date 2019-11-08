@@ -1,11 +1,15 @@
 #include "matrix.hpp"
 
-matrix::matrix(std::vector<std::string> &strs, uint8_t size) : m_rows(size)
+matrix::matrix(std::vector<std::string> &cities_list, uint8_t size) : m_rows(size)
 {
     for(std::vector<row>::iterator col = m_rows.begin(); col != m_rows.end(); col++)
         *col = row(size);
 
-    for(std::vector<std::string>::iterator word = strs.begin(); word != strs.end() - 1; word++)
+    /* used cities_list.end - 1 couse last city name will be start edge */
+    for(std::vector<std::string>::iterator word = cities_list.begin(); word != cities_list.end() - 1; word++)
+        /* word->front() - 65u == ('A' - 65 = 0)
+         * word->back() - 97u == ('a' - 97 = 0)
+         * for simple indexation of matrix */
         (*this)[word->front() - 65u][word->back() - 97u].add_edge( edge(&*word, 0u, 0.1f) );
 }
 

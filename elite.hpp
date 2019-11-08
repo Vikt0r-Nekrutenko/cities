@@ -3,10 +3,11 @@
 
 #include "ant.hpp"
 
+/* the task of elite ants: walk along the edges with the maximum amount of pheromone */
 class elite : public ant
 {
 public:
-    elite(matrix &map, uint8_t location);
+    elite(matrix &map, edge &start_location);
 private:
     vertex *choose_next_vertex() final;
 };
