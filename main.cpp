@@ -104,45 +104,55 @@ Path ants_colony_algorithm(Matrix &matrix)
     PathPairs antPathPairs;
 
     int vertexNumber = 0;//rand() % MatrixWidth;
-    float totalProbability = 0.f;
-    for(auto &vertex : matrix.at(vertexNumber)) {
-        for(auto &edge : vertex) {
-            if(!edge.isPassed) {
-                totalProbability += std::pow(edge.pheromone, ALPHA) * std::pow(edge.word->length() / 100.f, BETA);
+    antPathPairs.push_back({{}, 0ull});
+
+    while(true) {
+        bool isEnd = true;
+        float totalProbability = 0.f;
+        for(auto &vertex : matrix.at(vertexNumber)) {
+            for(auto &edge : vertex) {
+                if(!edge.isPassed) {
+                    totalProbability += std::pow(edge.pheromone, ALPHA) * std::pow(edge.word->length() / 100.f, BETA);
+                    isEnd = false;
+                }
             }
         }
-    }
 
-    Roulette roulette;
-    float currentProbability = 0.f;
-    for(auto &vertex : matrix.at(vertexNumber)) {
-        for(auto &edge : vertex) {
-            if(edge.isPassed)
-                continue;
-            float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
-            roulette.push_back({&edge, currentProbability, currentProbability += probability});
-        }
-    }
-
-    Edge *selectedEdge = nullptr;
-    float target = float(rand()) / float(RAND_MAX);
-    int low = 0;
-    int high = roulette.size() - 1;
-
-    while(low <= high) {
-        int mid = low + (high - low) / 2;
-        if(target >= roulette.at(mid).begin && target <= roulette.at(mid).end){
-            selectedEdge = roulette.at(mid).edge;
+        if(isEnd) {
             break;
-        } else if(target < roulette.at(mid).begin) {
-            high = mid - 1;
-        } else {
-            low = mid + 1;
         }
-    }
 
-    vertexNumber = selectedEdge->word->back() - 'a';
-    selectedEdge->isPassed = true;
-    antPathPairs.back().first.push_back(selectedEdge);
-    antPathPairs.back().second += selectedEdge->word->length();
+        Roulette roulette;
+        float currentProbability = 0.f;
+        for(auto &vertex : matrix.at(vertexNumber)) {
+            for(auto &edge : vertex) {
+                if(edge.isPassed)
+                    continue;
+                float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
+                roulette.push_back({&edge, currentProbability, currentProbability += probability});
+            }
+        }
+
+        Edge *selectedEdge = nullptr;
+        float target = float(rand()) / float(RAND_MAX);
+        int low = 0;
+        int high = roulette.size() - 1;
+
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            if(target >= roulette.at(mid).begin && target <= roulette.at(mid).end){
+                selectedEdge = roulette.at(mid).edge;
+                break;
+            } else if(target < roulette.at(mid).begin) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        vertexNumber = selectedEdge->word->back() - 'a';
+        selectedEdge->isPassed = true;
+        antPathPairs.back().first.push_back(selectedEdge);
+        antPathPairs.back().second += selectedEdge->word->length();
+    }
 }
