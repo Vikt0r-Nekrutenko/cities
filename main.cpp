@@ -43,6 +43,10 @@ int main()
 vector<string> combine_cities(vector<string> available_cities)
 {
     Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
+    for(auto &city : available_cities) {
+        matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
+    }
+
     Path path = ants_colony_algorithm(matrix);
 
     size_t length = 0ull;
