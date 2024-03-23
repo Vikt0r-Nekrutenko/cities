@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
-#include <sstream>
+#include <cmath>
 #include <string>
 #include <vector>
 
@@ -9,6 +9,8 @@
 #define DEFAULT_PHEROMONE_VALUE 0.1f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
 #define MAXIMUM_PHEROMONE_VALUE 100.f
+#define ALPHA 1.f
+#define BETA  1.f
 
 using namespace std;
 
@@ -91,5 +93,13 @@ int write_to_file(vector<string> cities_list)
 
 Path ants_colony_algorithm(Matrix &matrix)
 {
-
+    int vertexNumber = 0;//rand() % MatrixWidth;
+    float totalProbability = 0.f;
+    for(auto &vertex : matrix.at(vertexNumber)) {
+        for(auto &edge : vertex) {
+            if(!edge.isPassed) {
+                totalProbability += std::pow(edge.pheromone, ALPHA) * std::pow(edge.word->length() / 100.f, BETA);
+            }
+        }
+    }
 }
