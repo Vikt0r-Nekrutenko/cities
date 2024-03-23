@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-#define MATRIX_SIZE 26
 #define DEFAULT_PHEROMONE_VALUE 0.1f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
 #define MAXIMUM_PHEROMONE_VALUE 100.f
@@ -13,8 +12,10 @@
 #define ALPHA 1.f
 #define BETA  1.f
 #define Q     100'000.f;
-#define REGULAR_ANTS_COUNT MATRIX_SIZE
-#define ELITE_ANTS_COUNT (REGULAR_ANTS_COUNT >> 1)
+#define MATRIX_SIZE         26
+#define COLONY_ITERATIONS   100
+#define REGULAR_ANTS_COUNT  MATRIX_SIZE
+#define ELITE_ANTS_COUNT    (REGULAR_ANTS_COUNT >> 1)
 
 using namespace std;
 
@@ -106,83 +107,93 @@ int write_to_file(vector<string> cities_list)
 Path ants_colony_algorithm(Matrix &matrix)
 {
     PathPairs antPathPairs;
-    int ants = REGULAR_ANTS_COUNT + ELITE_ANTS_COUNT;
+    Path bestPath;
+    size_t bestLength = 0;
+    int iterations = COLONY_ITERATIONS;
 
-    while(ants--) {
-        int vertexNumber = 0;//rand() % MatrixWidth;
-        antPathPairs.push_back({{}, 0ull});
+    while(iterations--) {
+        int ants = REGULAR_ANTS_COUNT + ELITE_ANTS_COUNT;
 
-        while(true) {
-            bool isEnd = true;
-            float totalProbability = 0.f;
-            for(auto &vertex : matrix.at(vertexNumber)) {
-                for(auto &edge : vertex) {
-                    if(!edge.isPassed) {
-                        totalProbability += std::pow(edge.pheromone, ALPHA) * std::pow(edge.word->length() / 100.f, BETA);
-                        isEnd = false;
+        while(ants--) {
+            int vertexNumber = 0;//rand() % MatrixWidth;
+            antPathPairs.push_back({{}, 0ull});
+
+            while(true) {
+                bool isEnd = true;
+                float totalProbability = 0.f;
+                for(auto &vertex : matrix.at(vertexNumber)) {
+                    for(auto &edge : vertex) {
+                        if(!edge.isPassed) {
+                            totalProbability += std::pow(edge.pheromone, ALPHA) * std::pow(edge.word->length() / 100.f, BETA);
+                            isEnd = false;
+                        }
                     }
                 }
-            }
 
-            if(isEnd) {
-                break;
-            }
-
-            Roulette roulette;
-            float currentProbability = 0.f;
-            for(auto &vertex : matrix.at(vertexNumber)) {
-                for(auto &edge : vertex) {
-                    if(edge.isPassed)
-                        continue;
-                    float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
-                    roulette.push_back({&edge, currentProbability, currentProbability += probability});
-                }
-            }
-
-            Edge *selectedEdge = nullptr;
-            float target = float(rand()) / float(RAND_MAX);
-            int low = 0;
-            int high = roulette.size() - 1;
-
-            while(low <= high) {
-                int mid = low + (high - low) / 2;
-                if(target >= roulette.at(mid).begin && target <= roulette.at(mid).end){
-                    selectedEdge = roulette.at(mid).edge;
+                if(isEnd) {
                     break;
-                } else if(target < roulette.at(mid).begin) {
-                    high = mid - 1;
-                } else {
-                    low = mid + 1;
+                }
+
+                Roulette roulette;
+                float currentProbability = 0.f;
+                for(auto &vertex : matrix.at(vertexNumber)) {
+                    for(auto &edge : vertex) {
+                        if(edge.isPassed)
+                            continue;
+                        float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
+                        roulette.push_back({&edge, currentProbability, currentProbability += probability});
+                    }
+                }
+
+                Edge *selectedEdge = nullptr;
+                float target = float(rand()) / float(RAND_MAX);
+                int low = 0;
+                int high = roulette.size() - 1;
+
+                while(low <= high) {
+                    int mid = low + (high - low) / 2;
+                    if(target >= roulette.at(mid).begin && target <= roulette.at(mid).end){
+                        selectedEdge = roulette.at(mid).edge;
+                        break;
+                    } else if(target < roulette.at(mid).begin) {
+                        high = mid - 1;
+                    } else {
+                        low = mid + 1;
+                    }
+                }
+
+                vertexNumber = selectedEdge->word->back() - 'a';
+                selectedEdge->isPassed = true;
+                antPathPairs.back().first.push_back(selectedEdge);
+                antPathPairs.back().second += selectedEdge->word->length();
+            }
+
+            for(auto &edge : antPathPairs.back().first) {
+                edge->isPassed = false;
+            }
+        }
+        for(auto &pathPair : antPathPairs) {
+            for(auto &edge : pathPair.first) {
+                float newPheromone = edge->pheromone + float(pathPair.second) / Q;
+                if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+                    edge->pheromone = newPheromone;
+            }
+            if(bestLength > pathPair.second) {
+                bestLength = pathPair.second;
+                bestPath = pathPair.first;
+            }
+        }
+
+        for(auto &row : matrix) {
+            for(auto &vertex : row) {
+                for(auto &edge : vertex) {
+                    float newPheromone = edge.pheromone * EVAPORATION_VALUE;
+                    if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+                        edge.pheromone = newPheromone;
                 }
             }
-
-            vertexNumber = selectedEdge->word->back() - 'a';
-            selectedEdge->isPassed = true;
-            antPathPairs.back().first.push_back(selectedEdge);
-            antPathPairs.back().second += selectedEdge->word->length();
-        }
-
-        for(auto &edge : antPathPairs.back().first) {
-            edge->isPassed = false;
-        }
-    }
-    for(auto &pathPair : antPathPairs) {
-        for(auto &edge : pathPair.first) {
-            float newPheromone = edge->pheromone + float(pathPair.second) / Q;
-            if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                edge->pheromone = newPheromone;
         }
     }
 
-    for(auto &row : matrix) {
-        for(auto &vertex : row) {
-            for(auto &edge : vertex) {
-                float newPheromone = edge.pheromone * EVAPORATION_VALUE;
-                if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                    edge.pheromone = newPheromone;
-            }
-        }
-    }
-
-    return antPathPairs.back().first;
+    return bestPath;
 }
