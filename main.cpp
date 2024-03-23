@@ -11,6 +11,7 @@
 #define MAXIMUM_PHEROMONE_VALUE 100.f
 #define ALPHA 1.f
 #define BETA  1.f
+#define Q     100'000.f;
 #define REGULAR_ANTS_COUNT MATRIX_SIZE
 #define ELITE_ANTS_COUNT (REGULAR_ANTS_COUNT >> 1)
 
@@ -159,8 +160,16 @@ Path ants_colony_algorithm(Matrix &matrix)
             antPathPairs.back().first.push_back(selectedEdge);
             antPathPairs.back().second += selectedEdge->word->length();
         }
+
         for(auto &edge : antPathPairs.back().first) {
             edge->isPassed = false;
+        }
+    }
+    for(auto &pathPair : antPathPairs) {
+        for(auto &edge : pathPair.first) {
+            float newPheromone = edge->pheromone + float(pathPair.second) / Q;
+            if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+                edge->pheromone = newPheromone;
         }
     }
 
