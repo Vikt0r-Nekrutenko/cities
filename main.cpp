@@ -9,6 +9,7 @@
 #define DEFAULT_PHEROMONE_VALUE 0.1f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
 #define MAXIMUM_PHEROMONE_VALUE 100.f
+#define EVAPORATION_VALUE       0.65f
 #define ALPHA 1.f
 #define BETA  1.f
 #define Q     100'000.f;
@@ -170,6 +171,16 @@ Path ants_colony_algorithm(Matrix &matrix)
             float newPheromone = edge->pheromone + float(pathPair.second) / Q;
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                 edge->pheromone = newPheromone;
+        }
+    }
+
+    for(auto &row : matrix) {
+        for(auto &vertex : row) {
+            for(auto &edge : vertex) {
+                float newPheromone = edge.pheromone * EVAPORATION_VALUE;
+                if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+                    edge.pheromone = newPheromone;
+            }
         }
     }
 
