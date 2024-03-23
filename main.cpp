@@ -121,4 +121,21 @@ Path ants_colony_algorithm(Matrix &matrix)
             roulette.push_back({&edge, currentProbability, currentProbability += probability});
         }
     }
+
+    Edge *selectedEdge = nullptr;
+    float target = float(rand()) / float(RAND_MAX);
+    int low = 0;
+    int high = roulette.size() - 1;
+
+    while(low <= high) {
+        int mid = low + (high - low) / 2;
+        if(target >= roulette.at(mid).begin && target <= roulette.at(mid).end){
+            selectedEdge = roulette.at(mid).edge;
+            break;
+        } else if(target < roulette.at(mid).begin) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
 }
