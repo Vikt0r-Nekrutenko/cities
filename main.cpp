@@ -44,7 +44,9 @@ vector<string> combine_cities(vector<string> available_cities)
 {
     Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
     Path path = ants_colony_algorithm(matrix);
+
     size_t length = 0ull;
+    vector<string> resultCities;
 
     int validationSymbol = path.front()->word->front() - 'A';
     for(const auto &edge : path) {
@@ -54,10 +56,11 @@ vector<string> combine_cities(vector<string> available_cities)
         }
         validationSymbol = edge->word->back() - 'a';
         length += edge->word->length();
+        resultCities.push_back(*edge->word);
     }
     cout << "CONGRATULATION!!! Path length: [" << length << "] symbols." << endl;
 
-    return available_cities;
+    return resultCities;
 }
 
 vector<string> read_available_cities()
