@@ -22,9 +22,12 @@ struct Edge
 using Vertex = std::vector<Edge>;
 using Row = std::vector<Vertex>;
 using Matrix = std::vector<Row>;
+using Path = std::vector<std::pair<std::vector<Edge *>, size_t>>;
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
+Path ants_colony_algorithm(Matrix &matrix);
+
 int write_to_file(vector<string> cities_list);
 
 int main()
@@ -62,4 +65,9 @@ int write_to_file(vector<string> cities_list)
     copy(cities_list.begin(), cities_list.end(), output_iterator);
 
     return 0;
+}
+
+Path ants_colony_algorithm(Matrix &matrix)
+{
+
 }
