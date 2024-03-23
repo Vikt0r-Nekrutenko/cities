@@ -65,7 +65,7 @@ vector<string> combine_cities(vector<string> available_cities)
     }
 
     auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = ants_colony_algorithm(matrix);
+    Path path = ants_colony_algorithm(matrix); // avg time: 135s path lenth: 9752 symbols
     cout << "Ant colony elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - antsColonyAlgoBeginTime).count() << "] sec." << endl;
 
     size_t length = 0ull;
