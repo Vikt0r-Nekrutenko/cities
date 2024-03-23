@@ -5,7 +5,23 @@
 #include <string>
 #include <vector>
 
+#define MATRIX_SIZE 26
+#define DEFAULT_PHEROMONE_VALUE 0.1f
+#define MINIMUM_PHEROMONE_VALUE 0.01f
+#define MAXIMUM_PHEROMONE_VALUE 100.f
+
 using namespace std;
+
+struct Edge
+{
+    std::string *word = nullptr;
+    float pheromone = DEFAULT_PHEROMONE_VALUE;
+    bool isPassed = false;
+};
+
+using Vertex = std::vector<Edge>;
+using Row = std::vector<Vertex>;
+using Matrix = std::vector<Row>;
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
@@ -22,6 +38,7 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
+    Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
     return available_cities;
 }
 
