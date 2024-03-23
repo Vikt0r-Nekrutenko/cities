@@ -159,6 +159,9 @@ Path ants_colony_algorithm(Matrix &matrix)
             antPathPairs.back().first.push_back(selectedEdge);
             antPathPairs.back().second += selectedEdge->word->length();
         }
+        for(auto &edge : antPathPairs.back().first) {
+            edge->isPassed = false;
+        }
     }
 
     return antPathPairs.back().first;
