@@ -149,7 +149,7 @@ Path ants_colony_algorithm(Matrix &matrix)
                     }
                 }
 
-                Edge *selectedEdge = nullptr;
+                Edge *selectedEdge = roulette.front().edge;
                 float target = float(rand()) / float(RAND_MAX);
                 int low = 0;
                 int high = roulette.size() - 1;
@@ -182,9 +182,10 @@ Path ants_colony_algorithm(Matrix &matrix)
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                     edge->pheromone = newPheromone;
             }
-            if(bestLength > pathPair.second) {
+            if(bestLength < pathPair.second) {
                 bestLength = pathPair.second;
                 bestPath = pathPair.first;
+                cout << iterations << "." << bestPath.size() << " " << bestLength << endl;
             }
         }
 
