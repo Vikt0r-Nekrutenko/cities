@@ -101,6 +101,8 @@ int write_to_file(vector<string> cities_list)
 
 Path ants_colony_algorithm(Matrix &matrix)
 {
+    PathPairs antPathPairs;
+
     int vertexNumber = 0;//rand() % MatrixWidth;
     float totalProbability = 0.f;
     for(auto &vertex : matrix.at(vertexNumber)) {
@@ -138,4 +140,9 @@ Path ants_colony_algorithm(Matrix &matrix)
             low = mid + 1;
         }
     }
+
+    vertexNumber = selectedEdge->word->back() - 'a';
+    selectedEdge->isPassed = true;
+    antPathPairs.back().first.push_back(selectedEdge);
+    antPathPairs.back().second += selectedEdge->word->length();
 }
