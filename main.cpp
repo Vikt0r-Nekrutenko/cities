@@ -4,6 +4,7 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <chrono>
 
 #define DEFAULT_PHEROMONE_VALUE 0.1f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
@@ -57,12 +58,15 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
+    srand(1998);
     Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
     for(auto &city : available_cities) {
         matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
     }
 
+    auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
     Path path = ants_colony_algorithm(matrix);
+    cout << "Ant colony elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - antsColonyAlgoBeginTime).count() << "] sec." << endl;
 
     size_t length = 0ull;
     vector<string> resultCities;
