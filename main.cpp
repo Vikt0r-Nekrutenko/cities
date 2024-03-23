@@ -22,7 +22,8 @@ struct Edge
 using Vertex = std::vector<Edge>;
 using Row = std::vector<Vertex>;
 using Matrix = std::vector<Row>;
-using Path = std::vector<std::pair<std::vector<Edge *>, size_t>>;
+using Path = std::vector<Edge *>;
+using PathPairs = std::vector<std::pair<Path, size_t>>;
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
@@ -42,6 +43,20 @@ int main()
 vector<string> combine_cities(vector<string> available_cities)
 {
     Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
+    Path path = ants_colony_algorithm(matrix);
+    size_t length = 0ull;
+
+    int validationSymbol = path.front()->word->front() - 'A';
+    for(const auto &edge : path) {
+        if(edge->word->front() - 'A' != validationSymbol) {
+            cout << "Erorr!!! Path isn't valid!!!" << endl;
+            throw;
+        }
+        validationSymbol = edge->word->back() - 'a';
+        length += edge->word->length();
+    }
+    cout << "CONGRATULATION!!! Path length: [" << length << "] symbols." << endl;
+
     return available_cities;
 }
 
