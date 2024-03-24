@@ -5,3 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
+
+HEADERS += \
+    newSolution/ant_colony_algorithm.hpp
+
+INCLUDEPATH += \
+    newSolution \
