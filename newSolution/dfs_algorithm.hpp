@@ -18,7 +18,9 @@ Path dfs_algorithm(Matrix &matrix)
             size_t maxEdgeLength = 0ull;
             for(auto &vertex : matrix.at(vertexNumber)) {
                 for(auto &edge : vertex) {
-                    if(!edge.isPassed && edge.word->length() > maxEdgeLength) {
+                    float probability = rand() % 100;
+                    size_t limitEdgeLength = probability < 25 ? maxEdgeLength - 1 : maxEdgeLength;
+                    if(!edge.isPassed && edge.word->length() > limitEdgeLength) {
                         maxEdgeLength = edge.word->length();
                         selectedEdge = &edge;
                     }}}
@@ -44,9 +46,10 @@ Path dfs_algorithm(Matrix &matrix)
             pathPairs.back().first.push_back(selectedEdge);
             pathPairs.back().second += selectedEdge->word->length();
         }
-        for(auto &pathPair : pathPairs)
+        for(auto &pathPair : pathPairs) {
             for(auto &edge : pathPair.first)
                 edge->isPassed = false;
+        }
         pathPairs.clear();
     }
 

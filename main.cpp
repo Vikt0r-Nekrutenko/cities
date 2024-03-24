@@ -27,7 +27,7 @@ vector<string> combine_cities(vector<string> available_cities)
     }
 
     auto dfsAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = dfs_algorithm(matrix); // avg time: 21s; path lenth: 15985 symbols
+    Path path = dfs_algorithm(matrix); // avg time: 20s; path lenth: 16043 symbols
     cout << "DFS elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - dfsAlgoBeginTime).count() << "] sec." << endl;
     // auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
     // Path path = ants_colony_algorithm(matrix); // avg time: 75 path lenth: 10519 symbols
