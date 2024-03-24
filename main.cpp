@@ -27,7 +27,7 @@ vector<string> combine_cities(vector<string> available_cities)
     }
 
     auto combinedAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = combined_algorithm(matrix); // avg time: 20s; path lenth: 16043 symbols
+    Path path = combined_algorithm(matrix); // avg time: 0s; path lenth: 15965 symbols
     cout << "Combined elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - combinedAlgoBeginTime).count() << "] sec." << endl;
     // auto dfsAlgoBeginTime = chrono::high_resolution_clock::now();
     // Path path = dfs_algorithm(matrix); // avg time: 20s; path lenth: 16043 symbols

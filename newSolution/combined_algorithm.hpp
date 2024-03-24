@@ -24,7 +24,21 @@ Path combined_algorithm(Matrix &matrix)
                     isEnd = false;
                 }}}
 
-        if(isEnd) { break; }
+        if(isEnd) {
+            if(antPathPairs.back().first.size() == 1)
+                break;
+            if(bestLength < antPathPairs.back().second) {
+                bestLength = antPathPairs.back().second;
+                bestPath = antPathPairs.back().first;
+                std::cout << antPathPairs.size() << ":" << bestPath.size() << " [" << bestLength << "]" << std::endl;
+            }
+            std::vector<Edge *> tmpPath {antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1};
+            size_t tmpLength = antPathPairs.back().second - antPathPairs.back().first.back()->word->length();
+
+            antPathPairs.push_back({tmpPath, tmpLength});
+            vertexNumber = tmpPath.back()->word->back() - 'a';
+            continue;
+        }
 
         Edge *selectedEdge = nullptr;
 
