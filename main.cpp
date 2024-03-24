@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 #include <iterator>
 #include <chrono>
 
@@ -7,7 +6,6 @@
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
-Path ants_colony_algorithm(Matrix &matrix);
 
 int write_to_file(vector<string> cities_list);
 
