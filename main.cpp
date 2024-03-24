@@ -2,7 +2,7 @@
 #include <iterator>
 #include <chrono>
 
-#include "dfs_algorithm.hpp"
+#include "combined_algorithm.hpp"
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
@@ -26,9 +26,13 @@ vector<string> combine_cities(vector<string> available_cities)
         matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
     }
 
-    auto dfsAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = dfs_algorithm(matrix); // avg time: 20s; path lenth: 16043 symbols
-    cout << "DFS elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - dfsAlgoBeginTime).count() << "] sec." << endl;
+    auto combinedAlgoBeginTime = chrono::high_resolution_clock::now();
+    Path path = combined_algorithm(matrix); // avg time: 476s; path lenth: 16173 symbols. 55s:16112 FOR 10 ITERATIONS!!!!
+    cout << "Combined elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - combinedAlgoBeginTime).count() << "] sec." << endl;
+    // auto dfsAlgoBeginTime = chrono::high_resolution_clock::now();
+    // Path path = dfs_algorithm(matrix); // avg time: 20s; path lenth: 16043 symbols
+    // cout << "DFS elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - dfsAlgoBeginTime).count() << "] sec." << endl;
+
     // auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
     // Path path = ants_colony_algorithm(matrix); // avg time: 75 path lenth: 10519 symbols
     // cout << "Ant colony elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - antsColonyAlgoBeginTime).count() << "] sec." << endl;
