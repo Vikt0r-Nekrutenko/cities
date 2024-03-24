@@ -5,16 +5,16 @@
 
 Path combined_algorithm(Matrix &matrix)
 {
-    PathPairs antPathPairs;
     Path bestPath;
     size_t bestLength = 0;
     int iterations = COLONY_ITERATIONS;
 
     while(iterations--) {
         int ants = REGULAR_ANTS_COUNT + ELITE_ANTS_COUNT;
+        PathPairs colonyBestPathPairs;
         while(ants--) {
             int vertexNumber = rand() % MATRIX_SIZE;
-            antPathPairs.push_back({{}, 0ull});
+            PathPairs antPathPairs{{{}, 0ull}};
             pair<Path, size_t> bestPathForOneAnt {{}, 0};
 
             while(true) {
@@ -29,8 +29,7 @@ Path combined_algorithm(Matrix &matrix)
 
                 if(isEnd) {
                     if(antPathPairs.back().first.size() == 1) {
-                        antPathPairs.clear();
-                        antPathPairs.push_back(bestPathForOneAnt);
+                        colonyBestPathPairs.push_back(bestPathForOneAnt);
                         break;
                     }
                     if(antPathPairs.back().second > bestPathForOneAnt.second) {
@@ -78,7 +77,7 @@ Path combined_algorithm(Matrix &matrix)
                         edge.isPassed = false;
                     }}}
         }
-        for(auto &pathPair : antPathPairs) {
+        for(auto &pathPair : colonyBestPathPairs) {
             for(auto &edge : pathPair.first) {
                 float newPheromone = edge->pheromone + float(pathPair.second) / Q;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
@@ -87,7 +86,7 @@ Path combined_algorithm(Matrix &matrix)
             if(bestLength < pathPair.second) {
                 bestLength = pathPair.second;
                 bestPath = pathPair.first;
-                std::cout << iterations << "." << antPathPairs.size() << ":" << bestPath.size() << " [" << bestLength << "]" << std::endl;
+                std::cout << iterations << "." << colonyBestPathPairs.size() << ":" << bestPath.size() << " [" << bestLength << "]" << std::endl;
             }
         }
 
@@ -98,7 +97,6 @@ Path combined_algorithm(Matrix &matrix)
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                         edge.pheromone = newPheromone;
                 }}}
-        antPathPairs.clear();
     }
 
     return bestPath;
