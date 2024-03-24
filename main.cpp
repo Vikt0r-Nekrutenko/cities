@@ -130,13 +130,9 @@ Path ants_colony_algorithm(Matrix &matrix)
                         if(!edge.isPassed) {
                             totalProbability += std::pow(edge.pheromone, ALPHA) * std::pow(edge.word->length() / 100.f, BETA);
                             isEnd = false;
-                        }
-                    }
-                }
+                }}}
 
-                if(isEnd) {
-                    break;
-                }
+                if(isEnd) { break; }
 
                 Roulette roulette;
                 Edge *selectedEdge = nullptr;
@@ -190,9 +186,7 @@ Path ants_colony_algorithm(Matrix &matrix)
                     float newPheromone = edge.pheromone * EVAPORATION_VALUE;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                         edge.pheromone = newPheromone;
-                }
-            }
-        }
+        }}}
     }
 
     return bestPath;
