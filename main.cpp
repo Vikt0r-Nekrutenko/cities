@@ -65,7 +65,7 @@ vector<string> combine_cities(vector<string> available_cities)
     }
 
     auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = ants_colony_algorithm(matrix); // avg time: 135s path lenth: 9752 symbols
+    Path path = ants_colony_algorithm(matrix); // avg time: 124 path lenth: 10447 symbols
     cout << "Ant colony elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - antsColonyAlgoBeginTime).count() << "] sec." << endl;
 
     size_t length = 0ull;
@@ -150,19 +150,29 @@ Path ants_colony_algorithm(Matrix &matrix)
                 }
 
                 Edge *selectedEdge = roulette.front().edge;
-                float target = float(rand()) / float(RAND_MAX);
-                int low = 0;
-                int high = roulette.size() - 1;
+                if(ants > ELITE_ANTS_COUNT) {
+                    float target = float(rand()) / float(RAND_MAX);
+                    int low = 0;
+                    int high = roulette.size() - 1;
 
-                while(low <= high) {
-                    int mid = low + (high - low) / 2;
-                    if(target >= roulette.at(mid).begin && target <= roulette.at(mid).end){
-                        selectedEdge = roulette.at(mid).edge;
-                        break;
-                    } else if(target < roulette.at(mid).begin) {
-                        high = mid - 1;
-                    } else {
-                        low = mid + 1;
+                    while(low <= high) {
+                        int mid = low + (high - low) / 2;
+                        if(target >= roulette.at(mid).begin && target <= roulette.at(mid).end){
+                            selectedEdge = roulette.at(mid).edge;
+                            break;
+                        } else if(target < roulette.at(mid).begin) {
+                            high = mid - 1;
+                        } else {
+                            low = mid + 1;
+                        }
+                    }
+                } else {
+                    float maxProbability = 0.f;
+                    for(auto &sector : roulette) {
+                        if(sector.end - sector.begin > maxProbability) {
+                            maxProbability = sector.end - sector.begin;
+                            selectedEdge = sector.edge;
+                        }
                     }
                 }
 
