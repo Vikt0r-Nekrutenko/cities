@@ -5,11 +5,11 @@
 
 Path dfs_algorithm(Matrix &matrix)
 {
-    PathPairs antPathPairs;
+    PathPairs pathPairs;
     Path bestPath;
     size_t bestLength = 0;
     int vertexNumber = rand() % MATRIX_SIZE;
-    antPathPairs.push_back({{}, 0ull});
+    pathPairs.push_back({{}, 0ull});
 
     while(true) {
         bool isEnd = true;
@@ -26,9 +26,17 @@ Path dfs_algorithm(Matrix &matrix)
 
         vertexNumber = selectedEdge->word->back() - 'a';
         selectedEdge->isPassed = true;
-        antPathPairs.back().first.push_back(selectedEdge);
-        antPathPairs.back().second += selectedEdge->word->length();
+        pathPairs.back().first.push_back(selectedEdge);
+        pathPairs.back().second += selectedEdge->word->length();
     }
+    for(auto &pathPair : pathPairs) {
+        if(bestLength < pathPair.second) {
+            bestLength = pathPair.second;
+            bestPath = pathPair.first;
+            std::cout << bestPath.size() << " " << bestLength << std::endl;
+        }
+    }
+
     return bestPath;
 }
 
