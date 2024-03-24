@@ -7,10 +7,10 @@ Path combined_algorithm(Matrix &matrix)
 {
     PathPairs antPathPairs;
     Path bestPath;
-    size_t bestLength = 0;
     int iterations = COLONY_ITERATIONS;
     int ants = REGULAR_ANTS_COUNT + ELITE_ANTS_COUNT;
     while(ants--) {
+        size_t bestLength = 0;
         int vertexNumber = rand() % MATRIX_SIZE;
         antPathPairs.push_back({{}, 0ull});
 
@@ -25,12 +25,14 @@ Path combined_algorithm(Matrix &matrix)
                     }}}
 
             if(isEnd) {
-                if(antPathPairs.back().first.size() == 1)
+                if(antPathPairs.back().first.size() == 1){
+                    for(auto &pathPair : antPathPairs)
+                        if(bestLength < pathPair.second) {
+                            bestLength = pathPair.second;
+                            bestPath = pathPair.first;
+                            std::cout << ants << "." << antPathPairs.size() << ":" << bestPath.size() << " [" << bestLength << "]" << std::endl;
+                        }
                     break;
-                if(bestLength < antPathPairs.back().second) {
-                    bestLength = antPathPairs.back().second;
-                    bestPath = antPathPairs.back().first;
-                    std::cout << antPathPairs.size() << ":" << bestPath.size() << " [" << bestLength << "]" << std::endl;
                 }
                 std::vector<Edge *> tmpPath {antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1};
                 size_t tmpLength = antPathPairs.back().second - antPathPairs.back().first.back()->word->length();
@@ -73,6 +75,11 @@ Path combined_algorithm(Matrix &matrix)
                 for(auto &edge : vertex) {
                     edge.isPassed = false;
                 }}}
+        for(auto &edge : bestPath) {
+            float newPheromone = edge->pheromone + float(bestLength) / Q;
+            if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+                edge->pheromone = newPheromone;
+        }
         antPathPairs.clear();
     }
 
