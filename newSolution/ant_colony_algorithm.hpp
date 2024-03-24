@@ -111,6 +111,7 @@ Path ants_colony_algorithm(Matrix &matrix)
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                         edge.pheromone = newPheromone;
                 }}}
+        antPathPairs.clear();
     }
 
     return bestPath;
