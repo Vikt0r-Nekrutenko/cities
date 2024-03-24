@@ -139,17 +139,25 @@ Path ants_colony_algorithm(Matrix &matrix)
                 }
 
                 Roulette roulette;
+                Edge *selectedEdge = nullptr;
+
+                float maxProbability = 0.f;
                 float currentProbability = 0.f;
                 for(auto &vertex : matrix.at(vertexNumber)) {
                     for(auto &edge : vertex) {
                         if(edge.isPassed)
                             continue;
                         float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
-                        roulette.push_back({&edge, currentProbability, currentProbability += probability});
+                        if(ants <= ELITE_ANTS_COUNT && probability > maxProbability){
+                            currentProbability += probability;
+                            maxProbability = probability;
+                            selectedEdge = &edge;
+                        } else {
+                            roulette.push_back({&edge, currentProbability, currentProbability += probability});
+                        }
                     }
                 }
 
-                Edge *selectedEdge = roulette.front().edge;
                 if(ants > ELITE_ANTS_COUNT) {
                     float target = float(rand()) / float(RAND_MAX);
                     int low = 0;
@@ -164,14 +172,6 @@ Path ants_colony_algorithm(Matrix &matrix)
                             high = mid - 1;
                         } else {
                             low = mid + 1;
-                        }
-                    }
-                } else {
-                    float maxProbability = 0.f;
-                    for(auto &sector : roulette) {
-                        if(sector.end - sector.begin > maxProbability) {
-                            maxProbability = sector.end - sector.begin;
-                            selectedEdge = sector.edge;
                         }
                     }
                 }
