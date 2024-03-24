@@ -22,7 +22,15 @@ Path dfs_algorithm(Matrix &matrix)
                     goto endSelect;
                 }}} endSelect:
 
-        if(isEnd) { break; }
+        if(isEnd) {
+            if(pathPairs.back().first.size() == 1)
+                break;
+            std::vector<Edge *> tmpPath {pathPairs.back().first.begin(), pathPairs.back().first.end() - 1};
+            size_t tmpLength = pathPairs.back().second - pathPairs.back().first.back()->word->length();
+            pathPairs.push_back({tmpPath, tmpLength});
+            vertexNumber = tmpPath.back()->word->back() - 'a';
+            continue;
+        }
 
         vertexNumber = selectedEdge->word->back() - 'a';
         selectedEdge->isPassed = true;
@@ -33,7 +41,7 @@ Path dfs_algorithm(Matrix &matrix)
         if(bestLength < pathPair.second) {
             bestLength = pathPair.second;
             bestPath = pathPair.first;
-            std::cout << bestPath.size() << " " << bestLength << std::endl;
+            std::cout << pathPairs.size() << ":" << bestPath.size() << " [" << bestLength << "]" << std::endl;
         }
     }
 
