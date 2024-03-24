@@ -14,17 +14,16 @@ Path dfs_algorithm(Matrix &matrix)
         pathPairs.push_back({{}, 0ull});
 
         while(true) {
-            bool isEnd = true;
             Edge *selectedEdge = nullptr;
+            size_t maxEdgeLength = 0ull;
             for(auto &vertex : matrix.at(vertexNumber)) {
                 for(auto &edge : vertex) {
-                    if(!edge.isPassed) {
+                    if(!edge.isPassed && edge.word->length() > maxEdgeLength) {
+                        maxEdgeLength = edge.word->length();
                         selectedEdge = &edge;
-                        isEnd = false;
-                        goto endSelect;
-                    }}} endSelect:
+                    }}}
 
-            if(isEnd) {
+            if(selectedEdge == nullptr) {
                 if(pathPairs.back().first.size() == 1)
                     break;
                 if(bestLength < pathPairs.back().second) {
