@@ -11,7 +11,7 @@
 #define MAXIMUM_PHEROMONE_VALUE 100.f
 #define EVAPORATION_VALUE       0.65f
 #define ALPHA 1.f
-#define BETA  1.f
+#define BETA  2.f
 #define Q     100'000.f;
 #define MATRIX_SIZE         26
 #define COLONY_ITERATIONS   100
@@ -65,7 +65,7 @@ vector<string> combine_cities(vector<string> available_cities)
     }
 
     auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = ants_colony_algorithm(matrix); // avg time: 124 path lenth: 10447 symbols
+    Path path = ants_colony_algorithm(matrix); // avg time: 109 path lenth: 10426 symbols
     cout << "Ant colony elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - antsColonyAlgoBeginTime).count() << "] sec." << endl;
 
     size_t length = 0ull;
@@ -149,7 +149,6 @@ Path ants_colony_algorithm(Matrix &matrix)
                             continue;
                         float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
                         if(ants <= ELITE_ANTS_COUNT && probability > maxProbability){
-                            currentProbability += probability;
                             maxProbability = probability;
                             selectedEdge = &edge;
                         } else {
@@ -159,6 +158,7 @@ Path ants_colony_algorithm(Matrix &matrix)
                 }
 
                 if(ants > ELITE_ANTS_COUNT) {
+                    spin:
                     float target = float(rand()) / float(RAND_MAX);
                     int low = 0;
                     int high = roulette.size() - 1;
@@ -174,6 +174,7 @@ Path ants_colony_algorithm(Matrix &matrix)
                             low = mid + 1;
                         }
                     }
+                    if(selectedEdge == nullptr) goto spin;
                 }
 
                 vertexNumber = selectedEdge->word->back() - 'a';
