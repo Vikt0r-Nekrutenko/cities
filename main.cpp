@@ -65,7 +65,7 @@ vector<string> combine_cities(vector<string> available_cities)
     }
 
     auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = ants_colony_algorithm(matrix); // avg time: 109 path lenth: 10426 symbols
+    Path path = ants_colony_algorithm(matrix); // avg time: 82 path lenth: 10426 symbols
     cout << "Ant colony elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - antsColonyAlgoBeginTime).count() << "] sec." << endl;
 
     size_t length = 0ull;
@@ -143,39 +143,23 @@ Path ants_colony_algorithm(Matrix &matrix)
 
                 float maxProbability = 0.f;
                 float currentProbability = 0.f;
+                float target = (float(rand()) / float(RAND_MAX)) * (0.99999f - 0.00001f) + 0.00001f;
+
                 for(auto &vertex : matrix.at(vertexNumber)) {
                     for(auto &edge : vertex) {
                         if(edge.isPassed)
                             continue;
                         float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
-                        if(ants <= ELITE_ANTS_COUNT && probability > maxProbability){
+                        currentProbability += probability;
+                        if(ants > ELITE_ANTS_COUNT && target <= currentProbability){
+                            selectedEdge = &edge;
+                            goto endSelect;
+                        } else if(ants <= ELITE_ANTS_COUNT && probability > maxProbability){
                             maxProbability = probability;
                             selectedEdge = &edge;
-                        } else {
-                            roulette.push_back({&edge, currentProbability, currentProbability += probability});
                         }
                     }
-                }
-
-                if(ants > ELITE_ANTS_COUNT) {
-                    spin:
-                    float target = float(rand()) / float(RAND_MAX);
-                    int low = 0;
-                    int high = roulette.size() - 1;
-
-                    while(low <= high) {
-                        int mid = low + (high - low) / 2;
-                        if(target >= roulette.at(mid).begin && target <= roulette.at(mid).end){
-                            selectedEdge = roulette.at(mid).edge;
-                            break;
-                        } else if(target < roulette.at(mid).begin) {
-                            high = mid - 1;
-                        } else {
-                            low = mid + 1;
-                        }
-                    }
-                    if(selectedEdge == nullptr) goto spin;
-                }
+                } endSelect:
 
                 vertexNumber = selectedEdge->word->back() - 'a';
                 selectedEdge->isPassed = true;
