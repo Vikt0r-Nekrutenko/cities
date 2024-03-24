@@ -27,18 +27,10 @@ struct Edge
     bool isPassed = false;
 };
 
-struct Sector
-{
-    Edge *edge;
-    float begin;
-    float end;
-};
-
 using Vertex = std::vector<Edge>;
 using Row = std::vector<Vertex>;
 using Matrix = std::vector<Row>;
 using Path = std::vector<Edge *>;
-using Roulette = std::vector<Sector>;
 using PathPairs = std::vector<std::pair<Path, size_t>>;
 
 vector<string> combine_cities(vector<string> available_cities);
@@ -134,7 +126,6 @@ Path ants_colony_algorithm(Matrix &matrix)
 
                 if(isEnd) { break; }
 
-                Roulette roulette;
                 Edge *selectedEdge = nullptr;
 
                 float maxProbability = 0.f;
