@@ -35,7 +35,7 @@ Path combined_algorithm(Matrix &matrix)
                     if(antPathPairs.back().second > bestPathForOneAnt.second) {
                         bestPathForOneAnt = antPathPairs.back();
                     }
-                    std::vector<Edge *> tmpPath {antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1};
+                    Path tmpPath {antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1};
                     size_t tmpLength = antPathPairs.back().second - antPathPairs.back().first.back()->word->length();
 
                     antPathPairs.push_back({tmpPath, tmpLength});
@@ -44,7 +44,6 @@ Path combined_algorithm(Matrix &matrix)
                 }
 
                 Edge *selectedEdge = nullptr;
-
                 float maxProbability = 0.f;
                 float currentProbability = 0.f;
                 float target = (float(rand()) / float(RAND_MAX)) * (0.99999f - 0.00001f) + 0.00001f;
@@ -86,7 +85,7 @@ Path combined_algorithm(Matrix &matrix)
             if(bestLength < pathPair.second) {
                 bestLength = pathPair.second;
                 bestPath = pathPair.first;
-                std::cout << iterations << "." << colonyBestPathPairs.size() << ":" << bestPath.size() << " [" << bestLength << "]" << std::endl;
+                std::cout << iterations << "." << bestPath.size() << " [" << bestLength << "]" << std::endl;
             }
         }
 
