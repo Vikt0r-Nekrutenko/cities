@@ -7,7 +7,8 @@ SOURCES += \
         main.cpp \
 
 HEADERS += \
-    newSolution/ant_colony_algorithm.hpp
+    newSolution/ant_colony_algorithm.hpp \
+    newSolution/dfs_algorithm.hpp
 
 INCLUDEPATH += \
     newSolution \
