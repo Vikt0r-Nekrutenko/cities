@@ -21,38 +21,46 @@ int main()
 vector<string> combine_cities(vector<string> available_cities)
 {
     srand(1998);
-    Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
-    for(auto &city : available_cities) {
-        matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
-    }
 
-    auto combinedAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = combined_algorithm(matrix); // avg time: 476s; path lenth: 16173 symbols. 55s:16112 FOR 10 ITERATIONS!!!!
-    cout << "Combined elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - combinedAlgoBeginTime).count() << "] sec." << endl;
-    // auto dfsAlgoBeginTime = chrono::high_resolution_clock::now();
-    // Path path = dfs_algorithm(matrix); // avg time: 20s; path lenth: 16043 symbols
-    // cout << "DFS elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - dfsAlgoBeginTime).count() << "] sec." << endl;
+    Genome genomes[8];
 
-    // auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
-    // Path path = ants_colony_algorithm(matrix); // avg time: 75 path lenth: 10519 symbols
-    // cout << "Ant colony elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - antsColonyAlgoBeginTime).count() << "] sec." << endl;
-
-    size_t length = 0ull;
-    vector<string> resultCities;
-
-    int validationSymbol = path.front()->word->front() - 'A';
-    for(const auto &edge : path) {
-        if(edge->word->front() - 'A' != validationSymbol) {
-            cout << "Erorr!!! Path isn't valid!!!" << endl;
-            throw;
+    for(auto &genome : genomes) {
+        Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
+        for(auto &city : available_cities) {
+            matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
         }
-        validationSymbol = edge->word->back() - 'a';
-        length += edge->word->length();
-        resultCities.push_back(*edge->word);
-    }
-    cout << "CONGRATULATION!!! Path length: [" << length << "] symbols." << endl;
 
-    return resultCities;
+        genome.regularAntCount = randd(10, 26);
+        genome.eliteAntCount = randd(10, 26);
+        genome.iterations = randd(1, 6);
+        genome.evaporation = randf(0.f, 1.f);
+        genome.alpha = randf(0.f, 4.f);
+        genome.beta = randf(0.f, 4.f);
+
+        combined_algorithm(matrix, genome);
+        cout << "NEXT GENOME" << endl;
+    }
+
+    // auto combinedAlgoBeginTime = chrono::high_resolution_clock::now();
+    // Path path = combined_algorithm(matrix, {25, 13, 10, 1.f, 4.f, 0.65f}); // avg time: 476s; path lenth: 16173 symbols. 55s:16112 FOR 10 ITERATIONS!!!!
+    // cout << "Combined elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - combinedAlgoBeginTime).count() << "] sec." << endl;
+
+    // size_t length = 0ull;
+    // vector<string> resultCities;
+
+    // int validationSymbol = path.front()->word->front() - 'A';
+    // for(const auto &edge : path) {
+    //     if(edge->word->front() - 'A' != validationSymbol) {
+    //         cout << "Erorr!!! Path isn't valid!!!" << endl;
+    //         throw;
+    //     }
+    //     validationSymbol = edge->word->back() - 'a';
+    //     length += edge->word->length();
+    //     resultCities.push_back(*edge->word);
+    // }
+    // cout << "CONGRATULATION!!! Path length: [" << length << "] symbols." << endl;
+
+    return available_cities;
 }
 
 vector<string> read_available_cities()

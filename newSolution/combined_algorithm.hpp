@@ -16,9 +16,9 @@ struct Genome
     float evaporation;
 };
 
-Path combined_algorithm(Matrix &matrix, const Genome &genome)
+pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 {
-    Path bestPath;
+    pair<Path, size_t> bestPath;
     size_t bestLength = 0;
     int iterations = genome.iterations;
 
@@ -96,8 +96,8 @@ Path combined_algorithm(Matrix &matrix, const Genome &genome)
             }
             if(bestLength < pathPair.second) {
                 bestLength = pathPair.second;
-                bestPath = pathPair.first;
-                std::cout << iterations << "." << bestPath.size() << " [" << bestLength << "]" << std::endl;
+                bestPath = pathPair;
+                std::cout << iterations << "." << bestPath.first.size() << " [" << bestLength << "]" << std::endl;
             }
         }
 
