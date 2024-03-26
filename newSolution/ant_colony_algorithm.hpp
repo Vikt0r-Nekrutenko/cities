@@ -6,7 +6,7 @@
 #include <vector>
 #include <iostream>
 
-#define DEFAULT_PHEROMONE_VALUE 0.1f
+#define DEFAULT_PHEROMONE_VALUE 1.f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
 #define MAXIMUM_PHEROMONE_VALUE 100.f
 #define EVAPORATION_VALUE       0.65f
