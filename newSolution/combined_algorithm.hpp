@@ -13,14 +13,14 @@ struct Genome
     float evaporation;
 };
 
-Path combined_algorithm(Matrix &matrix)
+Path combined_algorithm(Matrix &matrix, const Genome &genome)
 {
     Path bestPath;
     size_t bestLength = 0;
-    int iterations = COLONY_ITERATIONS;
+    int iterations = genome.iterations;
 
     while(iterations--) {
-        int ants = REGULAR_ANTS_COUNT + ELITE_ANTS_COUNT;
+        int ants = genome.regularAntCount + genome.eliteAntCount;
         PathPairs colonyBestPathPairs;
         while(ants--) {
             int vertexNumber = rand() % MATRIX_SIZE;
@@ -33,7 +33,7 @@ Path combined_algorithm(Matrix &matrix)
                 for(auto &vertex : matrix.at(vertexNumber)) {
                     for(auto &edge : vertex) {
                         if(!edge.isPassed) {
-                            totalProbability += std::pow(edge.pheromone, ALPHA) * std::pow(edge.word->length() / 100.f, BETA);
+                            totalProbability += std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length() / 100.f, genome.beta);
                             isEnd = false;
                         }}}
 
@@ -62,12 +62,12 @@ Path combined_algorithm(Matrix &matrix)
                     for(auto &edge : vertex) {
                         if(edge.isPassed)
                             continue;
-                        float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
+                        float probability = std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length() / 100.f, genome.beta) / totalProbability;
                         currentProbability += probability;
-                        if(ants > ELITE_ANTS_COUNT && target <= currentProbability){
+                        if(ants > genome.eliteAntCount && target <= currentProbability){
                             selectedEdge = &edge;
                             goto endSelect;
-                        } else if(ants <= ELITE_ANTS_COUNT && probability > maxProbability){
+                        } else if(ants <= genome.eliteAntCount && probability > maxProbability){
                             maxProbability = probability;
                             selectedEdge = &edge;
                         }
@@ -102,7 +102,7 @@ Path combined_algorithm(Matrix &matrix)
         for(auto &row : matrix) {
             for(auto &vertex : row) {
                 for(auto &edge : vertex) {
-                    float newPheromone = edge.pheromone * EVAPORATION_VALUE;
+                    float newPheromone = edge.pheromone * genome.evaporation;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                         edge.pheromone = newPheromone;
                 }}}
