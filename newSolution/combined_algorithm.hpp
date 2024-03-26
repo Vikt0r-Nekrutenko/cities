@@ -3,6 +3,9 @@
 
 #include "ant_colony_algorithm.hpp"
 
+#define randf(min, max) ((float(rand()) / float(RAND_MAX)) * (max - min) + min)
+#define randd(min, max) (rand() % (max - min) + min)
+
 struct Genome
 {
     int regularAntCount;
@@ -55,7 +58,7 @@ Path combined_algorithm(Matrix &matrix, const Genome &genome)
                 Edge *selectedEdge = nullptr;
                 float maxProbability = 0.f;
                 float currentProbability = 0.f;
-                float target = (float(rand()) / float(RAND_MAX)) * (0.99999f - 0.00001f) + 0.00001f;
+                float target = randf(0.00001f, 0.99999f);
 
                 for(auto &vertex : matrix.at(vertexNumber)) {
                     for(auto &edge : vertex) {
