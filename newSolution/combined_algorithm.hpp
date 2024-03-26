@@ -3,6 +3,16 @@
 
 #include "ant_colony_algorithm.hpp"
 
+struct Genome
+{
+    int regularAntCount;
+    int eliteAntCount;
+    int iterations;
+    float alpha;
+    float beta;
+    float evaporation;
+};
+
 Path combined_algorithm(Matrix &matrix)
 {
     Path bestPath;
