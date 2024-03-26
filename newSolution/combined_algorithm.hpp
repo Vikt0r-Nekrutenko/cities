@@ -28,7 +28,7 @@ Path combined_algorithm(Matrix &matrix)
                         }}}
 
                 if(isEnd) {
-                    if(antPathPairs.back().first.size() == 1) {
+                    if(antPathPairs.back().first.size() <= 1) {
                         colonyBestPathPairs.push_back(bestPathForOneAnt);
                         break;
                     }
