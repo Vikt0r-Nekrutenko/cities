@@ -45,11 +45,10 @@ Path combined_algorithm(Matrix &matrix, const Genome &genome)
                     if(antPathPairs.back().second > bestPathForOneAnt.second) {
                         bestPathForOneAnt = antPathPairs.back();
                     }
-                    Path tmpPath {antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1};
-                    size_t tmpLength = antPathPairs.back().second - antPathPairs.back().first.back()->word->length();
 
-                    antPathPairs.push_back({tmpPath, tmpLength});
-                    vertexNumber = tmpPath.back()->word->back() - 'a';
+                    antPathPairs.push_back({{antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1},
+                                            antPathPairs.back().second - antPathPairs.back().first.back()->word->length()});
+                    vertexNumber = antPathPairs.back().first.back()->word->back() - 'a';
                     continue;
                 }
 
