@@ -97,7 +97,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             if(bestLength < pathPair.second) {
                 bestLength = pathPair.second;
                 bestPath = pathPair;
-                std::cout << iterations << "." << bestPath.first.size() << " [" << bestLength << "]" << std::endl;
+                // std::cout << iterations << "." << bestPath.first.size() << " [" << bestLength << "]" << std::endl;
             }
         }
 

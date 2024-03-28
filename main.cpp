@@ -20,26 +20,50 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
-    srand(1998);
+    vector<pair<Genome, size_t>> genomes(4);
+    Genome bestGenome {26, 13, 5, 1.f, 4.f, 0.65f};
+    pair<Path, size_t> bestResult;
 
-    Genome genomes[8];
-
-    for(auto &genome : genomes) {
-        Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
-        for(auto &city : available_cities) {
-            matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
-        }
-
-        genome.regularAntCount = randd(10, 26);
-        genome.eliteAntCount = randd(10, 26);
-        genome.iterations = randd(1, 6);
-        genome.evaporation = randf(0.f, 1.f);
-        genome.alpha = randf(0.f, 4.f);
-        genome.beta = randf(0.f, 4.f);
-
-        combined_algorithm(matrix, genome);
-        cout << "NEXT GENOME" << endl;
+    Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
+    for(auto &city : available_cities) {
+        matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
     }
+
+    int gen = 0;
+    while(gen < 10) {
+        int colonyN = 0;
+
+        for(auto &genome : genomes) {
+
+            int randGen = rand() % 6;
+            genome.first.regularAntCount  = bestGenome.regularAntCount    + (randGen == 0 ? randd(-1, 1) : 0);
+            genome.first.eliteAntCount    = bestGenome.eliteAntCount      + (randGen == 1 ? randd(-1, 1) : 0);
+            genome.first.iterations       = bestGenome.iterations         + (randGen == 2 ? randd(-1, 1) : 0);
+            genome.first.evaporation      = bestGenome.evaporation        + (randGen == 3 ? randf(-0.1f, 0.1f) : 0.f);
+            genome.first.alpha            = bestGenome.alpha              + (randGen == 4 ? randf(-0.1f, 0.1f) : 0.f);
+            genome.first.beta             = bestGenome.beta               + (randGen == 5 ? randf(-0.1f, 0.1f) : 0.f);
+
+            srand(1998);
+            auto combinedAlgoBeginTime = chrono::high_resolution_clock::now();
+            auto result = combined_algorithm(matrix, genome.first);
+            genome.second = result.second;
+            cout << gen << ":" << colonyN++ << ".Colony result: [" << result.second << "] elapsed: " << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - combinedAlgoBeginTime).count() << "sec." << endl;
+        }
+        for(auto &genome : genomes)
+            if(genome.second > bestResult.second) {
+                bestGenome = genome.first;
+                bestResult.second = genome.second;
+            }
+        ++gen;
+    }
+
+    cout << "Regular:.....[" << bestGenome.regularAntCount << "]" << endl
+         << "Elite:.......[" << bestGenome.eliteAntCount << "]" << endl
+         << "Iterations:..[" << bestGenome.iterations << "]" << endl
+         << "Alpha:.......[" << bestGenome.alpha << "]" << endl
+         << "Beta:........[" << bestGenome.beta << "]" << endl
+         << "Evaporation:.[" << bestGenome.evaporation << "]" << endl
+         << "Length:......[" << bestResult.second << "]" << endl;
 
     // auto combinedAlgoBeginTime = chrono::high_resolution_clock::now();
     // Path path = combined_algorithm(matrix, {25, 13, 10, 1.f, 4.f, 0.65f}); // avg time: 476s; path lenth: 16173 symbols. 55s:16112 FOR 10 ITERATIONS!!!!
