@@ -20,7 +20,7 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
-    vector<pair<Genome, size_t>> genomes(4);
+    vector<pair<Genome, size_t>> genomes(8);
     Genome bestGenome {26, 13, 5, 1.f, 4.f, 0.65f};
     pair<Path, size_t> bestResult;
 
@@ -30,18 +30,19 @@ vector<string> combine_cities(vector<string> available_cities)
     }
 
     int gen = 0;
-    while(gen < 10) {
+    while(gen < 100) {
+        int randGen = rand() % 6;
         int colonyN = 0;
+        int randColonyN = rand() % 8;
 
         for(auto &genome : genomes) {
 
-            int randGen = rand() % 6;
-            genome.first.regularAntCount  = bestGenome.regularAntCount    + (randGen == 0 ? randd(-1, 1) : 0);
-            genome.first.eliteAntCount    = bestGenome.eliteAntCount      + (randGen == 1 ? randd(-1, 1) : 0);
-            genome.first.iterations       = bestGenome.iterations         + (randGen == 2 ? randd(-1, 1) : 0);
-            genome.first.evaporation      = bestGenome.evaporation        + (randGen == 3 ? randf(-0.1f, 0.1f) : 0.f);
-            genome.first.alpha            = bestGenome.alpha              + (randGen == 4 ? randf(-0.1f, 0.1f) : 0.f);
-            genome.first.beta             = bestGenome.beta               + (randGen == 5 ? randf(-0.1f, 0.1f) : 0.f);
+            genome.first.regularAntCount  = bestGenome.regularAntCount    + (colonyN == randColonyN && randGen == 0 ? randd(-1, 1) : 0);
+            genome.first.eliteAntCount    = bestGenome.eliteAntCount      + (colonyN == randColonyN && randGen == 1 ? randd(-1, 1) : 0);
+            genome.first.iterations       = bestGenome.iterations         + (colonyN == randColonyN && randGen == 2 ? randd(-1, 1) : 0);
+            genome.first.evaporation      = bestGenome.evaporation        + (colonyN == randColonyN && randGen == 3 ? randf(-0.1f, 0.1f) : 0.f);
+            genome.first.alpha            = bestGenome.alpha              + (colonyN == randColonyN && randGen == 4 ? randf(-0.1f, 0.1f) : 0.f);
+            genome.first.beta             = bestGenome.beta               + (colonyN == randColonyN && randGen == 5 ? randf(-0.1f, 0.1f) : 0.f);
 
             srand(1998);
             auto combinedAlgoBeginTime = chrono::high_resolution_clock::now();
