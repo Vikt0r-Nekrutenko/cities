@@ -101,13 +101,22 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             }
         }
 
-        for(auto &row : matrix) {
-            for(auto &vertex : row) {
-                for(auto &edge : vertex) {
-                    float newPheromone = edge.pheromone * genome.evaporation;
+        for(int x = 25; x >= 0; --x) {
+            for(int y = 25; y >= 0; --y) {
+                for(size_t z = 0; z < matrix[x][y].size(); ++z) {
+                    float newPheromone = matrix[x][y][z].pheromone * genome.evaporation;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                        edge.pheromone = newPheromone;
-                }}}
+                        matrix[x][y][z].pheromone = newPheromone;
+                }
+            }
+        }
+        // for(auto &row : matrix) {
+        //     for(auto &vertex : row) {
+        //         for(auto &edge : vertex) {
+        //             float newPheromone = edge.pheromone * genome.evaporation;
+        //             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+        //                 edge.pheromone = newPheromone;
+        //         }}}
     }
 
     return bestPath;
