@@ -60,8 +60,9 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 float currentProbability = 0.f;
                 float target = randf(0.00001f, 0.99999f);
 
-                for(auto &vertex : matrix.at(vertexNumber)) {
-                    for(auto &edge : vertex) {
+                for(int y = 25; y >= 0; --y) {
+                    for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
+                        Edge &edge = matrix[vertexNumber][y][z];
                         if(edge.isPassed)
                             continue;
                         float probability = std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length() / 100.f, genome.beta) / totalProbability;
