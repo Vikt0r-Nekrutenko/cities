@@ -12,6 +12,9 @@
 #define MAX_BETA                4.f
 #define MAX_EVAPORATION         1.f
 
+void pullPheromonesIntoMatrix(Matrix &matrix, const string &fileName);
+
+void pushPheromonesIntoFile(const Matrix &matrix, const string &fileName);
 
 pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int genomesPerGeneration)
 {
@@ -42,9 +45,12 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
                 bestGenomePerGenerationL = genomes[i].second;
                 bestGenome = genomes[i].first;
             }
-            if(pathPair.second > bestPathPair.second)
+            if(pathPair.second > bestPathPair.second) {
                 bestPathPair = pathPair;
+                pushPheromonesIntoFile(matrix, "matrixes/" + to_string(bestPathPair.second) + ".txt");
+            }
 
+            genomes[i].first = bestGenome;
             if(i == mutableGenerationN) {
                 switch (mutableGenN) {
                 case 0: genomes[i].first.regularAntCount = randd(1, MAX_REGULAR_ANT_COUNT + 1); break;
@@ -56,7 +62,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
                 }
             }
         }
-        cout << bestGenomePerGenerationL << endl;
+        cout << generationN << " " << bestGenomePerGenerationL << endl;
 
     } while(++generationN < generationsCount);
     return bestPathPair;
