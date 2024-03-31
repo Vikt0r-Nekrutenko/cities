@@ -1,6 +1,7 @@
 #ifndef GENETIC_ALGORITHM_HPP
 #define GENETIC_ALGORITHM_HPP
 
+#include <fstream>
 #include "combined_algorithm.hpp"
 
 #define GEN_PER_GENOME          6
@@ -59,6 +60,16 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
 
     } while(++generationN < generationsCount);
     return bestPathPair;
+}
+
+void pullPheromonesIntoMatrix(Matrix &matrix, const string &fileName)
+{
+    ifstream mtxFile(fileName);
+    for(auto &row : matrix)
+        for(auto &vertex : row)
+            for(auto &edge : vertex)
+                mtxFile >> edge.pheromone;
+    mtxFile.close();
 }
 
 #endif // GENETIC_ALGORITHM_HPP
