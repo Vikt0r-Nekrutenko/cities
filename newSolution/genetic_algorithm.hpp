@@ -25,6 +25,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
         genome.first.beta               = randf(0.1f, MAX_BETA);
     }
     Genome bestGenome;
+    pair<Path, size_t> bestPathPair;
     int generationN = 0;
 
     do {
@@ -40,6 +41,8 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
                 bestGenomePerGenerationL = genomes[i].second;
                 bestGenome = genomes[i].first;
             }
+            if(pathPair.second > bestPathPair.second)
+                bestPathPair = pathPair;
 
             if(i == mutableGenerationN) {
                 switch (mutableGenN) {
@@ -52,8 +55,10 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
                 }
             }
         }
+        cout << bestGenomePerGenerationL << endl;
 
     } while(++generationN < generationsCount);
+    return bestPathPair;
 }
 
 #endif // GENETIC_ALGORITHM_HPP
