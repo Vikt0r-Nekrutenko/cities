@@ -19,25 +19,16 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
-    srand(1433);
-    /*
-Regular:.....[7]
-Elite:.......[6]
-Iterations:..[3]
-Alpha:.......[2.44162]
-Beta:........[1.42196]
-Evaporation:.[0.163356]
-Length:......[16504]
-*/
+    srand(1998);
+
     Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
     for(auto &city : available_cities) {
-        // if(matrix.at(city.front() - 'A').at(city.back() - 'a').empty())
         matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
     }
-    pullPheromonesIntoMatrix(matrix, "matrixes/16504.txt");
+    pullPheromonesIntoMatrix(matrix, "matrixes/16526.txt");
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
-    auto path = genetics_algorithm(matrix, 10, 8, true);
+    auto path = genetics_algorithm(matrix, 10, 8, {7, 4, 3, 2.44162f, 1.42196f, 0.163356f}, true);
     cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::minutes>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     size_t length = 0ull;
