@@ -31,6 +31,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
     Genome bestGenome;
     pair<Path, size_t> bestPathPair;
     int generationN = 0;
+    ofstream logFile(to_string(generationsCount) + "_" + to_string(genomesPerGeneration) + "_" + to_string(clock()) + ".txt");
 
     do {
         int mutableGenN = rand() % GEN_PER_GENOME;
@@ -63,8 +64,10 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
             }
         }
         cout << generationN << " " << bestGenomePerGenerationL << endl;
+        logFile << generationN << " " << bestGenomePerGenerationL << " " << bestGenome.regularAntCount << " " << bestGenome.eliteAntCount << " " << bestGenome.iterations << " " << bestGenome.alpha << " " << bestGenome.beta << " " << bestGenome.evaporation << endl;
 
     } while(++generationN < generationsCount);
+    logFile.close();
     return bestPathPair;
 }
 
