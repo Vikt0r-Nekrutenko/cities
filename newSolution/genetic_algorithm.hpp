@@ -7,27 +7,36 @@
 
 #define GEN_PER_GENOME          6
 #define MAX_REGULAR_ANT_COUNT   26
-#define MAX_ELITE_ANT_COUNT     3
+#define MAX_ELITE_ANT_COUNT     6
 #define MAX_ITERATIONS          30
-#define MAX_ALPHA               4.f
-#define MAX_BETA                4.f
+#define MAX_ALPHA               5.f
+#define MAX_BETA                5.f
 #define MAX_EVAPORATION         1.f
 
 void pullPheromonesIntoMatrix(Matrix &matrix, const string &fileName);
 
 void pushPheromonesIntoFile(const Matrix &matrix, const string &fileName);
 
-pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int genomesPerGeneration, bool arePushMatrix = false)
+pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int genomesPerGeneration, const Genome &startGenome = {-1,-1,-1,-1,-1,-1}, bool arePushMatrix = false)
 {
     vector<pair<Genome, size_t>> generationGenomes(genomesPerGeneration);
 
     for(auto &genome : generationGenomes) {
-        genome.first.regularAntCount    = randd(1, MAX_REGULAR_ANT_COUNT + 1);
-        genome.first.eliteAntCount      = randd(1, MAX_ELITE_ANT_COUNT + 1);
-        genome.first.iterations         = randd(1, MAX_ITERATIONS + 1);
-        genome.first.evaporation        = randf(0.1f, MAX_EVAPORATION);
-        genome.first.alpha              = randf(0.1f, MAX_ALPHA);
-        genome.first.beta               = randf(0.1f, MAX_BETA);
+        if(startGenome.iterations == -1) {
+            genome.first.regularAntCount    = randd(1, MAX_REGULAR_ANT_COUNT + 1);
+            genome.first.eliteAntCount      = randd(1, MAX_ELITE_ANT_COUNT + 1);
+            genome.first.iterations         = randd(1, MAX_ITERATIONS + 1);
+            genome.first.evaporation        = randf(0.1f, MAX_EVAPORATION);
+            genome.first.alpha              = randf(0.1f, MAX_ALPHA);
+            genome.first.beta               = randf(0.1f, MAX_BETA);
+        } else {
+            genome.first.regularAntCount    = startGenome.regularAntCount;
+            genome.first.eliteAntCount      = startGenome.eliteAntCount;
+            genome.first.iterations         = startGenome.iterations;
+            genome.first.evaporation        = startGenome.evaporation;
+            genome.first.alpha              = startGenome.alpha;
+            genome.first.beta               = startGenome.beta;
+        }
     }
     Genome bestGenome {0, 0, 0, 0.f, 0.f, 0.f};
     pair<Path, size_t> bestPathPair;

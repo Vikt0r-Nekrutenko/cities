@@ -34,7 +34,7 @@ Length:......[16504]
         // if(matrix.at(city.front() - 'A').at(city.back() - 'a').empty())
         matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
     }
-    pullPheromonesIntoMatrix(matrix, "matrixes/16489.txt");
+    pullPheromonesIntoMatrix(matrix, "matrixes/16504.txt");
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
     auto path = genetics_algorithm(matrix, 10, 8, true);
