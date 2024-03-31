@@ -57,10 +57,10 @@ Length:......[16504]
     // while(gen < 50) {
         Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
         for(auto &city : available_cities) {
-            // if(matrix.at(city.front() - 'A').at(city.back() - 'a').empty())
+            if(matrix.at(city.front() - 'A').at(city.back() - 'a').empty())
             matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
         }
-        pullPheromonesIntoMatrix(matrix, "matrixes/16489.txt");
+        // pullPheromonesIntoMatrix(matrix, "matrixes/16489.txt");
         // int randGen = rand() % 6;
         // int colonyN = 0;
         // int randColonyN = rand() % 8;
@@ -152,7 +152,7 @@ Length:......[16504]
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
     // auto path = combined_algorithm(matrix, {25, 13, 10, 1.f, 4.f, 0.65f}); // avg time: 476s; path lenth: 16173 symbols. 55s:16112 FOR 10 ITERATIONS!!!!
-    auto path = genetics_algorithm(matrix, 10, 8, true);
+    auto path = genetics_algorithm(matrix, 10, 8, false);
     cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::minutes>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
     // cout << "Combined elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - combinedAlgoBeginTime).count() << "] millisec." << endl;
 

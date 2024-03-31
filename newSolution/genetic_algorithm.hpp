@@ -6,9 +6,9 @@
 #include "combined_algorithm.hpp"
 
 #define GEN_PER_GENOME          6
-#define MAX_REGULAR_ANT_COUNT   6
+#define MAX_REGULAR_ANT_COUNT   26
 #define MAX_ELITE_ANT_COUNT     3
-#define MAX_ITERATIONS          1
+#define MAX_ITERATIONS          30
 #define MAX_ALPHA               4.f
 #define MAX_BETA                4.f
 #define MAX_EVAPORATION         1.f
@@ -32,7 +32,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
     Genome bestGenome {0, 0, 0, 0.f, 0.f, 0.f};
     pair<Path, size_t> bestPathPair;
     int generationN = 0;
-    ofstream logFile(to_string(generationsCount) + "_" + to_string(genomesPerGeneration) + "_" + to_string(time(nullptr)) + ".txt");
+    ofstream logFile("logs/" + to_string(generationsCount) + "_" + to_string(genomesPerGeneration) + "_" + to_string(time(nullptr)) + ".txt");
 
     do {
         int mutableGenN = rand() % GEN_PER_GENOME;
