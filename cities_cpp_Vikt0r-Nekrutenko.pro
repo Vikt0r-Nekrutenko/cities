@@ -11,9 +11,7 @@ SOURCES += \
         main.cpp \
 
 HEADERS += \
-    newSolution/ant_colony_algorithm.hpp \
     newSolution/combined_algorithm.hpp \
-    newSolution/dfs_algorithm.hpp \
     newSolution/genetic_algorithm.hpp
 
 INCLUDEPATH += \
