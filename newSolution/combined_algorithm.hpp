@@ -28,7 +28,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
         while(ants--) {
             int vertexNumber = rand() % MATRIX_SIZE;
             PathPairs antPathPairs{{{}, 0ull}};
-            pair<Path, size_t> bestPathForOneAnt {{}, 0};
+            size_t bestPathForOneAntIndex = 0ull;
+            size_t bestPathForOneAntLength = 0ull;
 
             while(true) {
                 bool isEnd = true;
@@ -43,11 +44,12 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 
                 if(isEnd) {
                     if(antPathPairs.back().first.size() <= 1) {
-                        colonyBestPathPairs.push_back(bestPathForOneAnt);
+                        colonyBestPathPairs.push_back(antPathPairs[bestPathForOneAntIndex]);
                         break;
                     }
-                    if(antPathPairs.back().second > bestPathForOneAnt.second) {
-                        bestPathForOneAnt = antPathPairs.back();
+                    if(antPathPairs.back().second > bestPathForOneAntLength) {
+                        bestPathForOneAntIndex = antPathPairs.size() - 1;
+                        bestPathForOneAntLength = antPathPairs.back().second;
                     }
 
                     antPathPairs.push_back({{antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1},
@@ -90,15 +92,15 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                         matrix[x][y][z].isPassed = false;
                     }}}
         }
-        for(auto &pathPair : colonyBestPathPairs) {
-            for(auto &edge : pathPair.first) {
-                float newPheromone = edge->pheromone + float(pathPair.second) / Q;
+        for(int i = colonyBestPathPairs.size() - 1; i >= 0; --i) {
+            for(int j = colonyBestPathPairs[i].first.size() - 1; j >= 0; --j) {
+                float newPheromone = colonyBestPathPairs[i].first[j]->pheromone + float(colonyBestPathPairs[i].second) / Q;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                    edge->pheromone = newPheromone;
+                    colonyBestPathPairs[i].first[j]->pheromone = newPheromone;
             }
-            if(bestLength < pathPair.second) {
-                bestLength = pathPair.second;
-                bestPath = pathPair;
+            if(bestLength < colonyBestPathPairs[i].second) {
+                bestLength = colonyBestPathPairs[i].second;
+                bestPath = colonyBestPathPairs[i];
                 // std::cout << iterations << "." << bestPath.first.size() << " [" << bestLength << "]" << std::endl;
             }
         }
