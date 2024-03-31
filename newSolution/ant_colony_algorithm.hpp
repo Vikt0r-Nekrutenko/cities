@@ -6,15 +6,15 @@
 #include <vector>
 #include <iostream>
 
-#define DEFAULT_PHEROMONE_VALUE 0.1f
+#define DEFAULT_PHEROMONE_VALUE 1.f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
 #define MAXIMUM_PHEROMONE_VALUE 100.f
 #define EVAPORATION_VALUE       0.65f
 #define ALPHA 1.f
-#define BETA  2.f
+#define BETA  4.f
 #define Q     100'000.f;
 #define MATRIX_SIZE         26
-#define COLONY_ITERATIONS   100
+#define COLONY_ITERATIONS   1000
 #define REGULAR_ANTS_COUNT  MATRIX_SIZE
 #define ELITE_ANTS_COUNT    (REGULAR_ANTS_COUNT >> 1)
 

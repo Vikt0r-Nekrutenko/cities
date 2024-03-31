@@ -1,8 +1,7 @@
 #include <fstream>
 #include <iterator>
-#include <chrono>
 
-#include "combined_algorithm.hpp"
+#include "genetic_algorithm.hpp"
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
@@ -21,27 +20,22 @@ int main()
 vector<string> combine_cities(vector<string> available_cities)
 {
     srand(1998);
+
     Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
     for(auto &city : available_cities) {
         matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
     }
+    pullPheromonesIntoMatrix(matrix, "matrixes/16526.txt");
 
-    auto combinedAlgoBeginTime = chrono::high_resolution_clock::now();
-    Path path = combined_algorithm(matrix); // avg time: 476s; path lenth: 16173 symbols. 55s:16112 FOR 10 ITERATIONS!!!!
-    cout << "Combined elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - combinedAlgoBeginTime).count() << "] sec." << endl;
-    // auto dfsAlgoBeginTime = chrono::high_resolution_clock::now();
-    // Path path = dfs_algorithm(matrix); // avg time: 20s; path lenth: 16043 symbols
-    // cout << "DFS elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - dfsAlgoBeginTime).count() << "] sec." << endl;
-
-    // auto antsColonyAlgoBeginTime = chrono::high_resolution_clock::now();
-    // Path path = ants_colony_algorithm(matrix); // avg time: 75 path lenth: 10519 symbols
-    // cout << "Ant colony elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - antsColonyAlgoBeginTime).count() << "] sec." << endl;
+    auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
+    auto path = genetics_algorithm(matrix, 100, 8, {7, 4, 3, 2.44162f, 1.42196f, 0.163356f}, true);
+    cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::minutes>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     size_t length = 0ull;
     vector<string> resultCities;
 
-    int validationSymbol = path.front()->word->front() - 'A';
-    for(const auto &edge : path) {
+    int validationSymbol = path.first.front()->word->front() - 'A';
+    for(const auto &edge : path.first) {
         if(edge->word->front() - 'A' != validationSymbol) {
             cout << "Erorr!!! Path isn't valid!!!" << endl;
             throw;

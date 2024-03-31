@@ -3,61 +3,78 @@
 
 #include "ant_colony_algorithm.hpp"
 
-Path combined_algorithm(Matrix &matrix)
+#define randf(min, max) ((float(rand()) / float(RAND_MAX)) * (max - min) + min)
+#define randd(min, max) (rand() % (max - min) + min)
+
+struct Genome
 {
-    Path bestPath;
+    int regularAntCount;
+    int eliteAntCount;
+    int iterations;
+    float alpha;
+    float beta;
+    float evaporation;
+};
+
+pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
+{
+    pair<Path, size_t> bestPath;
     size_t bestLength = 0;
-    int iterations = COLONY_ITERATIONS;
+    int iterations = genome.iterations;
+    int beginVertex = 0;
 
     while(iterations--) {
-        int ants = REGULAR_ANTS_COUNT + ELITE_ANTS_COUNT;
+        int ants = genome.regularAntCount + genome.eliteAntCount;
         PathPairs colonyBestPathPairs;
         while(ants--) {
-            int vertexNumber = rand() % MATRIX_SIZE;
+            int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
             PathPairs antPathPairs{{{}, 0ull}};
-            pair<Path, size_t> bestPathForOneAnt {{}, 0};
+            size_t bestPathForOneAntIndex = 0ull;
+            size_t bestPathForOneAntLength = 0ull;
 
             while(true) {
                 bool isEnd = true;
                 float totalProbability = 0.f;
-                for(auto &vertex : matrix.at(vertexNumber)) {
-                    for(auto &edge : vertex) {
+                for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
+                    for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
+                        Edge &edge = matrix[vertexNumber][y][z];
                         if(!edge.isPassed) {
-                            totalProbability += std::pow(edge.pheromone, ALPHA) * std::pow(edge.word->length() / 100.f, BETA);
+                            totalProbability += std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length() / 100.f, genome.beta);
                             isEnd = false;
                         }}}
 
                 if(isEnd) {
-                    if(antPathPairs.back().first.size() == 1) {
-                        colonyBestPathPairs.push_back(bestPathForOneAnt);
+                    if(antPathPairs.back().first.size() <= 1) {
+                        colonyBestPathPairs.push_back(antPathPairs[bestPathForOneAntIndex]);
                         break;
                     }
-                    if(antPathPairs.back().second > bestPathForOneAnt.second) {
-                        bestPathForOneAnt = antPathPairs.back();
+                    if(antPathPairs.back().second > bestPathForOneAntLength) {
+                        bestPathForOneAntIndex = antPathPairs.size() - 1;
+                        bestPathForOneAntLength = antPathPairs.back().second;
                     }
-                    Path tmpPath {antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1};
-                    size_t tmpLength = antPathPairs.back().second - antPathPairs.back().first.back()->word->length();
 
-                    antPathPairs.push_back({tmpPath, tmpLength});
-                    vertexNumber = tmpPath.back()->word->back() - 'a';
+                    antPathPairs.push_back({{antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1},
+                                            antPathPairs.back().second - antPathPairs.back().first.back()->word->length()});
+                    vertexNumber = antPathPairs.back().first.back()->word->back() - 'a';
                     continue;
                 }
 
                 Edge *selectedEdge = nullptr;
                 float maxProbability = 0.f;
                 float currentProbability = 0.f;
-                float target = (float(rand()) / float(RAND_MAX)) * (0.99999f - 0.00001f) + 0.00001f;
+                float target = randf(0.00001f, 0.99999f);
 
-                for(auto &vertex : matrix.at(vertexNumber)) {
-                    for(auto &edge : vertex) {
+                for(int y = 25; y >= 0; --y) {
+                    for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
+                        Edge &edge = matrix[vertexNumber][y][z];
                         if(edge.isPassed)
                             continue;
-                        float probability = std::pow(edge.pheromone, ALPHA) * std::pow(float(edge.word->length()) / 100.f, BETA) / totalProbability;
+                        float probability = std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length() / 100.f, genome.beta) / totalProbability;
                         currentProbability += probability;
-                        if(ants > ELITE_ANTS_COUNT && target <= currentProbability){
+                        if(ants > genome.eliteAntCount && target <= currentProbability){
                             selectedEdge = &edge;
                             goto endSelect;
-                        } else if(ants <= ELITE_ANTS_COUNT && probability > maxProbability){
+                        } else if(ants <= genome.eliteAntCount && probability > maxProbability){
                             maxProbability = probability;
                             selectedEdge = &edge;
                         }
@@ -70,31 +87,32 @@ Path combined_algorithm(Matrix &matrix)
                 antPathPairs.back().second += selectedEdge->word->length();
             }
 
-            for(auto &row : matrix) {
-                for(auto &vertex : row) {
-                    for(auto &edge : vertex) {
-                        edge.isPassed = false;
+            for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+                for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
+                    for(size_t z = 0; z < matrix[x][y].size(); ++z) {
+                        matrix[x][y][z].isPassed = false;
                     }}}
         }
-        for(auto &pathPair : colonyBestPathPairs) {
-            for(auto &edge : pathPair.first) {
-                float newPheromone = edge->pheromone + float(pathPair.second) / Q;
+        for(int i = colonyBestPathPairs.size() - 1; i >= 0; --i) {
+            for(int j = colonyBestPathPairs[i].first.size() - 1; j >= 0; --j) {
+                float newPheromone = colonyBestPathPairs[i].first[j]->pheromone + float(colonyBestPathPairs[i].second) / Q;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                    edge->pheromone = newPheromone;
+                    colonyBestPathPairs[i].first[j]->pheromone = newPheromone;
             }
-            if(bestLength < pathPair.second) {
-                bestLength = pathPair.second;
-                bestPath = pathPair.first;
-                std::cout << iterations << "." << bestPath.size() << " [" << bestLength << "]" << std::endl;
+            if(bestLength < colonyBestPathPairs[i].second) {
+                bestLength = colonyBestPathPairs[i].second;
+                bestPath = colonyBestPathPairs[i];
+                // std::cout << iterations << "." << bestPath.first.size() << " [" << bestLength << "]" << std::endl;
             }
         }
 
-        for(auto &row : matrix) {
-            for(auto &vertex : row) {
-                for(auto &edge : vertex) {
-                    float newPheromone = edge.pheromone * EVAPORATION_VALUE;
+        if(!colonyBestPathPairs.empty())
+        for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+            for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
+                for(size_t z = 0; z < matrix[x][y].size(); ++z) {
+                    float newPheromone = matrix[x][y][z].pheromone * genome.evaporation;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                        edge.pheromone = newPheromone;
+                        matrix[x][y][z].pheromone = newPheromone;
                 }}}
     }
 
