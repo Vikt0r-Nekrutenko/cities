@@ -23,8 +23,17 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
     do {
         int mutableGenN = rand() % GEN_PER_GENOME;
         int mutableGenerationN = rand() % genomesPerGeneration;
+        size_t bestGenomePerGenerationL = 0;
 
         for(int i = 0; i < int(genomes.size()); ++i) {
+            pair<Path, size_t> pathPair = combined_algorithm(matrix, genomes[i].first);
+            genomes[i].second = pathPair.second;
+
+            if(genomes[i].second > bestGenomePerGenerationL) {
+                bestGenomePerGenerationL = genomes[i].second;
+                bestGenome = genomes[i].first;
+            }
+
             if(i == mutableGenerationN) {
                 switch (mutableGenN) {
                 case 0: genomes[i].first.regularAntCount = randd(1, 27); break;
