@@ -3,6 +3,8 @@
 
 #include "combined_algorithm.hpp"
 
+#define GEN_PER_GENOME 6
+
 pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int genomesPerGeneration)
 {
     vector<pair<Genome, size_t>> genomes(genomesPerGeneration);
@@ -19,6 +21,8 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
     int generationN = 0;
 
     do {
+        int mutableGenN = rand() % GEN_PER_GENOME;
+        int mutableGenerationN = rand() % genomesPerGeneration;
 
     } while(++generationN < generationsCount);
 }
