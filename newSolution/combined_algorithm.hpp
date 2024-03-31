@@ -21,12 +21,13 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
     pair<Path, size_t> bestPath;
     size_t bestLength = 0;
     int iterations = genome.iterations;
+    int beginVertex = 0;
 
     while(iterations--) {
         int ants = genome.regularAntCount + genome.eliteAntCount;
         PathPairs colonyBestPathPairs;
         while(ants--) {
-            int vertexNumber = rand() % MATRIX_SIZE;
+            int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
             PathPairs antPathPairs{{{}, 0ull}};
             size_t bestPathForOneAntIndex = 0ull;
             size_t bestPathForOneAntLength = 0ull;
@@ -105,6 +106,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             }
         }
 
+        if(!colonyBestPathPairs.empty())
         for(int x = 25; x >= 0; --x) {
             for(int y = 25; y >= 0; --y) {
                 for(size_t z = 0; z < matrix[x][y].size(); ++z) {
