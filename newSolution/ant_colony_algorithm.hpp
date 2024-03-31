@@ -1,38 +1,6 @@
 #ifndef ANT_COLONY_ALGORITHM_HPP
 #define ANT_COLONY_ALGORITHM_HPP
 
-#include <cmath>
-#include <string>
-#include <vector>
-#include <iostream>
-
-#define DEFAULT_PHEROMONE_VALUE 1.f
-#define MINIMUM_PHEROMONE_VALUE 0.01f
-#define MAXIMUM_PHEROMONE_VALUE 100.f
-#define EVAPORATION_VALUE       0.65f
-#define ALPHA 1.f
-#define BETA  4.f
-#define Q     100'000.f;
-#define MATRIX_SIZE         26
-#define COLONY_ITERATIONS   1000
-#define REGULAR_ANTS_COUNT  MATRIX_SIZE
-#define ELITE_ANTS_COUNT    (REGULAR_ANTS_COUNT >> 1)
-
-using namespace std;
-
-struct Edge
-{
-    std::string *word = nullptr;
-    float pheromone = DEFAULT_PHEROMONE_VALUE;
-    bool isPassed = false;
-};
-
-using Vertex = std::vector<Edge>;
-using Row = std::vector<Vertex>;
-using Matrix = std::vector<Row>;
-using Path = std::vector<Edge *>;
-using PathPairs = std::vector<std::pair<Path, size_t>>;
-
 Path ants_colony_algorithm(Matrix &matrix)
 {
     PathPairs antPathPairs;

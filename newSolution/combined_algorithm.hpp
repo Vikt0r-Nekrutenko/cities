@@ -1,7 +1,36 @@
 #ifndef COMBINED_ALGORITHM_HPP
 #define COMBINED_ALGORITHM_HPP
 
-#include "ant_colony_algorithm.hpp"
+#include <cmath>
+#include <string>
+#include <vector>
+
+#define DEFAULT_PHEROMONE_VALUE 1.f
+#define MINIMUM_PHEROMONE_VALUE 0.01f
+#define MAXIMUM_PHEROMONE_VALUE 100.f
+#define EVAPORATION_VALUE       0.65f
+#define ALPHA 1.f
+#define BETA  4.f
+#define Q     100'000.f;
+#define MATRIX_SIZE         26
+#define COLONY_ITERATIONS   1000
+#define REGULAR_ANTS_COUNT  MATRIX_SIZE
+#define ELITE_ANTS_COUNT    (REGULAR_ANTS_COUNT >> 1)
+
+using namespace std;
+
+struct Edge
+{
+    std::string *word = nullptr;
+    float pheromone = DEFAULT_PHEROMONE_VALUE;
+    bool isPassed = false;
+};
+
+using Vertex = std::vector<Edge>;
+using Row = std::vector<Vertex>;
+using Matrix = std::vector<Row>;
+using Path = std::vector<Edge *>;
+using PathPairs = std::vector<std::pair<Path, size_t>>;
 
 #define randf(min, max) ((float(rand()) / float(RAND_MAX)) * (max - min) + min)
 #define randd(min, max) (rand() % (max - min) + min)
@@ -102,7 +131,6 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             if(bestLength < colonyBestPathPairs[i].second) {
                 bestLength = colonyBestPathPairs[i].second;
                 bestPath = colonyBestPathPairs[i];
-                // std::cout << iterations << "." << bestPath.first.size() << " [" << bestLength << "]" << std::endl;
             }
         }
 
