@@ -28,7 +28,7 @@ vector<string> combine_cities(vector<string> available_cities)
     pullPheromonesIntoMatrix(matrix, "matrixes/16526.txt");
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
-    auto path = genetics_algorithm(matrix, 10, 8, {7, 4, 3, 2.44162f, 1.42196f, 0.163356f}, true);
+    auto path = genetics_algorithm(matrix, 100, 8, {7, 4, 3, 2.44162f, 1.42196f, 0.163356f}, true);
     cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::minutes>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     size_t length = 0ull;
