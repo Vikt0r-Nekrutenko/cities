@@ -35,7 +35,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             while(true) {
                 bool isEnd = true;
                 float totalProbability = 0.f;
-                for(int y = 25; y >= 0; --y) {
+                for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
                     for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
                         Edge &edge = matrix[vertexNumber][y][z];
                         if(!edge.isPassed) {
@@ -87,8 +87,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 antPathPairs.back().second += selectedEdge->word->length();
             }
 
-            for(int x = 25; x >= 0; --x) {
-                for(int y = 25; y >= 0; --y) {
+            for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+                for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
                     for(size_t z = 0; z < matrix[x][y].size(); ++z) {
                         matrix[x][y][z].isPassed = false;
                     }}}
@@ -107,8 +107,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
         }
 
         if(!colonyBestPathPairs.empty())
-        for(int x = 25; x >= 0; --x) {
-            for(int y = 25; y >= 0; --y) {
+        for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+            for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
                 for(size_t z = 0; z < matrix[x][y].size(); ++z) {
                     float newPheromone = matrix[x][y][z].pheromone * genome.evaporation;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
