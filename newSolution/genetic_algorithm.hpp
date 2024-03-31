@@ -65,10 +65,20 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
 void pullPheromonesIntoMatrix(Matrix &matrix, const string &fileName)
 {
     ifstream mtxFile(fileName);
-    for(auto &row : matrix)
-        for(auto &vertex : row)
-            for(auto &edge : vertex)
-                mtxFile >> edge.pheromone;
+    for(int x = MATRIX_SIZE - 1; x >= 0; --x)
+        for(int y = MATRIX_SIZE - 1; y >= 0; --y)
+            for(int z = matrix[x][y].size() - 1; z >= 0; --z)
+                mtxFile >> matrix[x][y][z].pheromone;
+    mtxFile.close();
+}
+
+void pushPheromonesIntoFile(const Matrix &matrix, const string &fileName)
+{
+    ofstream mtxFile(fileName);
+    for(int x = MATRIX_SIZE - 1; x >= 0; --x)
+        for(int y = MATRIX_SIZE - 1; y >= 0; --y)
+            for(int z = matrix[x][y].size() - 1; z >= 0; --z)
+                mtxFile << matrix[x][y][z].pheromone << " ";
     mtxFile.close();
 }
 
