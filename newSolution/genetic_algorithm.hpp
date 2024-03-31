@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <chrono>
+#include <iostream>
 #include "combined_algorithm.hpp"
 
 #define GEN_PER_GENOME          6
