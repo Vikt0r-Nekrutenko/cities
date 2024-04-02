@@ -7,18 +7,18 @@
 #include "combined_algorithm.hpp"
 
 #define GEN_PER_GENOME          6
-#define MAX_REGULAR_ANT_COUNT   26
-#define MAX_ELITE_ANT_COUNT     6
+#define MAX_REGULAR_ANT_COUNT   MATRIX_SIZE
+#define MAX_ELITE_ANT_COUNT     3
 #define MAX_ITERATIONS          30
-#define MAX_ALPHA               5.f
-#define MAX_BETA                5.f
+#define MAX_ALPHA               4.f
+#define MAX_BETA                4.f
 #define MAX_EVAPORATION         1.f
 
 void pullPheromonesIntoMatrix(Matrix &matrix, const string &fileName);
 
 void pushPheromonesIntoFile(const Matrix &matrix, const string &fileName);
 
-pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int genomesPerGeneration, const Genome &startGenome = {-1,-1,-1,-1,-1,-1}, bool arePushMatrix = false)
+pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int genomesPerGeneration, bool arePushMatrix = false, const Genome &startGenome = {-1,-1,-1,-1,-1,-1})
 {
     vector<pair<Genome, size_t>> generationGenomes(genomesPerGeneration);
 
