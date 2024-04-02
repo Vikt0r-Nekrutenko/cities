@@ -8,8 +8,8 @@
 
 #define GEN_PER_GENOME          6
 #define MAX_REGULAR_ANT_COUNT   MATRIX_SIZE
-#define MAX_ELITE_ANT_COUNT     3
-#define MAX_ITERATIONS          100
+#define MAX_ELITE_ANT_COUNT     MATRIX_SIZE
+#define MAX_ITERATIONS          1
 #define MAX_ALPHA               4.f
 #define MAX_BETA                4.f
 #define MAX_EVAPORATION         1.f
