@@ -5,6 +5,7 @@
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
+size_t validate_city_list(vector<string> &resultCities, const pair<Path, size_t> &path);
 
 int write_to_file(vector<string> cities_list);
 
@@ -30,20 +31,11 @@ vector<string> combine_cities(vector<string> available_cities)
     auto path = genetics_algorithm(matrix, 1, 8, true);
     cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
-    size_t length = 0ull;
     vector<string> resultCities;
 
-    int validationSymbol = path.first.front()->word->front() - 'A';
-    for(const auto &edge : path.first) {
-        if(edge->word->front() - 'A' != validationSymbol) {
-            cout << "Erorr!!! Path isn't valid!!!" << endl;
-            throw;
-        }
-        validationSymbol = edge->word->back() - 'a';
-        length += edge->word->length();
-        resultCities.push_back(*edge->word);
-    }
-    cout << "CONGRATULATION!!! Path length: [" << length << "] symbols." << endl;
+    try {
+        cout << "CONGRATULATION!!! Path length: [" << validate_city_list(resultCities, path) << "] symbols." << endl;
+    } catch(const string &ex) { cout << ex << endl; }
 
     return resultCities;
 }
@@ -68,4 +60,20 @@ int write_to_file(vector<string> cities_list)
     copy(cities_list.begin(), cities_list.end(), output_iterator);
 
     return 0;
+}
+
+size_t validate_city_list(vector<string> &resultCities, const pair<Path, size_t> &path)
+{
+    size_t length = 0ull;
+
+    int validationSymbol = path.first.front()->word->front() - 'A';
+    for(const auto &edge : path.first) {
+        if(edge->word->front() - 'A' != validationSymbol) {
+            throw "Erorr!!! Path isn't valid!!!";
+        }
+        validationSymbol = edge->word->back() - 'a';
+        length += edge->word->length();
+        resultCities.push_back(*edge->word);
+    }
+    return length;
 }
