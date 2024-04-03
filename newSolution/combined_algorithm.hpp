@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 
-#define DEFAULT_PHEROMONE_VALUE 1.f
+#define DEFAULT_PHEROMONE_VALUE 10.f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
-#define MAXIMUM_PHEROMONE_VALUE 10.f
-#define Q                       100'000.f
+#define MAXIMUM_PHEROMONE_VALUE 100.f
+#define Q                       16'000.f
 #define MATRIX_SIZE             26
 
 using namespace std;

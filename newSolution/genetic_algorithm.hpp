@@ -8,10 +8,10 @@
 
 #define GEN_PER_GENOME          6
 #define MAX_REGULAR_ANT_COUNT   MATRIX_SIZE
-#define MAX_ELITE_ANT_COUNT     MATRIX_SIZE
+#define MAX_ELITE_ANT_COUNT     3
 #define MAX_ITERATIONS          1
-#define MAX_ALPHA               4.f
-#define MAX_BETA                4.f
+#define MAX_ALPHA               5.f
+#define MAX_BETA                5.f
 #define MAX_EVAPORATION         1.f
 
 void pullPheromonesIntoMatrix(Matrix &matrix, const string &fileName);
@@ -39,7 +39,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
             genome.first.beta               = startGenome.beta;
         }
     }
-    Genome bestGenome {0, 0, 0, 0.f, 0.f, 0.f};
+    Genome bestGenomeInLastGeneration {0, 0, 0, 0.f, 0.f, 0.f};
     pair<Path, size_t> bestPathPair;
     int generationN = 0;
     ofstream logFile("logs/" + to_string(generationsCount) + "_" + to_string(genomesPerGeneration) + "_" + to_string(time(nullptr)) + ".txt");
@@ -66,7 +66,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
 
             if(generationGenomes[i].second > bestGenomePerGenerationL) {
                 bestGenomePerGenerationL = generationGenomes[i].second;
-                bestGenome = generationGenomes[i].first;
+                bestGenomeInLastGeneration = generationGenomes[i].first;
             }
             if(pathPair.second > bestPathPair.second) {
                 bestPathPair = pathPair;
@@ -77,9 +77,9 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
             cout << generationN << ":" << i << " " << pathPair.second << " " << double(chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - beginTime).count()) / 1000.0 << " sec." << endl;
         }
         for(size_t i = 0; i < generationGenomes.size(); ++i)
-            generationGenomes[i].first = bestGenome;
+            generationGenomes[i].first = bestGenomeInLastGeneration;
         cout << "Generation #: [" << generationN << "] result: [" << bestGenomePerGenerationL << "] per [" << double(chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - generationBeginTime).count()) / 1000.0 << "] sec." << endl;
-        logFile << generationN << " " << bestGenomePerGenerationL << " " << bestGenome.regularAntCount << " " << bestGenome.eliteAntCount << " " << bestGenome.iterations << " " << bestGenome.alpha << " " << bestGenome.beta << " " << bestGenome.evaporation << endl;
+        logFile << generationN << " " << bestGenomePerGenerationL << " " << bestGenomeInLastGeneration.regularAntCount << " " << bestGenomeInLastGeneration.eliteAntCount << " " << bestGenomeInLastGeneration.iterations << " " << bestGenomeInLastGeneration.alpha << " " << bestGenomeInLastGeneration.beta << " " << bestGenomeInLastGeneration.evaporation << endl;
     } while(++generationN < generationsCount);
     logFile.close();
     return bestPathPair;
