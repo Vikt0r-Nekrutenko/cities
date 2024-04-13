@@ -24,11 +24,13 @@ vector<string> combine_cities(vector<string> available_cities)
 
     Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
     for(auto &city : available_cities)
+        if(matrix.at(city.front() - 'A').at(city.back() - 'a').empty())
         matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
-    pullPheromonesIntoMatrix(matrix, "matrixes/16644.txt");
+    // pullPheromonesIntoMatrix(matrix, "matrixes/16644.txt");
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
-    auto path = genetics_algorithm(matrix, 3, 4, true, {26, 1, 1, 0.742006f, 0.118091f, 0.581106f});
+    // auto path = genetics_algorithm(matrix, 3, 4, true, {26, 1, 1, 0.742006f, 0.118091f, 0.581106f});
+    auto path = combined_algorithm(matrix, {26, 13, 3000, 2.f, 1.f, 0.09f});
     cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::minutes>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     vector<string> resultCities;
