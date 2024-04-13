@@ -2,6 +2,7 @@
 #define COMBINED_ALGORITHM_HPP
 
 #include <cmath>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -47,7 +48,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
     int beginVertex = 0;
 
     while(iterations--) {
-        int ants = genome.regularAntCount + genome.eliteAntCount;
+        int ants = genome.regularAntCount + 3;//genome.eliteAntCount;
         PathPairs colonyBestPathPairs;
         while(ants--) {
             int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
@@ -62,7 +63,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                     for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
                         Edge &edge = matrix[vertexNumber][y][z];
                         if(!edge.isPassed) {
-                            totalProbability += std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length() / 100.f, genome.beta);
+                            totalProbability += std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length(), genome.beta);
                             isEnd = false;
                         }}}
 
@@ -92,15 +93,17 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                         Edge &edge = matrix[vertexNumber][y][z];
                         if(edge.isPassed)
                             continue;
-                        float probability = std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length() / 100.f, genome.beta) / totalProbability;
+                        float probability = std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length(), genome.beta) / totalProbability;
                         currentProbability += probability;
-                        if(ants > genome.eliteAntCount && target <= currentProbability){
+                        if(ants > 3/*genome.eliteAntCount*/ && target <= currentProbability){
+                        // if(target <= currentProbability){
                             selectedEdge = &edge;
                             goto endSelect;
-                        } else if(ants <= genome.eliteAntCount && probability > maxProbability){
+                        } else if(ants <= 3/*genome.eliteAntCount*/ && probability > maxProbability){
+                        // } /*else if(probability > maxProbability){
                             maxProbability = probability;
                             selectedEdge = &edge;
-                        }
+                        }//*/
                     }
                 } endSelect:
 
@@ -116,6 +119,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                         matrix[x][y][z].isPassed = false;
                     }}}
         }
+
+        pair<Path, size_t> colonyBestPathPair {{}, 0};
         for(int i = colonyBestPathPairs.size() - 1; i >= 0; --i) {
             for(int j = colonyBestPathPairs[i].first.size() - 1; j >= 0; --j) {
                 float newPheromone = colonyBestPathPairs[i].first[j]->pheromone + float(colonyBestPathPairs[i].second) / Q;
@@ -125,7 +130,21 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             if(bestLength < colonyBestPathPairs[i].second) {
                 bestLength = colonyBestPathPairs[i].second;
                 bestPath = colonyBestPathPairs[i];
+                cout << iterations << " " << bestLength << endl;
             }
+            if(colonyBestPathPair.second < colonyBestPathPairs[i].second)
+                colonyBestPathPair = colonyBestPathPairs[i];
+        }
+
+        for(int j = bestPath.first.size() - 1; j >= 0; --j) {
+            float newPheromone = bestPath.first[j]->pheromone + float(bestLength) / Q * (float(genome.eliteAntCount) / 3.f);
+            if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+                bestPath.first[j]->pheromone = newPheromone;
+        }
+        for(int i = colonyBestPathPair.first.size() - 1; i >= 0; --i) {
+            float newPheromone = colonyBestPathPair.first[i]->pheromone + float(colonyBestPathPair.second) / Q * (float(genome.eliteAntCount) / 1.5f);
+            if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+                colonyBestPathPair.first[i]->pheromone = newPheromone;
         }
 
         if(!colonyBestPathPairs.empty())
