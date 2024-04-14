@@ -5,11 +5,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #define DEFAULT_PHEROMONE_VALUE 10.f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
 #define MAXIMUM_PHEROMONE_VALUE 100.f
-#define Q                       16'000.f
+#define Q                       10'000.f
 #define MATRIX_SIZE             26
 
 using namespace std;
@@ -34,6 +35,7 @@ struct Genome
 {
     int regularAntCount;
     int eliteAntCount;
+    int greedyAntCount;
     int iterations;
     float alpha;
     float beta;
@@ -48,7 +50,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
     int beginVertex = 0;
 
     while(iterations--) {
-        int ants = genome.regularAntCount + 3;//genome.eliteAntCount;
+        int ants = genome.regularAntCount + genome.greedyAntCount;
         PathPairs colonyBestPathPairs;
         while(ants--) {
             int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
@@ -95,15 +97,13 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                             continue;
                         float probability = std::pow(edge.pheromone, genome.alpha) * std::pow(edge.word->length(), genome.beta) / totalProbability;
                         currentProbability += probability;
-                        if(ants > 3/*genome.eliteAntCount*/ && target <= currentProbability){
-                        // if(target <= currentProbability){
+                        if(ants > genome.greedyAntCount && target <= currentProbability){
                             selectedEdge = &edge;
                             goto endSelect;
-                        } else if(ants <= 3/*genome.eliteAntCount*/ && probability > maxProbability){
-                        // } /*else if(probability > maxProbability){
+                        } else if(ants <= genome.greedyAntCount && probability > maxProbability){
                             maxProbability = probability;
                             selectedEdge = &edge;
-                        }//*/
+                        }
                     }
                 } endSelect:
 
@@ -131,6 +131,12 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 bestLength = colonyBestPathPairs[i].second;
                 bestPath = colonyBestPathPairs[i];
                 cout << iterations << " " << bestLength << endl;
+                // ofstream mtxFile("matrixes/" + to_string(bestLength) + ".txt");
+                // for(int x = MATRIX_SIZE - 1; x >= 0; --x)
+                //     for(int y = MATRIX_SIZE - 1; y >= 0; --y)
+                //         for(int z = matrix[x][y].size() - 1; z >= 0; --z)
+                //             mtxFile << matrix[x][y][z].pheromone << " ";
+                // mtxFile.close();
             }
             if(colonyBestPathPair.second < colonyBestPathPairs[i].second)
                 colonyBestPathPair = colonyBestPathPairs[i];
