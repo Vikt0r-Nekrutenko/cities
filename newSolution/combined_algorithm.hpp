@@ -52,8 +52,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 matrix[x][y][z].etha = std::pow(matrix[x][y][z].word->length(), genome.beta);
             }}}
 
-    pair<Path, size_t> bestPath;
-    size_t bestLength = 0;
+    pair<Path, size_t> bestPathPair;
     int iterations = genome.iterations;
     int beginVertex = 0;
 
@@ -138,10 +137,9 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                     colonyBestPathPairs[i].first[j]->pheromone = newPheromone;
             }
-            if(bestLength < colonyBestPathPairs[i].second) {
-                bestLength = colonyBestPathPairs[i].second;
-                bestPath = colonyBestPathPairs[i];
-                cout << iterations << " " << bestLength << endl;
+            if(bestPathPair.second < colonyBestPathPairs[i].second) {
+                bestPathPair = colonyBestPathPairs[i];
+                cout << iterations << " " << bestPathPair.second << endl;
                 // ofstream mtxFile("matrixes/" + to_string(bestLength) + ".txt");
                 // for(int x = MATRIX_SIZE - 1; x >= 0; --x)
                 //     for(int y = MATRIX_SIZE - 1; y >= 0; --y)
@@ -155,10 +153,10 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             }
         }
 
-        for(int j = bestPath.first.size() - 1; j >= 0; --j) {
-            float newPheromone = bestPath.first[j]->pheromone + float(bestLength) / Q * (float(genome.eliteAntCount) / 3.f);
+        for(int j = bestPathPair.first.size() - 1; j >= 0; --j) {
+            float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * (float(genome.eliteAntCount) / 3.f);
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                bestPath.first[j]->pheromone = newPheromone;
+                bestPathPair.first[j]->pheromone = newPheromone;
         }
 
         for(int i = colonyBestPathPairPtr->first.size() - 1; i >= 0; --i) {
@@ -176,7 +174,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 }}}
     }
 
-    return bestPath;
+    return bestPathPair;
 }
 
 #endif // COMBINED_ALGORITHM_HPP
