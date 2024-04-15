@@ -15,17 +15,17 @@
 
 using namespace std;
 
-struct Edge
+struct alignas(32) Edge
 {
     std::string *word = nullptr;
     float pheromone = DEFAULT_PHEROMONE_VALUE;
-    bool isPassed = false;
     float etha = 0.f;
+    bool isPassed = false;
 };
 
 using Vertex = std::vector<Edge>;
 using Row = std::vector<Vertex>;
-using Matrix = std::vector<Row>;
+using Matrix = std::vector<Edge>[MATRIX_SIZE][MATRIX_SIZE];
 using Path = std::vector<Edge *>;
 using PathPairs = std::vector<std::pair<Path, size_t>>;
 
@@ -71,10 +71,11 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
                     for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
                         Edge &edge = matrix[vertexNumber][y][z];
-                        if(!edge.isPassed) {
-                            totalProbability += std::pow(edge.pheromone, genome.alpha) * edge.etha;
-                            isEnd = false;
-                        }}}
+                        if(edge.isPassed)
+                            continue;
+                        totalProbability += std::pow(edge.pheromone, genome.alpha) * edge.etha;
+                        isEnd = false;
+                    }}
 
                 if(isEnd) {
                     if(antPathPairs.back().first.size() <= 1) {
@@ -97,7 +98,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 float currentProbability = 0.f;
                 float target = randf(0.00001f, 0.99999f);
 
-                for(int y = 25; y >= 0; --y) {
+                for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
                     for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
                         Edge &edge = matrix[vertexNumber][y][z];
                         if(edge.isPassed)
@@ -122,14 +123,13 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 
             for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
                 for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                    for(size_t z = 0; z < matrix[x][y].size(); ++z) {
+                    for(int z = matrix[x][y].size() - 1; z >= 0; --z) {
                         matrix[x][y][z].isPassed = false;
                     }}}
         }
 
-        // pair<Path, size_t> colonyBestPathPair {{}, 0};
         size_t colonyBestL = 0;
-        int colonyBestPathId = 0;
+        pair<Path, size_t> *colonyBestPathPairPtr = nullptr;
         for(int i = colonyBestPathPairs.size() - 1; i >= 0; --i) {
             for(int j = colonyBestPathPairs[i].first.size() - 1; j >= 0; --j) {
                 float newPheromone = colonyBestPathPairs[i].first[j]->pheromone + float(colonyBestPathPairs[i].second) / Q;
@@ -149,7 +149,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             }
             if(colonyBestL < colonyBestPathPairs[i].second) {
                 colonyBestL = colonyBestPathPairs[i].second;
-                colonyBestPathId = i;
+                colonyBestPathPairPtr = &colonyBestPathPairs[i];
             }
         }
 
@@ -158,21 +158,20 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                 bestPath.first[j]->pheromone = newPheromone;
         }
-        for(int i = colonyBestPathPairs[colonyBestPathId].first.size() - 1; i >= 0; --i) {
-            float newPheromone = colonyBestPathPairs[colonyBestPathId].first[i]->pheromone + float(colonyBestPathPairs[colonyBestPathId].second) / Q * (float(genome.eliteAntCount) / 1.5f);
+
+        for(int i = colonyBestPathPairPtr->first.size() - 1; i >= 0; --i) {
+            float newPheromone = colonyBestPathPairPtr->first[i]->pheromone + float(colonyBestPathPairPtr->second) / Q * (float(genome.eliteAntCount) / 1.5f);
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                colonyBestPathPairs[colonyBestPathId].first[i]->pheromone = newPheromone;
+                colonyBestPathPairPtr->first[i]->pheromone = newPheromone;
         }
 
-        for(auto xt = matrix.begin(); xt != matrix.end(); ++xt) {
-            for(auto yt = xt->begin(); yt != xt->end(); ++yt) {
-                for(auto zt = yt->begin(); zt != yt->end(); ++zt) {
-                    float newPheromone = zt->pheromone * genome.evaporation;
+        for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+            for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
+                for(int z = matrix[x][y].size() - 1; z >= 0; --z) {
+                    float newPheromone = matrix[x][y][z].pheromone * genome.evaporation;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                        zt->pheromone = newPheromone;
-                }
-            }
-        }
+                        matrix[x][y][z].pheromone = newPheromone;
+                }}}
     }
 
     return bestPath;
