@@ -127,7 +127,9 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                     }}}
         }
 
-        pair<Path, size_t> colonyBestPathPair {{}, 0};
+        // pair<Path, size_t> colonyBestPathPair {{}, 0};
+        size_t colonyBestL = 0;
+        int colonyBestPathId = 0;
         for(int i = colonyBestPathPairs.size() - 1; i >= 0; --i) {
             for(int j = colonyBestPathPairs[i].first.size() - 1; j >= 0; --j) {
                 float newPheromone = colonyBestPathPairs[i].first[j]->pheromone + float(colonyBestPathPairs[i].second) / Q;
@@ -145,8 +147,10 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 //             mtxFile << matrix[x][y][z].pheromone << " ";
                 // mtxFile.close();
             }
-            if(colonyBestPathPair.second < colonyBestPathPairs[i].second)
-                colonyBestPathPair = colonyBestPathPairs[i];
+            if(colonyBestL < colonyBestPathPairs[i].second) {
+                colonyBestL = colonyBestPathPairs[i].second;
+                colonyBestPathId = i;
+            }
         }
 
         for(int j = bestPath.first.size() - 1; j >= 0; --j) {
@@ -154,10 +158,10 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                 bestPath.first[j]->pheromone = newPheromone;
         }
-        for(int i = colonyBestPathPair.first.size() - 1; i >= 0; --i) {
-            float newPheromone = colonyBestPathPair.first[i]->pheromone + float(colonyBestPathPair.second) / Q * (float(genome.eliteAntCount) / 1.5f);
+        for(int i = colonyBestPathPairs[colonyBestPathId].first.size() - 1; i >= 0; --i) {
+            float newPheromone = colonyBestPathPairs[colonyBestPathId].first[i]->pheromone + float(colonyBestPathPairs[colonyBestPathId].second) / Q * (float(genome.eliteAntCount) / 1.5f);
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                colonyBestPathPair.first[i]->pheromone = newPheromone;
+                colonyBestPathPairs[colonyBestPathId].first[i]->pheromone = newPheromone;
         }
 
         for(auto xt = matrix.begin(); xt != matrix.end(); ++xt) {
