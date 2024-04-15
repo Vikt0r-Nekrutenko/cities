@@ -27,7 +27,8 @@ using Vertex = std::vector<Edge>;
 using Row = std::vector<Vertex>;
 using Matrix = std::vector<Edge>[MATRIX_SIZE][MATRIX_SIZE];
 using Path = std::vector<Edge *>;
-using PathPairs = std::vector<std::pair<Path, size_t>>;
+using PathPair = std::pair<Path, size_t>;
+using PathPairs = std::vector<PathPair>;
 
 #define randf(min, max) ((float(rand()) / float(RAND_MAX)) * (max - min) + min)
 #define randd(min, max) (rand() % (max - min) + min)
@@ -58,7 +59,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 
     while(iterations--) {
         int ants = genome.regularAntCount + genome.greedyAntCount;
-        PathPairs colonyBestPathPairs;
+        PathPairs colonyBestPathPairs(ants);
+        PathPair *cbppIt = colonyBestPathPairs.data();
         while(ants--) {
             int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
             PathPairs antPathPairs{{{}, 0ull}};
@@ -79,7 +81,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 
                 if(isEnd) {
                     if(antPathPairs.back().first.size() <= 1) {
-                        colonyBestPathPairs.push_back(antPathPairs[bestPathForOneAntIndex]);
+                        *cbppIt++ = antPathPairs[bestPathForOneAntIndex];
                         break;
                     }
                     if(antPathPairs.back().second > bestPathForOneAntLength) {
