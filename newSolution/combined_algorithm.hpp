@@ -59,8 +59,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 
     while(iterations--) {
         int ants = genome.regularAntCount + genome.greedyAntCount;
-        PathPairs colonyBestPathPairs(ants);
-        PathPair *cbppIt = colonyBestPathPairs.data();
+        PathPair colonyBestPathPairs[ants];
+        PathPair *cbppIt = colonyBestPathPairs;
         while(ants--) {
             int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
             PathPairs antPathPairs{{{}, 0ull}};
@@ -132,7 +132,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 
         size_t colonyBestL = 0;
         pair<Path, size_t> *colonyBestPathPairPtr = nullptr;
-        for(int i = colonyBestPathPairs.size() - 1; i >= 0; --i) {
+        for(int i = genome.regularAntCount + genome.greedyAntCount - 1; i >= 0; --i) {
             for(int j = colonyBestPathPairs[i].first.size() - 1; j >= 0; --j) {
                 float newPheromone = colonyBestPathPairs[i].first[j]->pheromone + float(colonyBestPathPairs[i].second) / Q;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
