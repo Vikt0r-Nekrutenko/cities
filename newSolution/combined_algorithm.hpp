@@ -160,14 +160,15 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 colonyBestPathPair.first[i]->pheromone = newPheromone;
         }
 
-        if(!colonyBestPathPairs.empty())
-        for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-            for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                for(size_t z = 0; z < matrix[x][y].size(); ++z) {
-                    float newPheromone = matrix[x][y][z].pheromone * genome.evaporation;
+        for(auto xt = matrix.begin(); xt != matrix.end(); ++xt) {
+            for(auto yt = xt->begin(); yt != xt->end(); ++yt) {
+                for(auto zt = yt->begin(); zt != yt->end(); ++zt) {
+                    float newPheromone = zt->pheromone * genome.evaporation;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                        matrix[x][y][z].pheromone = newPheromone;
-                }}}
+                        zt->pheromone = newPheromone;
+                }
+            }
+        }
     }
 
     return bestPath;
