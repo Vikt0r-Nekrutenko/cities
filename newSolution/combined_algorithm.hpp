@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <chrono>
 
 #define DEFAULT_PHEROMONE_VALUE 10.f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
@@ -54,6 +55,9 @@ struct Genome
 
 pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 {
+    float tavg = 0.f;
+    int tcount = 0;
+
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
         for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
             for(size_t z = 0; z < matrix[x][y].size(); ++z) {
@@ -178,15 +182,21 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 colonyBestPathPairPtr->first[i]->pheromone = newPheromone;
         }
 
+        auto t = chrono::high_resolution_clock::now();
         for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
             for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                for(int z = matrix[x][y].size() - 1; z >= 0; --z) {
-                    float newPheromone = matrix[x][y][z].pheromone * genome.evaporation;
+                Edge *ptr = matrix[x][y].data();
+                Edge *end = matrix[x][y].data() + matrix[x][y].size();
+                while(ptr != end) {
+                    float newPheromone = ptr->pheromone * genome.evaporation;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                        matrix[x][y][z].pheromone = newPheromone;
-                    matrix[x][y][z].prob = matrix[x][y][z].etha * std::pow(matrix[x][y][z].pheromone, genome.alpha);
+                        ptr->pheromone = newPheromone;
+                    ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
+                    ++ptr;
                 }}}
+        tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
     }
+    cout << (tavg / tcount) << endl;
 
     return bestPathPair;
 }
