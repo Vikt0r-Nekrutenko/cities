@@ -146,13 +146,18 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                     }}}
         }
 
+        auto t = chrono::high_resolution_clock::now();
         size_t colonyBestL = 0;
         pair<Path, size_t> *colonyBestPathPairPtr = nullptr;
         for(int i = genome.regularAntCount + genome.greedyAntCount - 1; i >= 0; --i) {
-            for(int j = colonyBestPathPairs[i].first.size() - 1; j >= 0; --j) {
-                float newPheromone = colonyBestPathPairs[i].first[j]->pheromone + float(colonyBestPathPairs[i].second) / Q;
+            Edge **ptr = colonyBestPathPairs[i].first.data();
+            Edge **end = colonyBestPathPairs[i].first.data() + colonyBestPathPairs[i].first.size();
+
+            while(ptr != end) {
+                float newPheromone = (*ptr)->pheromone + float(colonyBestPathPairs[i].second) / Q;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                    colonyBestPathPairs[i].first[j]->pheromone = newPheromone;
+                    (*ptr)->pheromone = newPheromone;
+                ++ptr;
             }
             if(bestPathPair.second < colonyBestPathPairs[i].second) {
                 bestPathPair = colonyBestPathPairs[i];
@@ -169,6 +174,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 colonyBestPathPairPtr = &colonyBestPathPairs[i];
             }
         }
+        tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
 
         for(int j = bestPathPair.first.size() - 1; j >= 0; --j) {
             float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * (float(genome.eliteAntCount) / 3.f);
@@ -182,7 +188,6 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 colonyBestPathPairPtr->first[i]->pheromone = newPheromone;
         }
 
-        auto t = chrono::high_resolution_clock::now();
         for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
             for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
                 Edge *ptr = matrix[x][y].data();
@@ -194,9 +199,9 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                     ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
                     ++ptr;
                 }}}
-        tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
     }
-    cout << (tavg / tcount) << endl;
+    cout << (tavg / tcount) << endl
+         << (tavg / tcount) * genome.iterations << endl;
 
     return bestPathPair;
 }
