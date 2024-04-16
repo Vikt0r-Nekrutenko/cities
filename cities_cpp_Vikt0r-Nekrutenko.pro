@@ -12,7 +12,7 @@ SOURCES += \
 
 HEADERS += \
     newSolution/combined_algorithm.hpp \
-    newSolution/genetic_algorithm.hpp
+    # newSolution/genetic_algorithm.hpp
 
 INCLUDEPATH += \
     newSolution \

@@ -39,7 +39,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
             genome.first.beta               = startGenome.beta;
         }
     }
-    Genome bestGenomeInLastGeneration {0, 0, 0, 0.f, 0.f, 0.f};
+    Genome bestGenomeInLastGeneration {0, 0, 0, 0, 0.f, 0.f, 0.f};
     pair<Path, size_t> bestPathPair;
     int generationN = 0;
     ofstream logFile("logs/" + to_string(generationsCount) + "_" + to_string(genomesPerGeneration) + "_" + to_string(time(nullptr)) + ".txt");

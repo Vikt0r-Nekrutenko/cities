@@ -21,10 +21,16 @@ struct alignas(32) Edge
     float pheromone = DEFAULT_PHEROMONE_VALUE;
     float etha = 0.f;
     bool isPassed = false;
+    // uint8_t __padding[15];
 };
 
-using Vertex = std::vector<Edge>;
-using Row = std::vector<Vertex>;
+struct Vertex {
+    Edge edges[MATRIX_SIZE * MATRIX_SIZE];
+    Edge *endPtr = edges;
+};
+
+// using Vertex = std::vector<Edge>;
+// using Row = std::vector<Vertex>;
 using Matrix = std::vector<Edge>[MATRIX_SIZE][MATRIX_SIZE];
 using Path = std::vector<Edge *>;
 using PathPair = std::pair<Path, size_t>;
@@ -139,8 +145,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             }
             if(bestPathPair.second < colonyBestPathPairs[i].second) {
                 bestPathPair = colonyBestPathPairs[i];
-                cout << iterations << " " << bestPathPair.second << endl;
-                // ofstream mtxFile("matrixes/" + to_string(bestLength) + ".txt");
+                // cout << iterations << " " << bestPathPair.second << endl;
+                // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt");
                 // for(int x = MATRIX_SIZE - 1; x >= 0; --x)
                 //     for(int y = MATRIX_SIZE - 1; y >= 0; --y)
                 //         for(int z = matrix[x][y].size() - 1; z >= 0; --z)

@@ -1,7 +1,9 @@
 #include <fstream>
 #include <iterator>
+#include <chrono>
 
-#include "genetic_algorithm.hpp"
+// #include "genetic_algorithm.hpp"
+#include "combined_algorithm.hpp"
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
@@ -21,17 +23,37 @@ int main()
 vector<string> combine_cities(vector<string> available_cities)
 {
     srand(1998);
+    // srand(time(nullptr));
 
-    Matrix matrix = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
-    for(auto &city : available_cities)
-        if(matrix.at(city.front() - 'A').at(city.back() - 'a').empty())
-        matrix.at(city.front() - 'A').at(city.back() - 'a').push_back({&city});
-    // pullPheromonesIntoMatrix(matrix, "matrixes/16644.txt");
+    Vertex matrix[MATRIX_SIZE];// = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
+    Matrix mtx;
+    for(auto &city : available_cities) {
+        if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
+        // if(matrix[city.front() - 'A'].edges[city.back() - 'a'].word == nullptr)
+            mtx[city.front() - 'A'][city.back() - 'a'].push_back({&city});
+            *matrix[city.front() - 'A'].endPtr++ = {&city};
+        }
+    }
+
+
+
+    // cout << "time1: [" << chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - time1).count() << "] min." << endl;
+
+
+    // cout << "time2: [" << chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - time1).count() << "] min." << endl;
+
+        // tmpMatrix[city.front() - 'A'][city.back() - 'a'].push_back({&city});
+    // ifstream mtxFile("matrixes/16579.txt");
+    // for(int x = MATRIX_SIZE - 1; x >= 0; --x)
+    //     for(int y = MATRIX_SIZE - 1; y >= 0; --y)
+    //         for(int z = matrix[x][y].size() - 1; z >= 0; --z)
+    //             mtxFile >> matrix[x][y][z].pheromone;
+    // mtxFile.close();
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
     // auto path = genetics_algorithm(matrix, 3, 4, true, {26, 1, 1, 0.742006f, 0.118091f, 0.581106f});
-    auto path = combined_algorithm(matrix, {26, 13, 3000, 2.f, 1.f, 0.09f});
-    cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::minutes>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
+    auto path = combined_algorithm(mtx, {26, 52, 1, 1000, 2.f, 1.f, 0.1f});
+    cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     vector<string> resultCities;
 
