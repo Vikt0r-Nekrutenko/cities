@@ -57,13 +57,18 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
 {
     float tavg = 0.f;
     int tcount = 0;
-
+            auto t = chrono::high_resolution_clock::now();
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
         for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-            for(size_t z = 0; z < matrix[x][y].size(); ++z) {
-                matrix[x][y][z].etha = std::pow(matrix[x][y][z].word->length(), genome.beta);
-                matrix[x][y][z].prob = matrix[x][y][z].etha * std::pow(matrix[x][y][z].pheromone, genome.alpha);
+            Edge *ptr = matrix[x][y].data();
+            Edge *end = matrix[x][y].data() + matrix[x][y].size();
+            while(ptr != end) {
+            // for(size_t z = 0; z < matrix[x][y].size(); ++z) {
+                ptr->etha = std::pow(ptr->word->length(), genome.beta);
+                ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
+                ++ptr;
             }}}
+    tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
 
     pair<Path, size_t> bestPathPair;
     int iterations = genome.iterations;
@@ -139,7 +144,6 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 antPathPairs.back().second += selectedEdge->word->length();
             }
 
-            auto t = chrono::high_resolution_clock::now();
             for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
                 for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
                     Edge *ptr = matrix[x][y].data();
@@ -148,7 +152,6 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                         ptr->isPassed = false;
                         ++ptr;
                     }}}
-            tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
         }
 
         size_t colonyBestL = 0;
@@ -203,8 +206,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                     ++ptr;
                 }}}
     }
-    cout << (tavg / tcount) << endl
-         << (tavg / tcount) * genome.iterations * (genome.regularAntCount + genome.greedyAntCount) << endl;
+    cout << (tavg / tcount) << endl;
+//         << (tavg / tcount) * genome.iterations * (genome.regularAntCount + genome.greedyAntCount) << endl;
 
     return bestPathPair;
 }
