@@ -1,1786 +1,380 @@
-Blagoveshchensk
-Khan Yunis
-Sambhal
-Longueuil
-Las Pinas
-Santa Coloma de Gramanet
-Tebing Tinggi
-Isahaya
-Aberdeen
-Naypyidaw
-Wah Cantonment
-Tuticorin
-Nova Friburgo
-Orekhovo-Zuyevo
-Omdurman
-Navapolatsk
-Kharagpur
-Ramat Gan
-Nangloi Jat
-Tondabayashi
-Iquique
-Emmen
-Nalchik
-Kamensk-Uralsky
-Yavatmal
-Los Teques
-Salem
-Machilipatnam
-Miqdadiyah
-Higashihiroshima
-Al-Qurnah
-Huadian
-Naivasha
-Aguascalientes
-Santarem
-Matamoros
-Sao Carlos
-Santo Domingo Norte
-Evansville
-Everett
-Teresopolis
-San Juan de Giron
-Nijmegen
-Naperville
-El Alto
-Ordos City
-Yuanjiang
-Girardot
-Talisay
-Yamagata
-Ambikapur
-Rostov-on-Don
-Nicolas Romero
-Olongapo
-Olinda
-Aden
-Navi Mumbai
-Isabela
-Andijan
-Newcastle upon Tyne
-Eindhoven
-Nanyang
-Gold Coast
-Torrejon de Ardoz
-Zaozhuang
-Gresham
-Marrakech
-Hirakata
-Aqaba
-Antofagasta
-Al-Thuqbah
-Hancheng
-Ganganagar
-Ribeirao das Neves
-Shahrekord
-Dangyang
-Guarapari
-Inglewood
-Dasoguz
-Zrenjanin
-Nossa Senhora do Socorro
-Ouagadougou
-Uppsala
-Argenteuil
-Las Palmas de Gran Canaria
-Aktau
-Ubon Ratchathani
-Ipatinga
-Armavir
-Regensburg
-Gatineau
-Utsunomiya
-Aguas Lindas de Goias
-Santa Cruz do Sul
-Le Mans
-Sunderland
-Dasmarinas
-Sterlitamak
-Kaunas
+Bandar Abbas
 San Juan Bautista Tuxtepec
 Cachoeiro de Itapemirim
-Mostoles
-San Fernando del Valle de Catamarca
-Amman
-Niteroi
-Ipiales
-Shizuishan
-Nairobi
-Iloilo City
-Yekaterinburg
-Gorzow Wielkopolski
-Iskenderun
-Nagpur
-Rancho Cucamonga
-Awasa
-Aparecida de Goiania
-Astrakhan
-Nyeri
-Itapevi
-Ipswich
-Hawally
-Yangquan
-Noyabrsk
-Kishangarh
-Hazaribagh
-Haining City
-Yinchuan
-Naic
-Central Coast
-Tulancingo
-Oaxaca de Juarez
-Zhukovsky
-Yoshkar-Ola
-Ahvaz
-Zhenjiang
-Guarapuava
-Akola
-Ashkelon
-Ngong
-Guatemala City
-Yichun
-Nagahama
-Ahmednagar
-Ranebennuru
-Ufa
-Aracaju
-Udon Thani
-Irbid
-Des Moines
-Sorsogon City
-Yingkou
-Uruapan
-Norilsk
-Karabuk
-Kimchaek
-Kitchener
-Rishra
-Allappuzha
-Anda
-Adapazari
-Ichinoseki
-Islamabad
-Dehradun
-Nakhon Si Thammarat
-Tiruchchirappalli
-Isehara
-Allahabad
-Dinalupihan
-Navoiy
-Yingcheng
-Ghaziabad
-Dera Ghazi Khan
-Novocheboksarsk
-Khartoum North
-Haridwar
-Rajahmundry
-Yichang
-Guarenas
-Sultan Pur Majra
-Al Khalis
-San Martin
-Newport
-Trois-Rivieres
-Seleyang Baru
-Ulanqab
-Bokaro Steel City
-Yogyakarta
-Annaba
-Ananindeua
-Antananarivo
-Oradea
-Ashoknagar
-Roodepoort
-Tongchuan
-Nonthaburi
-Itajai
-Itami
-Ichikawa
-Ado-Ekiti
-Izmir
-Rehovot
-Trece Martires
-San Nicolas de los Garza
-Amersfoort
-Tadepalligudem
-Montreal
-Leskovac
-Colorado Springs
-Santa Cruz do Capibaribe
-Elk Grove
-Elizabeth
-Hafar Al-Batin
-Nazarabad
-Dum Dum
-Mustafabad
-Digos
-Sergiyev Posad
-Dos Hermanas
-Santo Domingo de los Colorados
-San Pedro de la Paz
-Zonguldak
-Khmelnytskyi
-Inezgane
-Eastbourne
-Erfurt
-Tres Lagoas
-St. Helens
-Sri Muktsar Sahib
-Bhalswa Jahangir Pur
-Round Rock
-Kursk
-Khamis Mushait
-Turkmenabat
-Thai Nguyen
-Nadiad
-Diaobingshan
-Norman
-Nizhny Novgorod
-Dohuk
-Karadeniz Eregli
-Ikere-Ekiti
-Istanbul
-Liupanshui
-Iwakuni
-Ilheus
-Surigao City
-Yaroslavl
-Lauro de Freitas
-Santiago de los Caballeros
-Shuangyashan
-Nuevo Laredo
-Oakland
-Dehiwala-Mount Lavinia
-Al Hawiyah
-Heilbronn
-Nanded-Waghala
-Amsterdam
-Mexico City
-Yessentuki
-Ilopango
-Oviedo
-Olomouc
-Chorzow
-Wanzhou District
-Tainan City
-Yalova
-Asyut
-Tiaret
-Tlalnepantla
-Angarsk
-Khan Bani Saad
-Darmstadt
-Telford
-Davao City
-Yachiyo
-Omsk
-Kolhapur
-Rio das Ostras
-San Francisco de Macoris
-Sujangarh
-Hermosillo
-Orlando
-Obninsk
-Kokand
-Dabrowa Gornicza
-Agartala
-Abengourou
-Uttarpara
-Ayacucho
-Oulu
-Ulm
-Mataram
-Mar del Plata
-Adelaide
-El-Mahalla El-Kubra
-Alappuzha
-Antwerp
-Punta Arenas
-Stuttgart
-Teixeira de Freitas
-San Luis Rio Colorado
-Oakville
-Elblag
-Goicoechea
-Alicante
-Edmonton
-Niigata
-Altamira
-Abidjan
-New Haven
-Narashino
-Orleans
-Sterling Heights
-Sahiwal
-Leganes
-Santa Cruz de Tenerife
-El Oued
-Dar Es Salaam
-Markham
-Maastricht
-Tirunelveli
-Islam Shahr
-Reutlingen
-Nagaoka
-Ansan
-Nakhon Ratchasima
-Akishima
-Ain Beida
-Aydin
-Nasimshahr
-Robertsonpet
-Trondheim
-Muzaffargharh
-Haicheng
-Greater Sudbury
-Yenakiieve
-El Monte
-East Jerusalem
-Muscat
-Touggourt
-Thunder Bay
-Yevpatoria
-Aix-en-Provence
-Erzurum
-Muzaffarpur
-Reynosa
-Augsburg
-Gottingen
-Novokuznetsk
-Kryvyi Rih
-Haldwani-cum-Kathgodam
-Malappuram
-Melitopol
-Limoges
-Samawah
-Ho Chi Minh City
-Yuncheng
-Guangshui
-Itaborai
-Indianapolis
-Santa Clarita
-Albuquerque
-Elista
-Akesu
-Unnao
-Oshogbo
-Ourense
-Erode
-Ebina
-Al-Shatrah
-Hinganghat
-Tokorozawa
-Aalborg
-Guantanamo
-Odense
-El Jadida
-Ajmer
-Rancagua
-Austin
-Nuremberg
-Grand Rapids
-South Dum Dum
-Meerut
-Tiruvannamalai
-Izeh
-Higashimurayama
-Asaka
-Arica
-Acheng
-Golestan
-Nanjing
-Grand Prairie
-Edirne
-Ebetsu
-Udupi
-Irapuato
-Orsha
-Ariquemes
-Stakhanov
-Visakhapatnam
-Montpellier
-Raichur
-Ribeirao Pires
-Sioux Falls
-Stara Zagora
-Aurangabad
-Daet
-Tabuk
-Kecskemet
-Termez
-Zhangjiakou
-Umuarama
-Atlanta
-Allentown
-Nandyal
-Lowell
-Lagos de Moreno
-Odintsovo
-Ogaki
-Itatiba
-Aomori
-Izmit
-Tiruvottiyur
-Rio Branco
-Ozhukarai
-Iwata
-Athens
-San Miguel de Tucuman
-Najafabad
-Dos Quebradas
-Sao Jose do Rio Preto
-Oldenburg
-Gharraf
-Frankfurt am Main
-Nobeoka
-Ankang
-General Mariano Alvarez
-Zheleznodorozhny
-Yongzhou
-Uzhhorod
-Dhamtari
-Itapetininga
-Atushi
-Imbaba
-Amiens
-Surgut
-Tongling
-Greensboro
-Osnabruck
-Khammam
-Muttrah
-Hanzhong
-Guangzhou
-Uluberia
-Al-Mejar Al-Kabi
-Inazawa
-Araraquara
-Alphen aan den Rijn
-Nagano
-Obihiro
-Olsztyn
-Napier-Hastings
-Shahrud
-Delhi Cantonment
-Taldiqorgan
-Novokuybyshevsk
-Kunduz
-Zhaodong
-Gilbert
-Tandoadam
-Manchester
-Richmond
-Diyarbakir
-Resistencia
-Amaravathi
-Iasi
-Itabuna
-Amarillo
-Olanchito
-Oita
-Abohar
-Rishon LeZion
-Neftekamsk
-Kayes
-Shikohabad
-Dongchuan
-Nur-Sultan
-Neuss
-Slupsk
-Kota Kinabalu
-Urayasu
-Uruguaiana
-Abbotabad
-Durham
-Montes Claros
-Savannah
-Hafizabad
-Donetsk
-Kanhangad
-Denpasar
-Rochester
-Ruichang
-Governador Valadares
-Severodvinsk
-Kollam
-Milton Keynes
-Split
-Tabriz
-Zacatecas
-San Francisco del Rincon
-N'Djamena
-Alcorcon
-Novosibirsk
-Kakamigahara
-Americana
-Alandur
-Ratlam
-Mogi das Cruzes
-Sao Lourenco da Mata
-Arapiraca
-Antioch
-Hami City
-Yamuna Nagar
-Recklinghausen
-Naguanagua
-Anyang
-Gaza City
-Yazd
-Dezful
-Leicester
-Rio Verde
-El Paso
-Oral
-Linkoping
-Gongzhuling
-Greater Noida
-Antakya
-Al Rayyan
-Nova Iguacu
-Uji
-Itaquaquecetuba
-Apalit
-Teofilo Otoni
-Isparta
-Aksaray
-Yokohama
-Arayat
-Tuz Khurmatu
-Unaizah
-Homs
-South Tangerang
-Godoy Cruz
-Zamora de Hidalgo
-Oceanside
-Eskisehir
-Richmond Hill
-Little Rock
-Khoramabad
-Dipolog
-Guntakul
-Lagos
-Sevastopol
-Limassol
-Los Alcarrizos
-Sejong City
-Yong'an
-Nakhon Pathom
-Mymensingh
-Houghly-Chinsura
-Al Qadarif
-Fernando de la Mora
-Al-Hasakah
-Hialeah
-Hampton
-Neyveli
-Idlib
-Bergisch Gladbach
-Himamaylan
-Newark
-Kahramanmaras
-Santana de Parnaiba
-Acarigua
-Amravati
-Ichalakaranji
-Ibadan
-Nicosia
-Araruama
-Akbarpur
-Rach Gia
-A Coruna
-Abeokuta
-Abu Al-Khaseeb
-Beau-Bassin Rose-Hill
-Lazaro Cardenas
-Sunshine Coast
-Taiping
-Gabes
-Sadiqabad
-Dammam
-Mirpur Khas
-Suwayq
-Queimados
-Siirt
-Tagum
-Mabalacat
-Tanjungbalai
-Ibague
-Essen
-Nevinnomyssk
-Khomeini Shahr
-Rohtak
-Komsomolsk-on-Amur
-Rangpur
-Reggio Emilia
-Ambato
-Obuasi
-Ituiutaba
-Angeles
-San Pedro de Macoris
-San Cristobal de La Laguna
-Al Ain
-New Orleans
-Saint-Paul
-Lancaster
-Rondonopolis
-Sao Jose dos Campos
-Singkawang
-Gadag-Betgeri
-Incheon
-Narasaraopet
-Tieling
-Groningen
-Nasiriyah
-Hanam
-Murom
-Miass
-Santo Domingo Oeste
-Ensenada
-Ajman
-Nasushiobara
-Alchevsk
-Kamianets-Podilskyi
-Ichinomiya
-Alexandra
-Angers
-San Luis Potosi
-Ivano-Frankivsk
-Kabul
-Livingstone
-Eujeongbu
-Udaipur
-Raipur
-Rajarhat
-Talcahuano
-Offenbach am Main
-Novi Sad
-Deir ez Zor
-Rio de Janeiro
-Okayama
-Adiyaman
-Nishapur
-Rahim Yar Khan
-Ndola
-Aarhus
-Secunderabad
-Dongguan
-Nandurbar
-Ryazan
-Navojoa
-Aizawl
-Lomas de Zamora
-Asahikawa
-Alcobendas
-Santa Fe de Bogota
-Artyom
-Metepec
-Cartagena de Indias
-Shiraz
-Zoetermeer
-Rennes
-Stary Oskol
-Lengshuijiang
-Gangavati
-Iskandariya
-Arad
-Duque de Caxias
-Santo Domingo
-Orenburg
-Gomez Palacio
-Ota
-Abha
-Ahmedabad
-Diwaniyah
-Halifax
-Xilinhot
-Thoothukudi
-Izhevsk
-Krasnoyarsk
-Kaspiysk
-Kikwit
-Tuxtla Gutierrez
-Zielona Gora
-Ar-Ramtha
-Adoni
-Itapecerica da Serra
-Apartado
-Oryol
-Liverpool
-Los Guayos
-Seoul
-Liaocheng
-Guediawaye
-El Khroub
-Boulogne-Billancourt
-Tambov
-Valinhos
-Stavropol
-Luxembourg
-Gonbad-e Qabus
-St. Catharines
-Solihull
-Lubeck
-Khayelitsha
-Apeldoorn
-Nawabshah
-Hildesheim
-Madhavaram
-Monchengladbach
-Huaraz
-Zlatoust
-Thessaloniki
-Itumbiara
-Arkhangelsk
-Kawachinagano
-Osaka
-Acailandia
-Algeciras
-Southend on Sea
-Acapulco
-Ocumare del Tuy
-Yangzhou
-Ulhasnagar
-Ribeirao Preto
-Overland Park
-Kempton Park
-Kerch
-Hayward
-Detroit
-Taourirt
-Taganrog
-Gijon
-Northampton
-Nishinomiya
-Alcala de Henares
-San Salvador
-Raigarh
-Hitachinaka
-Araguari
-Innsbruck
-Kingston upon Hull
-Ludwigshafen am Rhein
-Nanchong
-Guadalajara
-Achinsk
-Kropyvnytskyi
-Isesaki
-Iruma
-Aurora
-Atsugi
-Iwo
-Odawara
-Abu Ghraib
-Bihar Sharif
-Fort Collins
-Santa Cruz
-Zanzibar City
-Yibin
-Najran
-Niamey
-Yelets
-Salt Lake City
-Yangjiang
-Georgetown
-Nalgonda
-Altay City
-Yokkaichi
-Iksan
-New York
-Koronadal
-Longxuyen
-New Delhi
-Ibarra
-Alexandria
-Aktobe
-El Tigre
-Elektrostal
-Leeuwarden
-Narita
-Arvada
-Adana
-Akita
-Aracatuba
-Anshun
-Numazu
-Udine
-Erlangen
-Naihati
-Ismailia
-Andimeshk
+Magnitogorsk
 Kabankalan
-Novomoskovsk
-Kopeysk
-Khabarovsk
-Kirkuk
-Karnal
-Lviv
-Vitoria da Conquista
-Amritsar
-Ravenna
-Agra
-Arzamas
-Sao Jose de Ribamar
-Rewa
-Anaco
-Okazaki
-Imperatriz
-Zamboanga City
-Yamoussoukro
-Orebro
-Ontario
-Omuta
-Almirante Tamandare
+Naperville
 Embu das Artes
-San Carlos
-Suryapet
-Tanjung Pinang
-Gokal Pur
-Rajnandgaon
-Nakhon Sawan
-Niihama
-Adhamiyah
-Hamilton
-Naberezhnye Chelny
-Yingtan
-Najaf
-Fquih Ben Salah
-Hong Kong
-Guaymas
-Shahin Shahr
-Rajapalayam
-Mohammadshahr
-Rason
-Norzagaray
-Yancheng
-Geelong
-Garden Grove
-Elche
-El Eulma
-Alor Setar
-Ras al-Khaimah
-Helsingborg
-Glasgow
-Wuppertal
+Saint Petersburg
+General Mariano Alvarez
+Zama
+Asansol
 Lages
-Sao Joao de Meriti
-Iguala
-Arnhem
-Murmansk
-Kislovodsk
-Kuwait City
-Yerevan
-Novara
-Al-Qa'im
-Madhyamgram
-Moreno Valley
+San Pedro de la Paz
+Zahedan
+Nalchik
+Kecskemet
+Taourirt
+The Hague
+El Khroub
+Bani Suwayf
+Fayetteville
+Edmonton
+Nabadwip
+Porac
+Cabo de Santo Agostinho
+Oaxaca de Juarez
+Zamora de Hidalgo
+Ordu
+Urayasu
+Unaizah
+Halifax
+Xiantao
+Olomouc
+Cachoeirinha
+Athi River
+Reno
+Ocumare del Tuy
 Yakeshi
-Iizuka
-Alanya
-Ambala Sadar
-Rajpur Sonarpur
-Rio Cuarto
-Ozamiz
-Zhucheng
-Gandhinagar
-Rockford
-Dire Dawa
-Atyrau
-Ulaanbaatar
-Rafsanjan
-Neemuch
-Huntington Beach
-Hoshiarpur
-Ruzhou
-Ulan-Ude
-Etawah
-Hospitalet de Llobregat
-Tongjiang
-Gudivada
-Antsirabe
-Edinburgh
-Hamamatsu
-Urawa
-Araucaria
-Asuncion
-Novoshakhtinsk
-Krishnanagar
-Rongcheng
-Gorontalo
-Oxford
-Duisburg
-Guadalupe
-Ecatepec
-Ciudad Lopez Mateos
-Sao Jose dos Pinhais
-Simferopol
-Los Banos
-Stamford
-Derbent
-Taboao da Serra
-Araguaina
-Alwar
-Rasht
-Thies
-San Jose del Monte
-English Bazar
-Rudrapur
-Rzeszow
-West Bromwich
-High Point
-Torbat-e Heydarieh
-Heerlen-Kerkrade
-Exeter
-Rui'an
-Nanchang
-General Santos
-St. Louis
-Shijiazhuang
-Guigang
-Gujrat
-Tiruchirappalli
-Independence
-El-Obeid
-Darbhanga
-Aizuwakamatsu
+Ibarra
+Arkhangelsk
+Kaili
+Ibague
+Ebetsu
 Ulan Hot
 Tandil
-Lyubertsy
-Yuzhno-Sakhalinsk
-Kathlehong
-Gyar
-Rodriguez
-Zagreb
-Bento Goncalves
-Serpukhov
-Vosloorus
-Santa Cruz de la Sierra
-Arar
-Rudny
-Yonago
-Oxnard
-Durgapur
-Reggio Calabria
-Agadir
-Rybinsk
-Karawal Nagar
-Rustaq
-Qurayyat
-Taraz
-Zhangjiagang
-Gangneung
-Giugliano in Campania
-Aachen
-Nazilli
-Ibri
-Iwatsuki
-Iligan
-Netanya
-Angren
-Navotas
-San Cristobal
-Las Tunas
-San Bernardino
-Onitsha
-Ardabil
-Lexington
-North Barrackpur
-Reus
-Sekondi-Takoradi
-Inegol
-Laghouat
-Tepic
-Coatzacoalcos
-Seongnam
-Minneapolis
-Sungai Petani
-Iriga
-Abbotsford
-Damoh
-Halisahar
-Rosario
-Osorno
-Ormoc
-Castellon de la Plana
-Andria
-Al-Rifa'i
-Itapipoca
-Athi River
-Reading
-Gondar
-Raigad
-Dibrugarh
-Hatsukaichi
-Itu
-Urumqi
-Ibirite
-Engels
-San Fernando de Apure
-Envigado
-Osijek
-Kostanay
-Yopal
-Longjing
-Gapan
-Nakhodka
-Arapongas
-Strasbourg
-Gorom-Gorom
-Mahmoudiyah
-Huangshan City
-Yan'an
-Nampula
-Alajuela
-Avellaneda
-Algiers
-Santa Ana de Coro
-Orsk
-Kaolack
-Khoramshahr
-Ruda Slaska
-Almetyevsk
-Kalyan-Dombivli
-Indaiatuba
-Aswan
-Nogales
-Sinop
-Pocos de Caldas
-Surendranagar Dudhrej
-Jerez de la Frontera
-Abaetetuba
-Araras
-San Bernardo
-Ogbomosho
-Olmaliq
-Qalyub
-Bordj Bou Arreridj
-Jleeb Al-Shuyoukh
-Huangyan
-Neyagawa
-Apucarana
-Ambarnath
-Hubli Dharwad
-Dortmund
-Dharmavaram
-Manizales
-Simi Valley
-Yokosuka
-Avadi
-Ichihara
-Antipolo
-Oskemen
-Nantong
-Guiyang
-Gujranwala
-Addis Ababa
-Ashdod
-Dresden
-Nagaur
-Rawalpindi
-Itagui
-Itabira
-Al Minya
-Atibaia
-Anantapur
-Russeifa
-Adilabad
-Dujail
-La Victoria
-Ann Arbor
-Rotherham
-Miami Gardens
-San Miguelito
-Olathe
-Escuintla
-Armenia
-Azua
-Alkmaar
-Riobamba
-Al Hartha
-Alagoinhas
-Santo Domingo Este
-Enschede
-Esenler
-Rizhao
-Ourinhos
-Shibin el-Kom
-Manavgat
-Townsville
-Ekibastuz
-Zhytomyr
-Rabat
-Tachikawa
-Albacete
-El Progreso
-Otsu
-Urasoe
-Esmeraldas
-San Fernando
-Oran
-Norfolk
-Kaithal
-Lubbock
-Khemisset
-Tlaquepaque
-Escondido
-Oktyabrsky
-Yatsushiro
-Okara
-Angono
-Ostrava
-Arlington
-Nizamabad
-Danjiangkou
-Urmia
-Al-Fashir
-Rajkot
-Tuguegarao
-Odesa
-Assis
-Santa Barbara d'Oeste
-Eugene
-Elazig
-Guaratingueta
-Akron
-Nis
-San Miguel
-Loikaw
-Willemstad
-Dordrecht
-Ternopil
-Lengshuitan
-Norrkoping
-Garanhuns
-Szeged
-Dabgram
-Montreuil
-Louisville
-Ezhou
-Uberlandia
-Adityapur
-Radom
-Mulheim an der Ruhr
-Raqqa
-Amagasaki
-Irving
-Guarulhos
-Salzgitter
-Regina
-Anlu
-Ulsan
-Nabadwip
-Piedras Negras
-Stockport
-Tepatitlan
-Namur
-Remscheid
-Dourados
-Saint Petersburg
-Gujrat City
-Yixing
-George Town
-Nyiregyhaza
-Almada
-Anshan
-Nimes
-Stoke-on-Trent
-Tambaram
-Mandaluyong
-Gondal
-Las Vegas
-Sloviansk
-Krasnogorsk
-Karimnagar
-Rafah
-Homyel
-Liberec
-Chilakaluripet
-Thanjavur
-Rubtsovsk
-Kramatorsk
-Kovrov
-Votorantim
-Malolos
-Spanish Town
-Nanning
-Guilin
-Novorossiysk
-Kira Town
-Nagareyama
-Antalya
-Anderlecht
-Tagbilaran
-Nishitokyo
-Osaki
-Ilam
-Miandoab
-Barysaw
-Warsaw
-Wloclawek
-Kyzyl
-Lower Hutt
-Tartus
-Sanandaj
-Jiutepec
-Chirchiq
-Quilmes
-Sao Bernardo do Campo
-Orange
-Eldoret
-Thiruvananthapuram
-Mughalsarai
-Ivanovo
-Osmanabad
-Durres
-Sarapul
-Leninsk-Kuznetsky
-Yamaguchi
-Ishinomaki
-Ixtapaluca
-Augusta
-Adama
-Anaheim
-Moscow
-Windhoek
-Kremenchuk
-Krusevac
-Clermont-Ferrand
-Dujiangyan City
-Yasuj
-Jiaozhou City
-Yuzhou
-Urgench
-Hastsal
-Linhares
-San Nicolas
-Saham
-Midsayap
-Prayagraj
-Johannesburg
-Graz
-Zaanstad
-Delmas
-Sao Caetano do Sul
-Lucknow
-Westland
-Dzerzhinsk
-Kafr El Sheikh
-Haiphong
-Guwahati
-Igarassu
-Uruma
-Amadora
-Ambala
-Anjo
-Ordu
-Ujjain
-Novo Gama
-Azamgarh
-Higashiomi
-Ikeda
-Agri
-Ikoma
-Ancona
-Amol
 Long Beach
-Heidelberg
-Guanghan
-Nottingham
-Mejicanos
-Sete Lagoas
-Sancti Spiritus
-San Pedro Sula
-Anchorage
-El Aaiun
-Novo Hamburgo
-Ouargla
-Abu Dhabi
-Izumi
-Imus
-Salihorsk
-Kansas City
-Yakutsk
-Khartoum
-Mueang Samut Prakan
-Norwich
-Hulunbuir
-Renqiu
-Umlazi
-Ibaraki
-Izumisano
-Otaru
-Ulyanovsk
-Kishanganj
-Jaragua do Sul
-Lavras
-Santo Tomas
-Siverek
-Kidapawan
-Nishio
-Ottawa
-Andong
-Guayaquil
-Los Angeles
-Saanich
 Hanumangarh
-Hiratsuka
-Alvorada
-Anju
-Uribia
-Ajax
-Xingcheng
-Ghazipur
-Raiganj
-Jehanabad
-Divinopolis
-Shubra al Khaymah
-Higashikurume
-Enugu
-Urdaneta
-Anapolis
-Sasaram
-Manaus
-Sacrament
-Tegal
-Limerick
-Kasganj
-Jaboatao dos Guarapes
-Saint-Louis
-San Salvador de Jujuy
-Yizheng
-Gelsenkirchen
-Nansana
-Al 'Arish
-Higashiosaka
-Ambattur
-Rajshahi
-Iida
-Almaty
-Yumen
-Nador
-Rio Claro
-Omaha
-Amarah
-Hollywood
-Dahod
-Delicias
-Smolensk
-Kaohsiung
-Giridih
-Hoshangabad
-Damascus
-Setif
-Florianopolis
-Santiago del Estero
-Orai
-Iwaki
-Ilorin
-Novy Urengoy
-Yangon
-Novocherkassk
-Kamal Shahr
-Raebareli
-Izumo
-Okinawa
-Al-Suwaira
-Amreli
-Ilagan
-Nikopol
-Lipetsk
-Krakow
-Winston-Salem
-Manolo Fortich
-Hobart
-Tegucigalpa
-Abuja
-Anantnag
-Gangtok
-Kirari Suleman Nagar
-Rybnik
-Kharkiv
-Vitoria de Santo Antao
-Osasco
-Oyama
-Arak
-Kragujevac
-Chernihiv
-Veliky Novgorod
-Damanhur
-Rotterdam
-Masjed Soleyman
-Nizhnevartovsk
-Kumbakonam
-Machakos
-Sharjah
-Hathras
-Saransk
-Kuantan
-Nouakchott
-Tikrit
-Tarnow
-Wichita Falls
-Sidi-bel-Abbes
-San Sebastian
-Nizhny Tagil
-Leeds
-Sivas
+Hofuf
+Fatehpur
+Recife
+East Jerusalem
+Maastricht
+Targu-Mures
 S.A.S. Nagar
-Ramadi
-Ilesa
-Auckland
-Dongyang
-Gangapur
-Roxas
-Santo Antonio de Jesus
-Saharanpur
-Riverside
-Elbasan
-Nablus
-San Luis
-San Juan del Rio
-Oshu
-Ueda
-Apopa
-Almeria
-Abadan
-Natal
-Lubumbashi
-Irkutsk
-Kalisz
-Zabol
-Lianyungang
-Grozny
-Yulin
-Noginsk
-Kaliningrad
-Dinajpur
-Riohacha
-Ashaiman
-Neijiang
-Gdansk
-Kitakyushu
-Uberaba
-Abakan
-Naucalpan
-Nashik
-Koblenz
-Zaoyang
-Gorakhpur
-Rawson
-North Las Vegas
-Santos
-Shreveport
-Tangerang
-Guangyuan
-Namangan
-North Dumdum
-Mykolaiv
-Vizianagaram
-Mostaganem
-Montego Bay
-Yining
-Geleen-Sittard
-Da Lat
-Turkistan
-Neuquen
-Nagercoil
-Lakhimpur
-Reykjavik
-Krasnodar
-Rourkela
-Anqing
-Giresun
-Nantes
-St. John's
-Sieverodonetsk
-Khon Kaen
-Nzerekore
-Espoo
-Oshawa
-Ashikaga
-Amroha
-Arusha
-Asansol
-Lakewood
+Rajahmundry
+Yazd
+Davangere
+El-Obeid
+Daly City
+Yancheng
+Glasgow
+Winston-Salem
+Mahbubnagar
+Radom
+Metepec
+Cardiff
+Fairfield
+Daejeon
+Nakhon Si Thammarat
+Tainan City
+Yelets
+Salihorsk
+Kahramanmaras
+Sadiqabad
 Dusseldorf
-Fremont
-Tula de Allende
-Elgin
-Nagasaki
-Itaguai
+Funchal
+Laghouat
+Titagarh
+Haarlemmermeer
+Richmond Hill
+Laiwu
+Uba
+Augsburg
+Garland
+Da Lat
+Tepic
+Cuauhtemoc
+Cabanatuan
+Nadiad
+Dallas
+Sabara
+Altay City
+Yan'an
+Nablus
+Sacrament
+Tacheng
+Gaziantep
+Phoenix
+Xai-Xai
+Inglewood
+Dabrowa Gornicza
+Artyom
+Madrid
+Damoh
+Haeju
+Ubon Ratchathani
 Ingolstadt
-Tarlac City
-York
-Kassel
-Levis
-Seversk
+Tadepalligudem
+Mahmoudiyah
+Hagonoy
+Yamuna Nagar
+Rzeszow
+Westminster
+Rafsanjan
+Najaf
+Fayyum
+Macheng
+Gomez Palacio
+Orleans
+Saratov
+Veracruz
+Zonguldak
 Kanchipuram
-Miskolc
-Campos dos Goytacazes
-Sri Jayawardenepura Kotte
-Esfahan
-Naujan
-Nagapattinam
-Minsk
-Kalol
-Lutsk
-Kota Bharu
-Udgir
-Ramagundam
-Mariveles
-Springs
-Seam Reab
-Bandar Abbas
-San Juan de la Maguana
-Akashi
+Malakal
+Laval
+Loikaw
+Wah Cantonment
+Taboao da Serra
+Ayacucho
+Obihiro
+Oakland
+Dakar
+Raiganj
+Jaboatao dos Guarapes
+Saarbrucken
+Nagasaki
 Imphal
-Leverkusen
-Nefteyugansk
-Kottayam
+Lviv
+Valle de Chalco
+Oral
+Lahti
+Igarassu
+Ulyanovsk
+Kaliningrad
+Da Nang
+Gagnoa
+Azamgarh
+Hafizabad
+Dahod
+Depok
+Kafr El Sheikh
+Hachioji
+Iasi
+Ibadan
+Naberezhnye Chelny
+Yaroslavl
+La Trinidad
+Dabgram
+Mainz
+Zagreb
+Bafoussam
 Mazari Sharif
 Ferraz de Vasconcelos
-San Buenaventura
-Accra
-Asmara
-Ageo
-Onomichi
-Iquitos
-Souk Ahras
-Salalah
-Hengyang
-Guelmim
-Magnitogorsk
-Korolyov
-Vitoria-Gasteiz
-Zhanjiang
-Gaocheng
-Gorgan
-Nagaon
-Naples
-San Francisco
-Orizaba
-Anand
-Depok
-Kermanshah
-Haarlemmermeer
-Raniganj
-Jerusalem
-Middlesbrough
-Hospet
-Targu-Mures
-Santiago de Cuba
-Asgabat
-Tangail
-Luhansk
-Krefeld
-Daly City
-Yiyang
-Ghent
-Tunis
-Sosnowiec
-Ciudad Valles
-Sao Luis
-San Cristobal de Las Casas
-South Bend
-Daqing
-Gothenburg
-Guanajuato
-Oberhausen
-Nasugbu
-Usak
-Kuala Terengganu
-Utrecht
-Tonk
-Khasavyurt
-Takarazuka
-Achalpur
-Riyadh
-Huddersfield
-Debrecen
-Nilopolis
-Soledad
-Diourbel
-Linz
-Zurich
-Heraklion
-Negombo
-Oruro
-Oklahoma City
-Yueyang
-Gloucester
-Raleigh
-Haarlem
-Mezhdurechensk
-Kiel
-Lysychansk
-Kuala Lumpur
-Ranaghat
-Taytay
-Yusufiyah
-Hindaun
-Norwalk
-Kanchrapara
-Al-Wahd
-Dallupura
-Abiko
-Osmaniye
-Erbil
-Lalitpur
-Rampur
-Reno
-Ongole
-Eluru
-Ussuriysk
-Kurnool
-Los Mochis
-Saratov
-Vasteras
-Salavat
-Titagarh
-Hiroshima
-Afyon
-Nancy
-Yaounde
-Enshi
-Imabari
-Ica
-Arequipa
-Angra dos Reis
-Saint-Denis
-Sabadell
-La Trinidad
-Dallas
-San Rafael
-Leipzig
-Gwalior
-Rouen
-Narayanganj
-Jahrom
-Mannheim
-Mira-Bhayandar
-Rufisque
-Etah
-Hartford
-Dandong
-Germiston
-Nizhnekamsk
-Kohat
-Taiz
-Ziguinchor
-Rustavi
-Ipoh
-Henderson
-Nukus
-Sao Mateus
-Sonipat
-Tumbes
-Schaerbeek
-Kut
-Tokat
-Taif
-Freiburg im Breisgau
-Uba
-Ambur
-Rostock
-Karaj
-Jeongeup
-Petropavlovsk-Kamchatsky
-Yonkers
-Sapucaia do Sul
-Ljubljana
-Anyama
-Ankara
-Arrah
-Herat
-Tours
-Srikakulam
-Mudanjiang
-General Trias
-Settat
-Taichung
-Guimaraes
-Shymkent
-Turhal
-Luleburgaz
-Zelenograd
-Dindigul
-Laval
-Lanus
-Springfield
-Dimitrovgrad
-Dongying
-Gurgaon
-Nawabganj
-Jos
-Shahjahanpur
-Reims
-Shahrisabz
-Zhaotong
-Gingoog
-Guntur
-Riga
-Aleppo
-Oslo
-Oyo
-Osh
-Hortolandia
-Aligarh
-Hyderabad
-Darjeeling
-Green Bay
-Yamato
-Oujda
-Ambon
-Nha Trang
-Gandhidham
-Maykop
-Pimpri-Chinchwad
-Delft
-Tel Aviv
-Virginia Beach
-Hamhung
-Garland
-Dhanbad
-Dunhuang
-Gunsan
-Nanping
-Glan
-Nanded
-Dewas
-Shah Alam
-Matanzas
-Sheffield
-Deyang
-Gaziantep
-Pembroke Pines
-Samarkand
-Danyang
-Guelph
-Hofuf
-Fayyum
-Marvdasht
-Tarsus
-Sumgait
-Tomsk
-Khanewal
-La Paz
-Zuwarah
-Hamm
-Meknes
-Stockholm
-Mogilev
-Volgodonsk
-Kirov
-Valparaiso de Goias
-Seeb
+Setif
+Fengcheng
+Gaza City
+Yalova
+Abu Ghraib
 Bottrop
-Porac
-Coral Springs
-Suhaj
-Jhelum
-Moers
-Subic
-Cuauhtemoc
-Cuttack
-Kyiv
-Vladivostok
-Karaikkudi
+Pervouralsk
+Kamensk-Uralsky
+Yakutsk
+Kragujevac
+Chorzow
+Wafangdian
+Nagano
+Osh
+Hathras
+Sabadell
+Leskovac
+Chelyabinsk
+Kadapa
+Atyrau
+Uzhhorod
+Dali
+Ipoh
+Haarlem
+Ma'anshan
+Nagercoil
+Lafayette
+Eldoret
+Tadipatri
+Imperatriz
+Zhytomyr
+Rafah
+Herat
+Telford
+Daito
+Oakville
+Edinburgh
+Hachinohe
+English Bazar
+Reading
+Ganzhou
+Ulanqab
+Bahadurgarh
+Habikino
+Oberhausen
+Naypyidaw
+Warsaw
+Wad Madani
+Iloilo City
+Yaizu
+Ube
+Eastbourne
+Elazig
+Gangneung
+Gaborone
+El Alto
+Odawara
+Al Qadarif
+Fallujah
+Ha'il
+La Paz
+Zacatecas
+Saanich
+Hafar Al-Batin
+Nanchang
+Giridih
+Ha Long
+Gapan
+Nagapattinam
+Madurai
+Islam Shahr
+Raebareli
+Ilam
+Machakos
+Sadr City
+Yaounde
+Elektrostal
+Leninsk-Kuznetsky
+Yusufiyah
+Habra
+Araure
+Ebina
+Azua
+Avadi
+Idlib
+Barysaw
+Wichita Falls
+Seam Reab
+Brasov
+Varzea Grande
+Enshi
+Innsbruck
+Kharkiv
+Valledupar
+Ranebennuru
+Udaipur
+Rabat
+Tal Afar
+Raichur
+Raigad
+Dasoguz
+Zaanstad
+Dadu
+Ujjain
+Naic
+Chernihiv
+Valinhos
+Saint-Etienne
+Ecatepec
+Chirchiq
+Qalat Sukkar
+Reykjavik
+Karaj
+Jacksonville
+Ekibastuz
+Zhangjiakou
+Unnao
+Obninsk
+Kangundo
+Olmaliq
+Qatif
+Facatativa
+Aurangabad
+Dezful
+La Union
+Nasiriyah
+Huaraz
+Zlatoust
+Tacloban
+Nagaon
+Nacala
+Athens
+Saint-Denis
+Sfax
+Xilinhot
+Tabriz
+Zamboanga City
+Yachiyo
+Oldenburg
+Ghent
+Tarnow
+Warangal
+La Ceiba
+Asyut
+Tambov
+Vacoas-Phoenix
+Xalapa
+Ajax
+Xiangyang
+Gangtok
+Kalisz
+Zagazig
+Gandhidham
+Machilipatnam
+Mogilev
+Visakhapatnam
+Moscow
+Windhoek
+Kaolack
+Krakow
+Weifang
+Gabes
+Sanandaj
+Jersey City
+Yasuj
+Jiutepec
+Cabimas
+Sinop
+Pakdasht
+Tabuk
+Kalar
+Rodriguez
+Zhuhai
+Irving
+Gandhinagar
+Rach Gia
+Ahvaz
+Zabol
+Laiyang
+Gharraf
+Flint
+Taizhou
+Ulm
+Maykop
+Prayagraj
+Jeongeup
+Plovdiv
+Vitebsk
+Kaesong
+Gadag-Betgeri
+Ilopango
+Obuasi
+Ilheus
+Suwayq
+Qianjiang
+Gondal
+Limerick
+Kabul
+Lakhimpur
+Rustaq
+Qalyub
+Bordeaux
+Xiamen
+Nador
+Reims
+Saham
+Miandoab
+Bhuj
+Jakarta
+Antwerp
+Pallavaram
+Macapa
+Aydin
+Narayanganj
+Jiroft
+Taif
+Foz do Iguacu

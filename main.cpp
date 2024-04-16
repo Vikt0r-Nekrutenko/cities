@@ -25,14 +25,14 @@ vector<string> combine_cities(vector<string> available_cities)
     srand(1998);
     // srand(time(nullptr));
 
-    Vertex matrix[MATRIX_SIZE];// = Matrix(MATRIX_SIZE, Row(MATRIX_SIZE));
-    Matrix mtx;
+    Vertex matrix[MATRIX_SIZE];
+    Matrix mtx;// = Matrix(MATRIX_SIZE, vector<vector<Edge>>(MATRIX_SIZE));
     for(auto &city : available_cities) {
-        // if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
+        if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
         // if(matrix[city.front() - 'A'].edges[city.back() - 'a'].word == nullptr)
             mtx[city.front() - 'A'][city.back() - 'a'].push_back({&city});
             *matrix[city.front() - 'A'].endPtr++ = {&city};
-        // }
+        }
     }
 
 
@@ -52,7 +52,7 @@ vector<string> combine_cities(vector<string> available_cities)
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
     // auto path = genetics_algorithm(matrix, 3, 4, true, {26, 1, 1, 0.742006f, 0.118091f, 0.581106f});
-    auto path = combined_algorithm(mtx, {26, 52, 1, 100, 2.f, 1.f, 0.1f});
+    auto path = combined_algorithm(mtx, {26, 52, 1, 1000, 2.f, 1.f, 0.1f});
     cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     vector<string> resultCities;

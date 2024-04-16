@@ -20,6 +20,8 @@ struct alignas(32) Edge
     std::string *word = nullptr;
     float pheromone = DEFAULT_PHEROMONE_VALUE;
     float etha = 0.f;
+    // float tao  = 0.f;
+    float prob = 0.f;
     bool isPassed = false;
     // uint8_t __padding[15];
 };
@@ -56,6 +58,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
         for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
             for(size_t z = 0; z < matrix[x][y].size(); ++z) {
                 matrix[x][y][z].etha = std::pow(matrix[x][y][z].word->length(), genome.beta);
+                matrix[x][y][z].prob = matrix[x][y][z].etha * std::pow(matrix[x][y][z].pheromone, genome.alpha);
             }}}
 
     pair<Path, size_t> bestPathPair;
@@ -76,11 +79,13 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 bool isEnd = true;
                 float totalProbability = 0.f;
                 for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                    for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
-                        Edge &edge = matrix[vertexNumber][y][z];
+                    auto it = matrix[vertexNumber][y].begin();
+                    auto itEnd = matrix[vertexNumber][y].cend();
+                    while(it != itEnd) {
+                        Edge &edge = *it++;
                         if(edge.isPassed)
                             continue;
-                        totalProbability += std::pow(edge.pheromone, genome.alpha) * edge.etha;
+                        totalProbability += edge.prob;
                         isEnd = false;
                     }}
 
@@ -106,11 +111,13 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 float target = randf(0.00001f, 0.99999f);
 
                 for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                    for(int z = matrix[vertexNumber][y].size() - 1; z >= 0; --z) {
-                        Edge &edge = matrix[vertexNumber][y][z];
+                    auto it = matrix[vertexNumber][y].begin();
+                    auto itEnd = matrix[vertexNumber][y].cend();
+                    while(it != itEnd) {
+                        Edge &edge = *it++;
                         if(edge.isPassed)
                             continue;
-                        float probability = std::pow(edge.pheromone, genome.alpha) * edge.etha / totalProbability;
+                        float probability = edge.prob / totalProbability;
                         currentProbability += probability;
                         if(ants > genome.greedyAntCount && target <= currentProbability){
                             selectedEdge = &edge;
@@ -177,6 +184,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                     float newPheromone = matrix[x][y][z].pheromone * genome.evaporation;
                     if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                         matrix[x][y][z].pheromone = newPheromone;
+                    matrix[x][y][z].prob = matrix[x][y][z].etha * std::pow(matrix[x][y][z].pheromone, genome.alpha);
                 }}}
     }
 
