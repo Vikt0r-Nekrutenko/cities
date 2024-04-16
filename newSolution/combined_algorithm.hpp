@@ -139,14 +139,18 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 antPathPairs.back().second += selectedEdge->word->length();
             }
 
+            auto t = chrono::high_resolution_clock::now();
             for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
                 for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                    for(int z = matrix[x][y].size() - 1; z >= 0; --z) {
-                        matrix[x][y][z].isPassed = false;
+                    Edge *ptr = matrix[x][y].data();
+                    Edge *end = matrix[x][y].data() + matrix[x][y].size();
+                    while(ptr != end) {
+                        ptr->isPassed = false;
+                        ++ptr;
                     }}}
+            tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
         }
 
-        auto t = chrono::high_resolution_clock::now();
         size_t colonyBestL = 0;
         pair<Path, size_t> *colonyBestPathPairPtr = nullptr;
         for(int i = genome.regularAntCount + genome.greedyAntCount - 1; i >= 0; --i) {
@@ -174,7 +178,6 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 colonyBestPathPairPtr = &colonyBestPathPairs[i];
             }
         }
-        tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
 
         for(int j = bestPathPair.first.size() - 1; j >= 0; --j) {
             float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * (float(genome.eliteAntCount) / 3.f);
@@ -201,7 +204,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                 }}}
     }
     cout << (tavg / tcount) << endl
-         << (tavg / tcount) * genome.iterations << endl;
+         << (tavg / tcount) * genome.iterations * (genome.regularAntCount + genome.greedyAntCount) << endl;
 
     return bestPathPair;
 }
