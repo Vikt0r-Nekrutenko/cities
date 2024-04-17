@@ -162,7 +162,7 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
             Edge **ptr = colonyBestPathPairs[i].first.data();
             Edge **end = colonyBestPathPairs[i].first.data() + colonyBestPathPairs[i].first.size();
 
-            float phadd = float(colonyBestPathPairs[i].second) / Q * ((i == colonyMaxPathIndex) ? (float(genome.eliteAntCount) / 1.5f) : 1);
+            float phadd = float(colonyBestPathPairs[i].second) / Q * (i == colonyMaxPathIndex ? (float(genome.eliteAntCount) / 1.5f) : 1.f);
             while(ptr != end) {
                 float newPheromone = (*ptr)->pheromone + phadd;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
@@ -199,8 +199,8 @@ pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
                     ++ptr;
                 }}}
     }
-    cout << (tavg / tcount) << endl
-        << (tavg / tcount) * genome.iterations * (genome.regularAntCount + genome.greedyAntCount) << endl;
+    // cout << (tavg / tcount) << endl
+        // << (tavg / tcount) * genome.iterations * (genome.regularAntCount + genome.greedyAntCount) << endl;
 
     return bestPathPair;
 }
