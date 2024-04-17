@@ -26,6 +26,7 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
         size_t colonyBestLength = 0;
         int colonyPathsIndex = 0;
         int colonyMaxPathIndex = 0;
+        int bestPathIndx = -1;
         PathPair colonyBestPathPairs[ants];
         PathPair *colonyPathPairPtr = colonyBestPathPairs;
         while(ants--) {
@@ -57,6 +58,10 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
                         if(colonyBestLength < colonyPathPairPtr->second) {
                             colonyBestLength = colonyPathPairPtr->second;
                             colonyMaxPathIndex = colonyPathsIndex;
+                        }
+                        if(bestPathPair.second < colonyPathPairPtr->second) {
+                            bestPathPair.second = colonyPathPairPtr->second;
+                            bestPathIndx = colonyPathsIndex;
                         }
                         ++colonyPathPairPtr;
                         ++colonyPathsIndex;
@@ -113,6 +118,19 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
                 }}
         }
 
+        if(bestPathIndx != -1) {
+            bestPathPair = colonyBestPathPairs[bestPathIndx];
+            cout << iterations << " " << bestPathPair.second << endl;
+            bestPathIndx = -1;
+            // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt");
+            // for(int x = MATRIX_SIZE - 1; x >= 0; --x)
+            //     for(int y = MATRIX_SIZE - 1; y >= 0; --y)
+            //         for(int z = matrix[x][y].size() - 1; z >= 0; --z)
+            //             mtxFile << matrix[x][y][z].pheromone << " ";
+            // mtxFile.close();
+        }
+
+
         for(int i = genome.regularAntCount + genome.greedyAntCount - 1; i >= 0; --i) {
             Edge **ptr = colonyBestPathPairs[i].first.data();
             Edge **end = colonyBestPathPairs[i].first.data() + colonyBestPathPairs[i].first.size();
@@ -123,16 +141,6 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                     (*ptr)->pheromone = newPheromone;
                 ++ptr;
-            }
-            if(bestPathPair.second < colonyBestPathPairs[i].second) {
-                bestPathPair = colonyBestPathPairs[i];
-                // cout << iterations << " " << bestPathPair.second << endl;
-                // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt");
-                // for(int x = MATRIX_SIZE - 1; x >= 0; --x)
-                //     for(int y = MATRIX_SIZE - 1; y >= 0; --y)
-                //         for(int z = matrix[x][y].size() - 1; z >= 0; --z)
-                //             mtxFile << matrix[x][y][z].pheromone << " ";
-                // mtxFile.close();
             }
         }
 
