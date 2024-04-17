@@ -27,7 +27,7 @@ vector<string> combine_cities(vector<string> available_cities)
     // srand(time(nullptr));
 
     Matrix3d mtx;// = Matrix(MATRIX_SIZE, vector<vector<Edge>>(MATRIX_SIZE));
-    vector<vector<Edge>> matrix{MATRIX_SIZE};
+    Matrix2d matrix;
     for(auto &city : available_cities) {
         if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
         // if(matrix[city.front() - 'A'].edges[city.back() - 'a'].word == nullptr)

@@ -22,7 +22,7 @@ struct alignas(32) Edge
 };
 
 using Matrix3d = std::vector<Edge>[MATRIX_SIZE][MATRIX_SIZE];
-using Matrix2d = std::vector<std::vector<Edge>>;
+using Matrix2d = std::vector<Edge>[MATRIX_SIZE];
 using Path = std::vector<Edge *>;
 using PathPair = std::pair<Path, size_t>;
 using PathPairs = std::vector<PathPair>;
