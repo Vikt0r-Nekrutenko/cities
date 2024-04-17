@@ -4,17 +4,16 @@
 #include <chrono>
 #include "combined_algorithm.hpp"
 
-pair<Path, size_t> combined_algorithm(Matrix3d &matrix, const Genome &genome)
+pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
 {
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-        for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-            Edge *ptr = matrix[x][y].data();
-            Edge *end = matrix[x][y].data() + matrix[x][y].size();
+            Edge *ptr = matrix[x].data();
+            Edge *end = matrix[x].data() + matrix[x].size();
             while(ptr != end) {
                 ptr->etha = std::pow(ptr->word->length(), genome.beta);
                 ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
                 ++ptr;
-            }}}
+            }}
 
     pair<Path, size_t> bestPathPair;
     int iterations = genome.iterations;
@@ -39,16 +38,15 @@ pair<Path, size_t> combined_algorithm(Matrix3d &matrix, const Genome &genome)
             while(true) {
                 bool isEnd = true;
                 float totalProbability = 0.f;
-                for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                    auto ptr = matrix[vertexNumber][y].begin();
-                    auto end = matrix[vertexNumber][y].cend();
-                    while(ptr != end) {
-                        Edge &edge = *ptr++;
-                        if(edge.isPassed)
-                            continue;
-                        totalProbability += edge.prob;
-                        isEnd = false;
-                    }}
+                auto ptr = matrix[vertexNumber].begin();
+                auto end = matrix[vertexNumber].cend();
+                while(ptr != end) {
+                    Edge &edge = *ptr++;
+                    if(edge.isPassed)
+                        continue;
+                    totalProbability += edge.prob;
+                    isEnd = false;
+                }
 
                 if(isEnd) {
                     if(antPathPairs.back().first.size() <= 1) {
@@ -77,24 +75,22 @@ pair<Path, size_t> combined_algorithm(Matrix3d &matrix, const Genome &genome)
                 float currentProbability = 0.f;
                 float target = randf(0.00001f, 0.99999f);
 
-                for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                    auto ptr = matrix[vertexNumber][y].begin();
-                    auto end = matrix[vertexNumber][y].cend();
-                    while(ptr != end) {
-                        Edge &edge = *ptr++;
-                        if(edge.isPassed)
-                            continue;
-                        float probability = edge.prob / totalProbability;
-                        currentProbability += probability;
-                        if(ants > genome.greedyAntCount && target <= currentProbability){
-                            selectedEdge = &edge;
-                            goto endSelect;
-                        } else if(ants <= genome.greedyAntCount && probability > maxProbability){
-                            maxProbability = probability;
-                            selectedEdge = &edge;
-                        }
+                ptr = matrix[vertexNumber].begin();
+                while(ptr != end) {
+                    Edge &edge = *ptr++;
+                    if(edge.isPassed)
+                        continue;
+                    float probability = edge.prob / totalProbability;
+                    currentProbability += probability;
+                    if(ants > genome.greedyAntCount && target <= currentProbability){
+                        selectedEdge = &edge;
+                        goto endSelect;
+                    } else if(ants <= genome.greedyAntCount && probability > maxProbability){
+                        maxProbability = probability;
+                        selectedEdge = &edge;
                     }
-                } endSelect:
+                }
+                endSelect:
 
                 vertexNumber = selectedEdge->word->back() - 'a';
                 selectedEdge->isPassed = true;
@@ -104,13 +100,12 @@ pair<Path, size_t> combined_algorithm(Matrix3d &matrix, const Genome &genome)
             // tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
 
             for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-                for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                    Edge *ptr = matrix[x][y].data();
-                    Edge *end = matrix[x][y].data() + matrix[x][y].size();
-                    while(ptr != end) {
-                        ptr->isPassed = false;
-                        ++ptr;
-                    }}}
+                Edge *ptr = matrix[x].data();
+                Edge *end = matrix[x].data() + matrix[x].size();
+                while(ptr != end) {
+                    ptr->isPassed = false;
+                    ++ptr;
+                }}
         }
 
         for(int i = genome.regularAntCount + genome.greedyAntCount - 1; i >= 0; --i) {
@@ -143,16 +138,15 @@ pair<Path, size_t> combined_algorithm(Matrix3d &matrix, const Genome &genome)
         }
 
         for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-            for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
-                Edge *ptr = matrix[x][y].data();
-                Edge *end = matrix[x][y].data() + matrix[x][y].size();
-                while(ptr != end) {
-                    float newPheromone = ptr->pheromone * genome.evaporation;
-                    if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
-                        ptr->pheromone = newPheromone;
-                    ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
-                    ++ptr;
-                }}}
+            Edge *ptr = matrix[x].data();
+            Edge *end = matrix[x].data() + matrix[x].size();
+            while(ptr != end) {
+                float newPheromone = ptr->pheromone * genome.evaporation;
+                if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
+                    ptr->pheromone = newPheromone;
+                ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
+                ++ptr;
+            }}
     }
     // cout << (tavg / tcount) << endl
     // << (tavg / tcount) * genome.iterations * (genome.regularAntCount + genome.greedyAntCount) << endl;
