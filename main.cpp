@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iterator>
 #include <chrono>
+#include <iostream>
 
 // #include "genetic_algorithm.hpp"
 #include "combined_algorithm.hpp"
@@ -25,18 +26,13 @@ vector<string> combine_cities(vector<string> available_cities)
     srand(1998);
     // srand(time(nullptr));
 
-    Vertex matrix[MATRIX_SIZE];
     Matrix mtx;// = Matrix(MATRIX_SIZE, vector<vector<Edge>>(MATRIX_SIZE));
     for(auto &city : available_cities) {
         if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
         // if(matrix[city.front() - 'A'].edges[city.back() - 'a'].word == nullptr)
             mtx[city.front() - 'A'][city.back() - 'a'].push_back({&city});
-            *matrix[city.front() - 'A'].endPtr++ = {&city};
         }
     }
-
-
-
     // cout << "time1: [" << chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - time1).count() << "] min." << endl;
 
 
