@@ -20,24 +20,24 @@ int main()
 
     return write_to_file(cities_list);
 }
-
+#include <cmath>
 vector<string> combine_cities(vector<string> available_cities)
 {
     srand(1998);
     // srand(time(nullptr));
 
-    Matrix mtx;// = Matrix(MATRIX_SIZE, vector<vector<Edge>>(MATRIX_SIZE));
+    Matrix3d mtx;// = Matrix(MATRIX_SIZE, vector<vector<Edge>>(MATRIX_SIZE));
+    vector<vector<Edge>> matrix{MATRIX_SIZE};
     for(auto &city : available_cities) {
         if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
         // if(matrix[city.front() - 'A'].edges[city.back() - 'a'].word == nullptr)
             mtx[city.front() - 'A'][city.back() - 'a'].push_back({&city});
+            matrix[city.front() - 'A'].push_back({&city});
         }
     }
+    // auto time1 = chrono::high_resolution_clock::now();
     // cout << "time1: [" << chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - time1).count() << "] min." << endl;
-
-
-    // cout << "time2: [" << chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - time1).count() << "] min." << endl;
-
+    // return available_cities;
         // tmpMatrix[city.front() - 'A'][city.back() - 'a'].push_back({&city});
     // ifstream mtxFile("matrixes/16579.txt");
     // for(int x = MATRIX_SIZE - 1; x >= 0; --x)

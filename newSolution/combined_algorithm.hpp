@@ -21,7 +21,7 @@ struct alignas(32) Edge
     bool isPassed = false;
 };
 
-using Matrix = std::vector<Edge>[MATRIX_SIZE][MATRIX_SIZE];
+using Matrix3d = std::vector<Edge>[MATRIX_SIZE][MATRIX_SIZE];
 using Path = std::vector<Edge *>;
 using PathPair = std::pair<Path, size_t>;
 using PathPairs = std::vector<PathPair>;
@@ -40,6 +40,6 @@ struct Genome
     float evaporation;
 };
 
-pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome);
+pair<Path, size_t> combined_algorithm(Matrix3d &matrix, const Genome &genome);
 
 #endif // COMBINED_ALGORITHM_HPP

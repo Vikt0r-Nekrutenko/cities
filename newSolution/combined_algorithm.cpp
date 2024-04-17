@@ -4,7 +4,7 @@
 #include <chrono>
 #include "combined_algorithm.hpp"
 
-pair<Path, size_t> combined_algorithm(Matrix &matrix, const Genome &genome)
+pair<Path, size_t> combined_algorithm(Matrix3d &matrix, const Genome &genome)
 {
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
         for(int y = MATRIX_SIZE - 1; y >= 0; --y) {
