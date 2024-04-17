@@ -7,8 +7,8 @@
 pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
 {
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-            Edge *ptr = matrix[x].data();
-            Edge *end = matrix[x].data() + matrix[x].size();
+            Edge *ptr = matrix[x].second.data();
+            Edge *end = matrix[x].second.data() + matrix[x].second.size();
             while(ptr != end) {
                 ptr->etha = std::pow(ptr->word->length(), genome.beta);
                 ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
@@ -38,17 +38,20 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
             while(true) {
                 bool isEnd = true;
                 float totalProbability = 0.f;
-                auto ptr = matrix[vertexNumber].begin();
-                auto end = matrix[vertexNumber].cend();
-                while(ptr != end) {
-                    Edge &edge = *ptr++;
-                    if(edge.isPassed)
-                        continue;
-                    totalProbability += edge.prob;
-                    isEnd = false;
+                if(matrix[vertexNumber].first == true) {
+                    Edge *ptr = matrix[vertexNumber].second.data();
+                    Edge *end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
+                    while(ptr != end) {
+                        Edge &edge = *ptr++;
+                        if(edge.isPassed)
+                            continue;
+                        totalProbability += edge.prob;
+                        isEnd = false;
+                    }
                 }
 
                 if(isEnd) {
+                    matrix[vertexNumber].first = false;
                     if(antPathPairs.back().first.size() <= 1) {
                         *colonyPathPairPtr = antPathPairs[bestPathForOneAntIndex];
                         if(colonyBestLength < colonyPathPairPtr->second) {
@@ -75,7 +78,8 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
                 float currentProbability = 0.f;
                 float target = randf(0.00001f, 0.99999f);
 
-                ptr = matrix[vertexNumber].begin();
+                Edge *ptr = matrix[vertexNumber].second.data();
+                Edge *end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
                 while(ptr != end) {
                     Edge &edge = *ptr++;
                     if(edge.isPassed)
@@ -100,8 +104,9 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
             // tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
 
             for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-                Edge *ptr = matrix[x].data();
-                Edge *end = matrix[x].data() + matrix[x].size();
+                matrix[x].first = true;
+                Edge *ptr = matrix[x].second.data();
+                Edge *end = matrix[x].second.data() + matrix[x].second.size();
                 while(ptr != end) {
                     ptr->isPassed = false;
                     ++ptr;
@@ -138,8 +143,8 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
         }
 
         for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-            Edge *ptr = matrix[x].data();
-            Edge *end = matrix[x].data() + matrix[x].size();
+            Edge *ptr = matrix[x].second.data();
+            Edge *end = matrix[x].second.data() + matrix[x].second.size();
             while(ptr != end) {
                 float newPheromone = ptr->pheromone * genome.evaporation;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)

@@ -32,7 +32,8 @@ vector<string> combine_cities(vector<string> available_cities)
         if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
         // if(matrix[city.front() - 'A'].edges[city.back() - 'a'].word == nullptr)
             mtx[city.front() - 'A'][city.back() - 'a'].push_back({&city});
-            matrix[city.front() - 'A'].push_back({&city});
+            matrix[city.front() - 'A'].first = true;
+            matrix[city.front() - 'A'].second.push_back({&city});
         }
     }
     // auto time1 = chrono::high_resolution_clock::now();
