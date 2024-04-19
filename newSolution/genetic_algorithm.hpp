@@ -83,7 +83,15 @@ pair<Path, size_t> genetics_algorithm(Matrix2d &matrix, int generationsCount, in
         for(size_t i = 0; i < generationGenomes.size(); ++i)
             generationGenomes[i].first = bestGenomeInLastGeneration;
         cout << "Generation #: [" << generationN << "] result: [" << bestGenomePerGenerationL << "] per [" << double(chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - generationBeginTime).count()) / 1000.0 << "] sec." << endl;
-        logFile << generationN << " " << bestGenomePerGenerationL << " " << bestGenomeInLastGeneration.regularAntCount << " " << bestGenomeInLastGeneration.eliteAntCount << " " << bestGenomeInLastGeneration.iterations << " " << bestGenomeInLastGeneration.alpha << " " << bestGenomeInLastGeneration.beta << " " << bestGenomeInLastGeneration.evaporation << endl;
+        logFile << generationN << " "
+                << bestGenomePerGenerationL
+                << " " << bestGenomeInLastGeneration.regularAntCount
+                << " " << bestGenomeInLastGeneration.eliteAntCount
+                << " " << bestGenomeInLastGeneration.greedyAntCount
+                << " " << bestGenomeInLastGeneration.iterations
+                << " " << bestGenomeInLastGeneration.alpha
+                << " " << bestGenomeInLastGeneration.beta
+                << " " << bestGenomeInLastGeneration.evaporation << endl;
     } while(++generationN < generationsCount);
     logFile.close();
     return bestPathPair;
