@@ -9,16 +9,17 @@
 #define GEN_PER_GENOME          6
 #define MAX_REGULAR_ANT_COUNT   MATRIX_SIZE
 #define MAX_ELITE_ANT_COUNT     3
+#define MAX_GREEDY_ANT_COUNT    3
 #define MAX_ITERATIONS          1
 #define MAX_ALPHA               5.f
 #define MAX_BETA                5.f
 #define MAX_EVAPORATION         1.f
 
-void pullPheromonesIntoMatrix(Matrix &matrix, const string &fileName);
+void pullPheromonesIntoMatrix(Matrix2d &matrix, const string &fileName);
 
-void pushPheromonesIntoFile(const Matrix &matrix, const string &fileName);
+void pushPheromonesIntoFile(const Matrix2d &matrix, const string &fileName);
 
-pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int genomesPerGeneration, bool arePushMatrix = false, const Genome &startGenome = {-1,-1,-1,-1,-1,-1})
+pair<Path, size_t> genetics_algorithm(Matrix2d &matrix, int generationsCount, int genomesPerGeneration, bool arePushMatrix = false, const Genome &startGenome = {-1,-1,-1,-1,-1,-1})
 {
     vector<pair<Genome, size_t>> generationGenomes(genomesPerGeneration);
 
@@ -26,6 +27,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
         if(startGenome.iterations == -1) {
             genome.first.regularAntCount    = randd(1, MAX_REGULAR_ANT_COUNT + 1);
             genome.first.eliteAntCount      = randd(1, MAX_ELITE_ANT_COUNT + 1);
+            genome.first.greedyAntCount     = randd(1, MAX_GREEDY_ANT_COUNT + 1);
             genome.first.iterations         = randd(1, MAX_ITERATIONS + 1);
             genome.first.evaporation        = randf(0.1f, MAX_EVAPORATION);
             genome.first.alpha              = randf(0.1f, MAX_ALPHA);
@@ -33,6 +35,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
         } else {
             genome.first.regularAntCount    = startGenome.regularAntCount;
             genome.first.eliteAntCount      = startGenome.eliteAntCount;
+            genome.first.greedyAntCount     = startGenome.greedyAntCount;
             genome.first.iterations         = startGenome.iterations;
             genome.first.evaporation        = startGenome.evaporation;
             genome.first.alpha              = startGenome.alpha;
@@ -54,6 +57,7 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
         case 3: generationGenomes[mutableGenerationN].first.evaporation     = randf(0.1f, MAX_EVAPORATION); break;
         case 4: generationGenomes[mutableGenerationN].first.alpha           = randf(0.1f, MAX_ALPHA); break;
         case 5: generationGenomes[mutableGenerationN].first.beta            = randf(0.1f, MAX_BETA); break;
+        case 6: generationGenomes[mutableGenerationN].first.greedyAntCount  = randf(0.1f, MAX_GREEDY_ANT_COUNT + 1); break;
         }
         size_t bestGenomePerGenerationL = 0;
 
@@ -85,23 +89,29 @@ pair<Path, size_t> genetics_algorithm(Matrix &matrix, int generationsCount, int 
     return bestPathPair;
 }
 
-void pullPheromonesIntoMatrix(Matrix &matrix, const string &fileName)
+void pullPheromonesIntoMatrix(Matrix2d &matrix, const string &fileName)
 {
     ifstream mtxFile(fileName);
-    for(int x = MATRIX_SIZE - 1; x >= 0; --x)
-        for(int y = MATRIX_SIZE - 1; y >= 0; --y)
-            for(int z = matrix[x][y].size() - 1; z >= 0; --z)
-                mtxFile >> matrix[x][y][z].pheromone;
+    for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+        Edge *ptr = matrix[x].second.data();
+        Edge *end = matrix[x].second.data() + matrix[x].second.size();
+        while(ptr != end) {
+            mtxFile >> ptr->pheromone;
+            ++ptr;
+        }}
     mtxFile.close();
 }
 
-void pushPheromonesIntoFile(const Matrix &matrix, const string &fileName)
+void pushPheromonesIntoFile(const Matrix2d &matrix, const string &fileName)
 {
     ofstream mtxFile(fileName);
-    for(int x = MATRIX_SIZE - 1; x >= 0; --x)
-        for(int y = MATRIX_SIZE - 1; y >= 0; --y)
-            for(int z = matrix[x][y].size() - 1; z >= 0; --z)
-                mtxFile << matrix[x][y][z].pheromone << " ";
+    for(int x = MATRIX_SIZE - 1; x >= 0; --x)   {
+        const Edge *ptr = matrix[x].second.data();
+        const Edge *end = matrix[x].second.data() + matrix[x].second.size();
+        while(ptr != end) {
+            mtxFile << ptr->pheromone << " ";
+            ++ptr;
+        }}
     mtxFile.close();
 }
 

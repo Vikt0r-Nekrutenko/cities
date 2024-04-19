@@ -122,12 +122,15 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
             bestPathPair = colonyBestPathPairs[bestPathIndx];
             cout << iterations << " " << bestPathPair.second << endl;
             bestPathIndx = -1;
-            // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt");
-            // for(int x = MATRIX_SIZE - 1; x >= 0; --x)
-            //     for(int y = MATRIX_SIZE - 1; y >= 0; --y)
-            //         for(int z = matrix[x][y].size() - 1; z >= 0; --z)
-            //             mtxFile << matrix[x][y][z].pheromone << " ";
-            // mtxFile.close();
+            ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
+            for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+                Edge *ptr = matrix[x].second.data();
+                Edge *end = matrix[x].second.data() + matrix[x].second.size();
+                while(ptr != end) {
+                    mtxFile << ptr->pheromone << " ";
+                    ++ptr;
+                }}
+            mtxFile.close();
         }
 
 

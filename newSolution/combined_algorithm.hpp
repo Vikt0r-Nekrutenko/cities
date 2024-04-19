@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#define DEFAULT_PHEROMONE_VALUE 10.f
+#define DEFAULT_PHEROMONE_VALUE 5.f
 #define MINIMUM_PHEROMONE_VALUE 0.01f
 #define MAXIMUM_PHEROMONE_VALUE 100.f
 #define Q                       10'000.f
