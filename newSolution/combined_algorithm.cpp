@@ -4,7 +4,7 @@
 #include <chrono>
 #include "combined_algorithm.hpp"
 
-pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &genome)
+Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &genome)
 {
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
             Edge *ptr = matrix[x].second.data();
@@ -165,5 +165,5 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const size_t edgeCount, 
     // cout << (tavg / tcount) << endl
     // << (tavg / tcount) * genome.iterations * (genome.regularAntCount + genome.greedyAntCount) << endl;
 
-    return bestPathPair;
+    return bestPathPair.first;
 }

@@ -8,7 +8,7 @@
 
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
-size_t validate_city_list(vector<string> &resultCities, const pair<Path, size_t> &path);
+size_t validate_city_list(vector<string> &resultCities, const Path &path);
 
 int write_to_file(vector<string> cities_list);
 
@@ -30,13 +30,13 @@ vector<string> combine_cities(vector<string> available_cities)
     Matrix2d matrix;
     size_t edgeCount = 0;
     for(auto &city : available_cities) {
-        if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
+        // if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
         // if(matrix[city.front() - 'A'].edges[city.back() - 'a'].word == nullptr)
             mtx[city.front() - 'A'][city.back() - 'a'].push_back({&city});
             matrix[city.front() - 'A'].first = true;
             matrix[city.front() - 'A'].second.push_back({&city});
             ++edgeCount;
-        }
+        // }
     }
     /*auto time1 = chrono::high_resolution_clock::now();
     struct PaTh {
@@ -183,12 +183,12 @@ int write_to_file(vector<string> cities_list)
     return 0;
 }
 
-size_t validate_city_list(vector<string> &resultCities, const pair<Path, size_t> &path)
+size_t validate_city_list(vector<string> &resultCities, const Path &path)
 {
     size_t length = 0ull;
 
-    int validationSymbol = path.first.front()->word->front() - 'A';
-    for(const auto &edge : path.first) {
+    int validationSymbol = path.front()->word->front() - 'A';
+    for(const auto &edge : path) {
         if(edge->word->front() - 'A' != validationSymbol) {
             throw "Erorr!!! Path isn't valid!!!";
         }
