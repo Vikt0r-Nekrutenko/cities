@@ -15,7 +15,6 @@ using namespace std;
 struct alignas(32) Edge
 {
     std::string *word = nullptr;
-    int visitAntNumber = 0;
     float pheromone = DEFAULT_PHEROMONE_VALUE;
     float etha = 0.f;
     float prob = 0.f;

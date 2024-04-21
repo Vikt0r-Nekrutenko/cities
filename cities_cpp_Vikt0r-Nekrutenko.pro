@@ -10,11 +10,12 @@ QMAKE_CXXFLAGS_RELEASE += -Ofast
 
 SOURCES += \
         main.cpp \
-    newSolution/combined_algorithm.cpp
+    newSolution/combined_algorithm.cpp \
+    # newSolution/genetic_algorithm.cpp
 
 HEADERS += \
     newSolution/combined_algorithm.hpp \
-    newSolution/genetic_algorithm.hpp
+    # newSolution/genetic_algorithm.hpp
 
 INCLUDEPATH += \
     newSolution \
