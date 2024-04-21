@@ -31,9 +31,10 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
         PathPair *colonyPathPairPtr = colonyBestPathPairs;
         while(ants--) {
             int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
-            PathPairs antPathPairs{{{}, 0ull}};
-            size_t bestPathForOneAntIndex = 0ull;
-            size_t bestPathForOneAntLength = 0ull;
+            PathPair workingStack {{}, 0ull};
+            // PathPairs antPathPairs{{{}, 0ull}};
+            // size_t bestPathForOneAntIndex = 0ull;
+            // size_t bestPathForOneAntLength = 0ull;
 
             // auto t = chrono::high_resolution_clock::now();
             while(true) {
@@ -53,28 +54,47 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
 
                 if(isEnd) {
                     matrix[vertexNumber].first = false;
-                    if(antPathPairs.back().first.size() <= 1) {
-                        *colonyPathPairPtr = antPathPairs[bestPathForOneAntIndex];
-                        if(colonyBestLength < colonyPathPairPtr->second) {
-                            colonyBestLength = colonyPathPairPtr->second;
-                            colonyMaxPathIndex = colonyPathsIndex;
-                        }
+                    // if(antPathPairs.back().first.size() <= 1) {
+                    //     *colonyPathPairPtr = antPathPairs[bestPathForOneAntIndex];
+                    //     if(colonyBestLength < colonyPathPairPtr->second) {
+                    //         colonyBestLength = colonyPathPairPtr->second;
+                    //         colonyMaxPathIndex = colonyPathsIndex;
+                    //     }
+                    //     if(bestPathPair.second < colonyPathPairPtr->second) {
+                    //         bestPathPair.second = colonyPathPairPtr->second;
+                    //         bestPathIndx = colonyPathsIndex;
+                    //     }
+                    //     ++colonyPathPairPtr;
+                    //     ++colonyPathsIndex;
+                    //     break;
+                    // }
+                    // if(antPathPairs.back().second > bestPathForOneAntLength) {
+                    //     bestPathForOneAntIndex = antPathPairs.size() - 1;
+                    //     bestPathForOneAntLength = antPathPairs.back().second;
+                    // }
+
+                    // antPathPairs.push_back({{antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1},
+                    //                         antPathPairs.back().second - antPathPairs.back().first.back()->word->length()});
+                    // vertexNumber = antPathPairs.back().first.back()->word->back() - 'a';
+                    if(workingStack.second > colonyPathPairPtr->second) {
+                        *colonyPathPairPtr = workingStack;
+                    }
+                    if(workingStack.first.size() <= 1) {
                         if(bestPathPair.second < colonyPathPairPtr->second) {
                             bestPathPair.second = colonyPathPairPtr->second;
                             bestPathIndx = colonyPathsIndex;
+                        }
+                        if(colonyBestLength < colonyPathPairPtr->second) {
+                            colonyBestLength = colonyPathPairPtr->second;
+                            colonyMaxPathIndex = colonyPathsIndex;
                         }
                         ++colonyPathPairPtr;
                         ++colonyPathsIndex;
                         break;
                     }
-                    if(antPathPairs.back().second > bestPathForOneAntLength) {
-                        bestPathForOneAntIndex = antPathPairs.size() - 1;
-                        bestPathForOneAntLength = antPathPairs.back().second;
-                    }
-
-                    antPathPairs.push_back({{antPathPairs.back().first.begin(), antPathPairs.back().first.end() - 1},
-                                            antPathPairs.back().second - antPathPairs.back().first.back()->word->length()});
-                    vertexNumber = antPathPairs.back().first.back()->word->back() - 'a';
+                    workingStack.second -= workingStack.first.back()->word->length();
+                    vertexNumber = workingStack.first.back()->word->front() - 'A';
+                    workingStack.first.pop_back();
                     continue;
                 }
 
@@ -103,8 +123,10 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
 
                 vertexNumber = selectedEdge->word->back() - 'a';
                 selectedEdge->isPassed = true;
-                antPathPairs.back().first.push_back(selectedEdge);
-                antPathPairs.back().second += selectedEdge->word->length();
+                // antPathPairs.back().first.push_back(selectedEdge);
+                // antPathPairs.back().second += selectedEdge->word->length();
+                workingStack.first.push_back(selectedEdge);
+                workingStack.second += selectedEdge->word->length();
             }
             // tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
 
@@ -120,7 +142,7 @@ pair<Path, size_t> combined_algorithm(Matrix2d &matrix, const Genome &genome)
 
         if(bestPathIndx != -1) {
             bestPathPair = colonyBestPathPairs[bestPathIndx];
-            // cout << iterations << " " << bestPathPair.second << endl;
+            cout << iterations << " " << bestPathPair.second << endl;
             bestPathIndx = -1;
             // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
             // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {

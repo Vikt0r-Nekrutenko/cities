@@ -36,7 +36,7 @@ vector<string> combine_cities(vector<string> available_cities)
             matrix[city.front() - 'A'].second.push_back({&city});
         }
     }
-    auto time1 = chrono::high_resolution_clock::now();
+    /*auto time1 = chrono::high_resolution_clock::now();
     struct PaTh {
         Edge *edges[1000];
         Edge **end;
@@ -130,7 +130,7 @@ vector<string> combine_cities(vector<string> available_cities)
         ++i;
     }
     cout << l << endl;
-    return available_cities;
+    return available_cities;*/
         // tmpMatrix[city.front() - 'A'][city.back() - 'a'].push_back({&city});
     // 17:39 - 19:53 [2:13] = 16595/10000
     // 20:51 - 21:41 [1:00] = 16564/1500?
@@ -145,15 +145,15 @@ vector<string> combine_cities(vector<string> available_cities)
     //     }}
     // mtxFile.close();
 
-    // auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
+    auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
     // // auto path = genetics_algorithm(matrix, 100, 1, true, {26, 13, 0, 100, 2.25f, 0.75f, 0.2f});
-    // auto path = combined_algorithm(matrix, {26, 13, 1, 1'000, 2.25f, 0.75f, 0.3f});
-    // cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
+    auto path = combined_algorithm(matrix, {26, 13, 1, 1'000, 2.25f, 0.75f, 0.3f});
+    cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     vector<string> resultCities;
 
     try {
-        // cout << "CONGRATULATION!!! Path length: [" << validate_city_list(resultCities, colonyBestPathPairs[0]) << "] symbols." << endl;
+        cout << "CONGRATULATION!!! Path length: [" << validate_city_list(resultCities, path) << "] symbols." << endl;
     } catch(char const*ex) { cout << ex << endl; }
 
     return resultCities;
