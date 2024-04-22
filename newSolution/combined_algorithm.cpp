@@ -27,8 +27,8 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
         int colonyMaxPathIndex = 0;
         int bestPathIndx = -1;
         int ants = genome.regularAntCount + genome.greedyAntCount;
-        PathPair colonyBestPathPairs[genome.regularAntCount + genome.greedyAntCount];
-        PathPair *colonyPathPairPtr = colonyBestPathPairs;
+        PathPair colonyPathsPairs[genome.regularAntCount + genome.greedyAntCount];
+        PathPair *colonyPathPairPtr = colonyPathsPairs;
         while(ants--) {
             int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
             PathPair workingStack {Path{edgeCount}, 0ull};
@@ -53,14 +53,17 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
                 if(isEnd) {
                     matrix[vertexNumber].first = false;
                     if(workingStack.second > colonyPathPairPtr->second) {
+                        // new best path for current ant
                         *colonyPathPairPtr = {{workingStack.first.begin(), stackIt}, workingStack.second};
                     }
                     if(stackIt == workingStack.first.begin() + 1) {
                         if(bestPathPair.second < colonyPathPairPtr->second) {
+                            // new global best path(index in current colony paths)
                             bestPathPair.second = colonyPathPairPtr->second;
                             bestPathIndx = colonyPathsIndex;
                         }
                         if(colonyBestLength < colonyPathPairPtr->second) {
+                            // max path in current colony for local ants
                             colonyBestLength = colonyPathPairPtr->second;
                             colonyMaxPathIndex = colonyPathsIndex;
                         }
@@ -71,7 +74,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
                     --stackIt;
                     workingStack.second -= (*stackIt)->word->length();
                     vertexNumber = (*stackIt)->word->front() - 'A';
-                    // workingStack.first.pop_back();
                     continue;
                 }
 
@@ -100,7 +102,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
 
                 vertexNumber = selectedEdge->word->back() - 'a';
                 selectedEdge->isPassed = true;
-                // workingStack.first.push_back(selectedEdge);
                 *stackIt++ = selectedEdge;
                 workingStack.second += selectedEdge->word->length();
             }
@@ -117,26 +118,25 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
         }
 
         if(bestPathIndx != -1) {
-            bestPathPair = colonyBestPathPairs[bestPathIndx];
-            // cout << iterations << " " << bestPathPair.second << endl;
-            bestPathIndx = -1;
-            // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
-            // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-            //     Edge *ptr = matrix[x].second.data();
-            //     Edge *end = matrix[x].second.data() + matrix[x].second.size();
-            //     while(ptr != end) {
-            //         mtxFile << ptr->pheromone << " ";
-            //         ++ptr;
-            //     }}
-            // mtxFile.close();
+            bestPathPair = colonyPathsPairs[bestPathIndx];
+            cout << iterations << " " << bestPathPair.second << endl;
+            ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
+            for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+                Edge *ptr = matrix[x].second.data();
+                Edge *end = matrix[x].second.data() + matrix[x].second.size();
+                while(ptr != end) {
+                    mtxFile << ptr->pheromone << " ";
+                    ++ptr;
+                }}
+            mtxFile.close();
         }
 
 
         for(int i = genome.regularAntCount + genome.greedyAntCount - 1; i >= 0; --i) {
-            Edge **ptr = colonyBestPathPairs[i].first.data();
-            Edge **end = colonyBestPathPairs[i].first.data() + colonyBestPathPairs[i].first.size();
+            Edge **ptr = colonyPathsPairs[i].first.data();
+            Edge **end = colonyPathsPairs[i].first.data() + colonyPathsPairs[i].first.size();
 
-            float phadd = float(colonyBestPathPairs[i].second) / Q * (i == colonyMaxPathIndex ? (float(genome.eliteAntCount) / 1.5f) : 1.f);
+            float phadd = float(colonyPathsPairs[i].second) / Q * (i == colonyMaxPathIndex ? (float(genome.eliteAntCount) / 1.5f) : 1.f);
             while(ptr != end) {
                 float newPheromone = (*ptr)->pheromone + phadd;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
