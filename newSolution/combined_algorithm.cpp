@@ -4,7 +4,7 @@
 #include <chrono>
 #include "combined_algorithm.hpp"
 
-Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &genome)
+Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &genome, const PathPair &prevPath)
 {
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
             Edge *ptr = matrix[x].second.data();
@@ -15,7 +15,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
                 ++ptr;
             }}
 
-    pair<Path, size_t> bestPathPair;
+    pair<Path, size_t> bestPathPair = prevPath;
     int iterations = genome.iterations;
     int beginVertex = 0;
     // float tavg = 0.f;

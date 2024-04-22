@@ -41,6 +41,6 @@ struct Genome
     float evaporation;
 };
 
-Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &genome);
+Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &genome, const PathPair &prevPath = {});
 
 #endif // COMBINED_ALGORITHM_HPP

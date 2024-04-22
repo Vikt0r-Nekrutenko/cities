@@ -9,6 +9,7 @@
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
 size_t validate_city_list(vector<string> &resultCities, const Path &path);
+PathPair read_previous_result(Matrix2d &matrix);
 
 int write_to_file(vector<string> cities_list);
 
@@ -23,8 +24,8 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
-    // srand(1998);
-    srand(time(nullptr));
+    srand(1998);
+    // srand(time(nullptr));
 
     Matrix3d mtx;// = Matrix(MATRIX_SIZE, vector<vector<Edge>>(MATRIX_SIZE));
     Matrix2d matrix;
@@ -38,14 +39,14 @@ vector<string> combine_cities(vector<string> available_cities)
             ++edgeCount;
         // }
     }
-    /*auto time1 = chrono::high_resolution_clock::now();
-    cout << "time1: [" << chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - time1).count() << "] min." << endl;
-    return available_cities;*/
+    // auto time1 = chrono::high_resolution_clock::now();
+    // cout << "time1: [" << chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - time1).count() << "] min." << endl;
+    // return available_cities;
 
     // 17:39 - 19:53 [2:13] = 16595/10000
     // 20:51 - 21:41 [1:00] = 16564/1500?
     // 1800
-    ifstream mtxFile("matrixes/16697.txt");
+    ifstream mtxFile("matrixes/16694.txt");
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
         Edge *ptr = matrix[x].second.data();
         Edge *end = matrix[x].second.data() + matrix[x].second.size();
@@ -57,7 +58,7 @@ vector<string> combine_cities(vector<string> available_cities)
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
     // // auto path = genetics_algorithm(matrix, 100, 1, true, {26, 13, 0, 100, 2.25f, 0.75f, 0.2f});
-    auto path = combined_algorithm(matrix, edgeCount, {26, 13, 1, 1'000, 2.25f, 0.75f, 0.3f});
+    auto path = combined_algorithm(matrix, edgeCount, {26, 13, 0, 10'00, 2.25f, 0.75f, 0.3f}, read_previous_result(matrix));
     cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     vector<string> resultCities;
@@ -105,4 +106,22 @@ size_t validate_city_list(vector<string> &resultCities, const Path &path)
         resultCities.push_back(*edge->word);
     }
     return length;
+}
+
+PathPair read_previous_result(Matrix2d &matrix)
+{
+    string line;
+    ifstream input_file("output.txt");
+    vector<string> available_cities;
+    PathPair prevResult;
+    while (getline(input_file, line)) {
+        for(auto it = matrix[line.front() - 'A'].second.begin(); it != matrix[line.front() - 'A'].second.end(); ++it) {
+            if(*(*it).word == line) {
+                prevResult.first.push_back(&(*it));
+                prevResult.second += (*it).word->length();
+            }
+        }
+    }
+    input_file.close();
+    return prevResult;
 }
