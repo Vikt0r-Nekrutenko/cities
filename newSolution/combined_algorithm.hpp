@@ -14,7 +14,7 @@
 #define LOCAL_ELITE_ANT_COUNT   9.f
 #define ALPHA       2.25f
 #define BETA        0.75f
-#define ITERATIONS  30'000
+#define ITERATIONS  5'000
 #define EVAPORATION 0.3f
 
 using namespace std;
@@ -35,7 +35,7 @@ using PathPair  = std::pair<Path, size_t>;
 #define randf(min, max) ((float(rand()) / float(RAND_MAX)) * (max - min) + min)
 #define randd(min, max) (rand() % (max - min) + min)
 
-Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath = {});
+Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath = {{}, 0});
 
 void pullPheromonesIntoMatrix(Matrix2d &matrix, const string &fileName);
 

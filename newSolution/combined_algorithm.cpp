@@ -156,7 +156,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
             }}
     }
 
-    return bestPathPair.first;
+    return bestPathPair.second > prevPath.second ? bestPathPair.first : prevPath.first;
 }
 
 void pullPheromonesIntoMatrix(Matrix2d &matrix, const string &fileName)

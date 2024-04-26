@@ -32,7 +32,7 @@ vector<string> combine_cities(vector<string> available_cities)
         matrix[city.front() - 'A'].second.push_back({&city});
         ++edgeCount;
     }
-    pullPheromonesIntoMatrix(matrix, "matrixes/16699.txt");
+    pullPheromonesIntoMatrix(matrix, "matrixes/16698.txt");
 
     auto algoBeginTime = chrono::high_resolution_clock::now();
     auto path = combined_algorithm(matrix, edgeCount, read_previous_result(matrix));
