@@ -23,7 +23,8 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
-    srand(time(nullptr));
+    // srand(time(nullptr));
+    srand(1998);
 
     Matrix2d matrix(MATRIX_SIZE);
     size_t edgeCount = 0;
@@ -32,10 +33,10 @@ vector<string> combine_cities(vector<string> available_cities)
         matrix[city.front() - 'A'].second.push_back({&city});
         ++edgeCount;
     }
-    pullPheromonesIntoMatrix(matrix, "matrixes/16698.txt");
+    pullPheromonesIntoMatrix(matrix, "matrixes/16699.txt");
 
     auto algoBeginTime = chrono::high_resolution_clock::now();
-    auto path = combined_algorithm(matrix, edgeCount, read_previous_result(matrix));
+    auto path = combined_algorithm(matrix, edgeCount/*, read_previous_result(matrix)*/);
     cout << "Elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - algoBeginTime).count() / 1000.0 << "] seconds." << endl;
 
     vector<string> resultCities;

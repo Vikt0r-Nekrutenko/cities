@@ -23,7 +23,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
         int colonyPathsIndex = 0;
         int colonyMaxPathIndex = 0;
         int bestPathIndx = -1;
-        constexpr int ColonySize = REGULAR_ANT_COUNT;
+        constexpr int ColonySize = REGULAR_ANT_COUNT + GREEDY_ANT_COUNT;
         int antNumber = ColonySize;
         int vertexNumber = -1;
 
@@ -78,6 +78,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
 
                 Edge *selectedEdge = nullptr;
                 float currentProbability = 0.f;
+                float maxProbablity = 0.f;
                 const float target = randf(0.00001f, 0.99999f);
 
                 Edge *ptr = matrix[vertexNumber].second.data();
@@ -88,9 +89,12 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                         continue;
                     const float probability = edge.prob / totalProbability;
                     currentProbability += probability;
-                    if(target <= currentProbability){
+                    if(antNumber >= GREEDY_ANT_COUNT && target <= currentProbability){
                         selectedEdge = &edge;
                         break;
+                    } else if(antNumber < GREEDY_ANT_COUNT && probability > maxProbablity) {
+                        selectedEdge = &edge;
+                        maxProbablity = probability;
                     }
                 }
 

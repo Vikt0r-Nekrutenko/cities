@@ -10,11 +10,12 @@
 #define Q                       10'000.f
 #define MATRIX_SIZE             26
 #define REGULAR_ANT_COUNT       MATRIX_SIZE
-#define GLOBAL_ELITE_ANT_COUNT  4.f
-#define LOCAL_ELITE_ANT_COUNT   9.f
+#define GREEDY_ANT_COUNT        0
+#define GLOBAL_ELITE_ANT_COUNT  7.5f
+#define LOCAL_ELITE_ANT_COUNT   1.f
 #define ALPHA       2.25f
 #define BETA        0.75f
-#define ITERATIONS  5'000
+#define ITERATIONS  30'000
 #define EVAPORATION 0.3f
 
 using namespace std;
