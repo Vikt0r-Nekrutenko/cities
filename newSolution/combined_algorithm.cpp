@@ -4,31 +4,32 @@
 
 #include "combined_algorithm.hpp"
 
-Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &genome, const PathPair &prevPath)
+Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath)
 {
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-            Edge *ptr = matrix[x].second.data();
-            Edge *end = matrix[x].second.data() + matrix[x].second.size();
-            while(ptr != end) {
-                ptr->etha = std::pow(ptr->word->length(), genome.beta);
-                ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
-                ++ptr;
-            }}
+        Edge *ptr = matrix[x].second.data();
+        Edge *end = matrix[x].second.data() + matrix[x].second.size();
+        while(ptr != end) {
+            ptr->etha = std::pow(ptr->word->length(), BETA);
+            ptr->prob = ptr->etha * std::pow(ptr->pheromone, ALPHA);
+            ++ptr;
+        }}
 
     pair<Path, size_t> bestPathPair = prevPath;
-    int iterations = genome.iterations;
+    int iterations = ITERATIONS;
 
     while(iterations--) {
         size_t colonyBestLength = 0;
         int colonyPathsIndex = 0;
         int colonyMaxPathIndex = 0;
         int bestPathIndx = -1;
-        int ants = genome.regularAntCount + genome.greedyAntCount;
+        constexpr int ColonySize = REGULAR_ANT_COUNT;
+        int antNumber = ColonySize;
         int vertexNumber = -1;
 
-        PathPair colonyPathsPairs[genome.regularAntCount + genome.greedyAntCount];
+        PathPair colonyPathsPairs[ColonySize];
         PathPair *colonyPathPairPtr = colonyPathsPairs;
-        while(ants--) {
+        while(antNumber--) {
             vertexNumber = (vertexNumber < MATRIX_SIZE - 1) ? vertexNumber + 1 : 0;
             PathPair workingStack {Path{edgeCount}, 0ull};
             Path::iterator stackIt = workingStack.first.begin();
@@ -76,7 +77,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
                 }
 
                 Edge *selectedEdge = nullptr;
-                float maxProbability = 0.f;
                 float currentProbability = 0.f;
                 float target = randf(0.00001f, 0.99999f);
 
@@ -88,15 +88,11 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
                         continue;
                     float probability = edge.prob / totalProbability;
                     currentProbability += probability;
-                    if(ants > genome.greedyAntCount && target <= currentProbability){
+                    if(target <= currentProbability){
                         selectedEdge = &edge;
-                        goto endSelect;
-                    } else if(ants <= genome.greedyAntCount && probability > maxProbability){
-                        maxProbability = probability;
-                        selectedEdge = &edge;
+                        break;
                     }
                 }
-                endSelect:
 
                 vertexNumber = selectedEdge->word->back() - 'a';
                 selectedEdge->isPassed = true;
@@ -129,11 +125,11 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
         }
 
 
-        for(int i = genome.regularAntCount + genome.greedyAntCount - 1; i >= 0; --i) {
+        for(int i = ColonySize - 1; i >= 0; --i) {
             Edge **ptr = colonyPathsPairs[i].first.data();
             Edge **end = colonyPathsPairs[i].first.data() + colonyPathsPairs[i].first.size();
 
-            float phadd = float(colonyPathsPairs[i].second) / Q * (i == colonyMaxPathIndex ? (float(genome.eliteAntCount) / 1.5f) : 1.f);
+            float phadd = float(colonyPathsPairs[i].second) / Q * (i == colonyMaxPathIndex ? LOCAL_ELITE_ANT_COUNT : 1.f);
             while(ptr != end) {
                 float newPheromone = (*ptr)->pheromone + phadd;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
@@ -143,7 +139,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
         }
 
         for(int j = bestPathPair.first.size() - 1; j >= 0; --j) {
-            float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * (float(genome.eliteAntCount) / 3.f);
+            float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * GLOBAL_ELITE_ANT_COUNT;
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                 bestPathPair.first[j]->pheromone = newPheromone;
         }
@@ -152,10 +148,10 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
             Edge *ptr = matrix[x].second.data();
             Edge *end = matrix[x].second.data() + matrix[x].second.size();
             while(ptr != end) {
-                float newPheromone = ptr->pheromone * genome.evaporation;
+                float newPheromone = ptr->pheromone * EVAPORATION;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                     ptr->pheromone = newPheromone;
-                ptr->prob = ptr->etha * std::pow(ptr->pheromone, genome.alpha);
+                ptr->prob = ptr->etha * std::pow(ptr->pheromone, ALPHA);
                 ++ptr;
             }}
     }

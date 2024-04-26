@@ -56,7 +56,7 @@ vector<string> combine_cities(vector<string> available_cities)
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
     // // auto path = genetics_algorithm(matrix, 100, 1, true, {26, 13, 0, 100, 2.25f, 0.75f, 0.2f});
-    auto path = combined_algorithm(matrix, edgeCount, {26, 13, 0, 10'0, 2.25f, 0.75f, 0.3f}, read_previous_result(matrix));
+    auto path = combined_algorithm(matrix, edgeCount, read_previous_result(matrix));
     cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
 
     vector<string> resultCities;
