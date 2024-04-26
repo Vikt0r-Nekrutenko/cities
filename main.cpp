@@ -24,8 +24,8 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
-    srand(1998);
-    // srand(time(nullptr));
+    // srand(1998);
+    srand(time(nullptr));
 
     Matrix3d mtx;// = Matrix(MATRIX_SIZE, vector<vector<Edge>>(MATRIX_SIZE));
     Matrix2d matrix;
@@ -46,7 +46,7 @@ vector<string> combine_cities(vector<string> available_cities)
     // 17:39 - 19:53 [2:13] = 16595/10000
     // 20:51 - 21:41 [1:00] = 16564/1500?
     // 1800
-    ifstream mtxFile("matrixes/16694.txt");
+    ifstream mtxFile("matrixes/16699.txt");
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
         Edge *ptr = matrix[x].second.data();
         Edge *end = matrix[x].second.data() + matrix[x].second.size();
