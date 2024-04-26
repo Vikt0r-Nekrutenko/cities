@@ -3,7 +3,6 @@
 #include <chrono>
 #include <iostream>
 
-// #include "genetic_algorithm.hpp"
 #include "combined_algorithm.hpp"
 
 vector<string> combine_cities(vector<string> available_cities);
