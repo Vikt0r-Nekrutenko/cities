@@ -8,7 +8,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
 {
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
         Edge *ptr = matrix[x].second.data();
-        Edge *end = matrix[x].second.data() + matrix[x].second.size();
+        const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
         while(ptr != end) {
             ptr->etha = std::pow(ptr->word->length(), BETA);
             ptr->prob = ptr->etha * std::pow(ptr->pheromone, ALPHA);
@@ -39,7 +39,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                 float totalProbability = 0.f;
                 if(matrix[vertexNumber].first) {
                     Edge *ptr = matrix[vertexNumber].second.data();
-                    Edge *end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
+                    const Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
                     while(ptr != end) {
                         Edge &edge = *ptr++;
                         if(edge.isPassed)
@@ -78,15 +78,15 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
 
                 Edge *selectedEdge = nullptr;
                 float currentProbability = 0.f;
-                float target = randf(0.00001f, 0.99999f);
+                const float target = randf(0.00001f, 0.99999f);
 
                 Edge *ptr = matrix[vertexNumber].second.data();
-                Edge *end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
+                const Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
                 while(ptr != end) {
                     Edge &edge = *ptr++;
                     if(edge.isPassed)
                         continue;
-                    float probability = edge.prob / totalProbability;
+                    const float probability = edge.prob / totalProbability;
                     currentProbability += probability;
                     if(target <= currentProbability){
                         selectedEdge = &edge;
@@ -103,7 +103,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
             for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
                 matrix[x].first = true;
                 Edge *ptr = matrix[x].second.data();
-                Edge *end = matrix[x].second.data() + matrix[x].second.size();
+                const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
                 while(ptr != end) {
                     ptr->isPassed = false;
                     ++ptr;
@@ -113,25 +113,25 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
         if(bestPathIndx != -1) {
             bestPathPair = colonyPathsPairs[bestPathIndx];
             cout << iterations << " " << bestPathPair.second << endl;
-            ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
-            for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-                Edge *ptr = matrix[x].second.data();
-                Edge *end = matrix[x].second.data() + matrix[x].second.size();
-                while(ptr != end) {
-                    mtxFile << ptr->pheromone << " ";
-                    ++ptr;
-                }}
-            mtxFile.close();
+            // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
+            // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+            //     Edge *ptr = matrix[x].second.data();
+            //     Edge *end = matrix[x].second.data() + matrix[x].second.size();
+            //     while(ptr != end) {
+            //         mtxFile << ptr->pheromone << " ";
+            //         ++ptr;
+            //     }}
+            // mtxFile.close();
         }
 
 
         for(int i = ColonySize - 1; i >= 0; --i) {
             Edge **ptr = colonyPathsPairs[i].first.data();
-            Edge **end = colonyPathsPairs[i].first.data() + colonyPathsPairs[i].first.size();
+            const Edge * const * const end = colonyPathsPairs[i].first.data() + colonyPathsPairs[i].first.size();
 
-            float phadd = float(colonyPathsPairs[i].second) / Q * (i == colonyMaxPathIndex ? LOCAL_ELITE_ANT_COUNT : 1.f);
+            const float phadd = float(colonyPathsPairs[i].second) / Q * (i == colonyMaxPathIndex ? LOCAL_ELITE_ANT_COUNT : 1.f);
             while(ptr != end) {
-                float newPheromone = (*ptr)->pheromone + phadd;
+                const float newPheromone = (*ptr)->pheromone + phadd;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                     (*ptr)->pheromone = newPheromone;
                 ++ptr;
@@ -139,16 +139,16 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
         }
 
         for(int j = bestPathPair.first.size() - 1; j >= 0; --j) {
-            float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * GLOBAL_ELITE_ANT_COUNT;
+            const float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * GLOBAL_ELITE_ANT_COUNT;
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                 bestPathPair.first[j]->pheromone = newPheromone;
         }
 
         for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
             Edge *ptr = matrix[x].second.data();
-            Edge *end = matrix[x].second.data() + matrix[x].second.size();
+            const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
             while(ptr != end) {
-                float newPheromone = ptr->pheromone * EVAPORATION;
+                const float newPheromone = ptr->pheromone * EVAPORATION;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                     ptr->pheromone = newPheromone;
                 ptr->prob = ptr->etha * std::pow(ptr->pheromone, ALPHA);
@@ -157,4 +157,30 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
     }
 
     return bestPathPair.first;
+}
+
+void pullPheromonesIntoMatrix(Matrix2d &matrix, const string &fileName)
+{
+    ifstream mtxFile(fileName);
+    for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+        Edge *ptr = matrix[x].second.data();
+        const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
+        while(ptr != end) {
+            mtxFile >> ptr->pheromone;
+            ++ptr;
+        }}
+    mtxFile.close();
+}
+
+void pushPheromonesIntoFile(const Matrix2d &matrix, const string &fileName)
+{
+    ofstream mtxFile(fileName);
+    for(int x = MATRIX_SIZE - 1; x >= 0; --x)   {
+        const Edge *ptr = matrix[x].second.data();
+        const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
+        while(ptr != end) {
+            mtxFile << ptr->pheromone << " ";
+            ++ptr;
+        }}
+    mtxFile.close();
 }

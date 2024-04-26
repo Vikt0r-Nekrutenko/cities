@@ -37,4 +37,8 @@ using PathPair = std::pair<Path, size_t>;
 
 Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath = {});
 
+void pullPheromonesIntoMatrix(Matrix2d &matrix, const string &fileName);
+
+void pushPheromonesIntoFile(const Matrix2d &matrix, const string &fileName);
+
 #endif // COMBINED_ALGORITHM_HPP

@@ -44,15 +44,15 @@ vector<string> combine_cities(vector<string> available_cities)
     // 17:39 - 19:53 [2:13] = 16595/10000
     // 20:51 - 21:41 [1:00] = 16564/1500?
     // 1800
-    ifstream mtxFile("matrixes/16699.txt");
-    for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-        Edge *ptr = matrix[x].second.data();
-        Edge *end = matrix[x].second.data() + matrix[x].second.size();
-        while(ptr != end) {
-            mtxFile >> ptr->pheromone;
-            ++ptr;
-        }}
-    mtxFile.close();
+    // ifstream mtxFile("matrixes/16699.txt");
+    // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+    //     Edge *ptr = matrix[x].second.data();
+    //     Edge *end = matrix[x].second.data() + matrix[x].second.size();
+    //     while(ptr != end) {
+    //         mtxFile >> ptr->pheromone;
+    //         ++ptr;
+    //     }}
+    // mtxFile.close();
 
     auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
     // // auto path = genetics_algorithm(matrix, 100, 1, true, {26, 13, 0, 100, 2.25f, 0.75f, 0.2f});
