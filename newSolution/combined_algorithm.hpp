@@ -10,8 +10,8 @@
 #define Q                       10'000.f
 #define MATRIX_SIZE             26
 #define REGULAR_ANT_COUNT       MATRIX_SIZE
-#define GLOBAL_ELITE_ANT_COUNT  4.f
-#define LOCAL_ELITE_ANT_COUNT   9.f
+#define GLOBAL_ELITE_ANT_COUNT  4.333f
+#define LOCAL_ELITE_ANT_COUNT   8.666f
 #define ALPHA       2.25f
 #define BETA        0.75f
 #define ITERATIONS  100
@@ -28,9 +28,9 @@ struct alignas(32) Edge
     bool isPassed = false;
 };
 
-using Matrix2d = std::vector<pair<bool, std::vector<Edge>>>;
-using Path = std::vector<Edge *>;
-using PathPair = std::pair<Path, size_t>;
+using Matrix2d  = std::vector<pair<bool, std::vector<Edge>>>;
+using Path      = std::vector<Edge *>;
+using PathPair  = std::pair<Path, size_t>;
 
 #define randf(min, max) ((float(rand()) / float(RAND_MAX)) * (max - min) + min)
 #define randd(min, max) (rand() % (max - min) + min)
