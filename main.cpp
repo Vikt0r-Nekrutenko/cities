@@ -24,46 +24,26 @@ int main()
 
 vector<string> combine_cities(vector<string> available_cities)
 {
-    srand(1998);
-    // srand(time(nullptr));
+    srand(time(nullptr));
 
     Matrix2d matrix(MATRIX_SIZE);
     size_t edgeCount = 0;
     for(auto &city : available_cities) {
-        // if(mtx[city.front() - 'A'][city.back() - 'a'].empty()) {
-        // if(matrix[city.front() - 'A'].edges[city.back() - 'a'].word == nullptr)
-            matrix[city.front() - 'A'].first = true;
-            matrix[city.front() - 'A'].second.push_back({&city});
-            ++edgeCount;
-        // }
+        matrix[city.front() - 'A'].first = true;
+        matrix[city.front() - 'A'].second.push_back({&city});
+        ++edgeCount;
     }
-    // auto time1 = chrono::high_resolution_clock::now();
-    // cout << "time1: [" << chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - time1).count() << "] min." << endl;
-    // return available_cities;
+    pullPheromonesIntoMatrix(matrix, "matrixes/16699.txt");
 
-    // 17:39 - 19:53 [2:13] = 16595/10000
-    // 20:51 - 21:41 [1:00] = 16564/1500?
-    // 1800
-    // ifstream mtxFile("matrixes/16699.txt");
-    // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-    //     Edge *ptr = matrix[x].second.data();
-    //     Edge *end = matrix[x].second.data() + matrix[x].second.size();
-    //     while(ptr != end) {
-    //         mtxFile >> ptr->pheromone;
-    //         ++ptr;
-    //     }}
-    // mtxFile.close();
-
-    auto geneticsAlgoBeginTime = chrono::high_resolution_clock::now();
-    // // auto path = genetics_algorithm(matrix, 100, 1, true, {26, 13, 0, 100, 2.25f, 0.75f, 0.2f});
-    auto path = combined_algorithm(matrix, edgeCount/*, read_previous_result(matrix)*/);
-    cout << "Genetics elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - geneticsAlgoBeginTime).count() << "] min." << endl;
+    auto algoBeginTime = chrono::high_resolution_clock::now();
+    auto path = combined_algorithm(matrix, edgeCount, read_previous_result(matrix));
+    cout << "Elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - algoBeginTime).count() / 1000.0 << "] seconds." << endl;
 
     vector<string> resultCities;
 
     try {
-        cout << "CONGRATULATION!!! Path length: [" << validate_city_list(resultCities, path) << "] symbols." << endl;
-    } catch(char const*ex) { cout << ex << endl; }
+        cout << "\n.::CONGRATULATION!::.\nPath length: [" << validate_city_list(resultCities, path) << "] symbols." << endl;
+    } catch(char const * ex) { cout << ex << endl; }
 
     return resultCities;
 }
@@ -97,7 +77,7 @@ size_t validate_city_list(vector<string> &resultCities, const Path &path)
     int validationSymbol = path.front()->word->front() - 'A';
     for(const auto &edge : path) {
         if(edge->word->front() - 'A' != validationSymbol) {
-            throw "Erorr!!! Path isn't valid!!!";
+            throw "\nErorr!!! Path isn't valid!!!";
         }
         validationSymbol = edge->word->back() - 'a';
         length += edge->word->length();

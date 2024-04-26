@@ -112,7 +112,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
 
         if(bestPathIndx != -1) {
             bestPathPair = colonyPathsPairs[bestPathIndx];
-            cout << iterations << " " << bestPathPair.second << endl;
+            cout << "Iteration #" << iterations << " Path length: [" << bestPathPair.second << "]." << endl;
             ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
             for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
                 Edge *ptr = matrix[x].second.data();
