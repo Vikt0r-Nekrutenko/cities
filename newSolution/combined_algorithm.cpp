@@ -1,7 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include <chrono>
+
 #include "combined_algorithm.hpp"
 
 Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &genome, const PathPair &prevPath)
@@ -17,9 +17,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
 
     pair<Path, size_t> bestPathPair = prevPath;
     int iterations = genome.iterations;
-    int beginVertex = 0;
-    // float tavg = 0.f;
-    // int tcount = 0;
 
     while(iterations--) {
         size_t colonyBestLength = 0;
@@ -27,14 +24,15 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
         int colonyMaxPathIndex = 0;
         int bestPathIndx = -1;
         int ants = genome.regularAntCount + genome.greedyAntCount;
+        int vertexNumber = -1;
+
         PathPair colonyPathsPairs[genome.regularAntCount + genome.greedyAntCount];
         PathPair *colonyPathPairPtr = colonyPathsPairs;
         while(ants--) {
-            int vertexNumber = beginVertex = (beginVertex < MATRIX_SIZE - 1) ? beginVertex + 1 : 0;
+            vertexNumber = (vertexNumber < MATRIX_SIZE - 1) ? vertexNumber + 1 : 0;
             PathPair workingStack {Path{edgeCount}, 0ull};
             Path::iterator stackIt = workingStack.first.begin();
 
-            // auto t = chrono::high_resolution_clock::now();
             while(true) {
                 bool isEnd = true;
                 float totalProbability = 0.f;
@@ -105,7 +103,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
                 *stackIt++ = selectedEdge;
                 workingStack.second += selectedEdge->word->length();
             }
-            // tavg += float(chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - t).count()); tcount++;
 
             for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
                 matrix[x].first = true;
@@ -162,8 +159,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const Genome &
                 ++ptr;
             }}
     }
-    // cout << (tavg / tcount) << endl
-    // << (tavg / tcount) * genome.iterations * (genome.regularAntCount + genome.greedyAntCount) << endl;
 
     return bestPathPair.first;
 }

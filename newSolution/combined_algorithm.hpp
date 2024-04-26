@@ -21,11 +21,9 @@ struct alignas(32) Edge
     bool isPassed = false;
 };
 
-using Matrix3d = std::vector<Edge>[MATRIX_SIZE][MATRIX_SIZE];
-using Matrix2d = pair<bool, std::vector<Edge>>[MATRIX_SIZE];
+using Matrix2d = std::vector<pair<bool, std::vector<Edge>>>;
 using Path = std::vector<Edge *>;
 using PathPair = std::pair<Path, size_t>;
-using PathPairs = std::vector<PathPair>;
 
 #define randf(min, max) ((float(rand()) / float(RAND_MAX)) * (max - min) + min)
 #define randd(min, max) (rand() % (max - min) + min)
