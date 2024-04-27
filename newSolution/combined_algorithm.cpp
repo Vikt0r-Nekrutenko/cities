@@ -19,11 +19,9 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
     int iterations = ITERATIONS;
 
     while(iterations--) {
-        size_t colonyBestLength = 0;
         int colonyPathsIndex = 0;
-        int colonyMaxPathIndex = 0;
         int bestPathIndx = -1;
-        constexpr int ColonySize = REGULAR_ANT_COUNT + GREEDY_ANT_COUNT;
+        constexpr int ColonySize = REGULAR_ANT_COUNT;
         int antNumber = ColonySize;
         int vertexNumber = -1;
 
