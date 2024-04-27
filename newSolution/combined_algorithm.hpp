@@ -12,7 +12,29 @@
 #define REGULAR_ANT_COUNT       MATRIX_SIZE
 #define GLOBAL_ELITE_ANT_COUNT  7.5f
 #define ALPHA       2.25f
-#define BETA        0.075f
+/**
+ * BETA = 0.87325 : 16590/20000(sym/iter)
+ *  +22/5000(sym/iter)
+ *  -12/2500(sym/iter)
+ *  16700 -> 16694 -4/2500(sym/iter) -LPR
+ *  16700 -> 16700 0/2500(sym/iter) +LPR
+ *  AVG goal: 1.5p
+ *
+ * BETA = 0.07325 : 16569/20000(sym/iter)
+ *  +2/5000(sym/iter)
+ *  -7/2500(sym/iter)
+ *  16700 -> 16694 -6/2500(sym/iter) -LPR
+ *  16700 -> 16701 +1/2500(sym/iter) +LPR
+ *  AVG goal: -2.5p
+ *
+ * BETA = 0.0325 : 16549/20000(sym/iter)
+ *  +35/5000(sym/iter)
+ *  -6/2500(sym/iter)
+ *  16700 -> 16696 -4/2500(sym/iter) -LPR
+ *  16700 -> 16701 +1/2500(sym/iter) +LPR
+ *  AVG goal: 6.5p
+*/
+#define BETA        0.0325f
 #define ITERATIONS  1'000
 #define EVAPORATION 0.1f
 
