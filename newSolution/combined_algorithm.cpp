@@ -61,11 +61,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                             bestPathPair.second = colonyPathPairPtr->second;
                             bestPathIndx = colonyPathsIndex;
                         }
-                        if(colonyBestLength < colonyPathPairPtr->second) {
-                            // max path in current colony for local ants
-                            colonyBestLength = colonyPathPairPtr->second;
-                            colonyMaxPathIndex = colonyPathsIndex;
-                        }
                         ++colonyPathPairPtr;
                         ++colonyPathsIndex;
                         break;
@@ -78,7 +73,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
 
                 Edge *selectedEdge = nullptr;
                 float currentProbability = 0.f;
-                float maxProbablity = 0.f;
                 const float target = randf(0.00001f, 0.99999f);
 
                 Edge *ptr = matrix[vertexNumber].second.data();
@@ -89,12 +83,9 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                         continue;
                     const float probability = edge.prob / totalProbability;
                     currentProbability += probability;
-                    if(antNumber >= GREEDY_ANT_COUNT && target <= currentProbability){
+                    if(target <= currentProbability){
                         selectedEdge = &edge;
                         break;
-                    } else if(antNumber < GREEDY_ANT_COUNT && probability > maxProbablity) {
-                        selectedEdge = &edge;
-                        maxProbablity = probability;
                     }
                 }
 
@@ -133,7 +124,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
             Edge **ptr = colonyPathsPairs[i].first.data();
             const Edge * const * const end = colonyPathsPairs[i].first.data() + colonyPathsPairs[i].first.size();
 
-            const float phadd = float(colonyPathsPairs[i].second) / Q * (i == colonyMaxPathIndex ? LOCAL_ELITE_ANT_COUNT : 1.f);
+            const float phadd = float(colonyPathsPairs[i].second) / Q;
             while(ptr != end) {
                 const float newPheromone = (*ptr)->pheromone + phadd;
                 if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
