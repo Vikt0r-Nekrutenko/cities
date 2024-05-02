@@ -31,9 +31,10 @@ vector<string> combine_cities(vector<string> available_cities)
     for(auto &city : available_cities) {
         matrix[city.front() - 'A'].first = true;
         matrix[city.front() - 'A'].second.push_back({&city});
+        matrix[city.front() - 'A'].second.back().pheromone = float(city.length()) / 100.f;
         ++edgeCount;
     }
-    // pullPheromonesIntoMatrix(matrix, "matrixes/16700.txt");
+    // pullPheromonesIntoMatrix(matrix, "matrixes/16657.txt");
 
     auto algoBeginTime = chrono::high_resolution_clock::now();
     auto path = combined_algorithm(matrix, edgeCount/*, read_previous_result(matrix)*/);

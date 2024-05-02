@@ -6,6 +6,10 @@
 
 Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath)
 {
+#define DBETA_low 0.0325f
+#define DBETA_high 0.987325f
+#define ITER_TO_RELOAD 100
+
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
         Edge *ptr = matrix[x].second.data();
         const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
@@ -15,8 +19,21 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
             ++ptr;
         }}
 
-    pair<Path, size_t> bestPathPair = prevPath;
     int iterations = ITERATIONS;
+    int iterToReload = ITER_TO_RELOAD;
+    float localBeta = DBETA_low;
+
+    // #4904 [16657] [1332]	0.7325	1332 evp:0.45 ITR:500 - with reload the matrix
+    // #4201 [16640] [795]	0.7325 795  evp:0.45
+    // #4666/5500 [16650] [527]	 L:0.0325 B:0.73250 ITR:100  maxITR:531  evp:0.3
+    // #4201/5500 [16640] [795]	 L:0.0325 B:0.73250 ITR:100  maxITR:795  evp:0.45
+
+
+    pair<Path, size_t> bestPathPair = prevPath;
+    size_t bestLength = prevPath.second;
+
+    int lastBestIteration = ITERATIONS;
+    int maxDiffWithBestIterations = 0;
 
     while(iterations--) {
         int colonyPathsIndex = 0;
@@ -54,9 +71,9 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                         *colonyPathPairPtr = {{workingStack.first.begin(), stackIt}, workingStack.second};
                     }
                     if(stackIt == workingStack.first.begin() + 1) {
-                        if(bestPathPair.second < colonyPathPairPtr->second) {
+                        if(bestLength < colonyPathPairPtr->second) {
                             // new global best path(index in current colony paths)
-                            bestPathPair.second = colonyPathPairPtr->second;
+                            bestLength = colonyPathPairPtr->second;
                             bestPathIndx = colonyPathsIndex;
                         }
                         ++colonyPathPairPtr;
@@ -69,12 +86,12 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                     continue;
                 }
 
-                Edge *selectedEdge = nullptr;
                 float currentProbability = 0.f;
-                const float target = randf(0.00001f, 0.99999f);
+                const float target = randf(0.0001f, 0.9999f);
 
                 Edge *ptr = matrix[vertexNumber].second.data();
                 const Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
+                Edge *selectedEdge = nullptr;//end - 1;
                 while(ptr != end) {
                     Edge &edge = *ptr++;
                     if(edge.isPassed)
@@ -103,9 +120,36 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                 }}
         }
 
+        if(bestPathIndx == -1 && iterToReload == 0) {
+            for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+                Edge *ptr = matrix[x].second.data();
+                const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
+                while(ptr != end) {
+                    ptr->etha = std::pow(ptr->word->length(), localBeta);
+                    ++ptr;
+                }}
+            localBeta = localBeta - DBETA_low < 0.001f ? DBETA_high : DBETA_low;
+            iterToReload = ITER_TO_RELOAD;
+        }
+
         if(bestPathIndx != -1) {
+            int tmpDI = lastBestIteration - iterations;
+            maxDiffWithBestIterations = tmpDI > maxDiffWithBestIterations ? tmpDI : maxDiffWithBestIterations;
+            lastBestIteration = iterations;
+
             bestPathPair = colonyPathsPairs[bestPathIndx];
-            cout << "Iteration #" << iterations << " Path length: [" << bestPathPair.second << "]." << endl;
+            cout << "#" << ITERATIONS - iterations << " [" << bestPathPair.second << "] [" << tmpDI << "]\t" << localBeta << "\t" << maxDiffWithBestIterations << endl;
+
+            for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+                Edge *ptr = matrix[x].second.data();
+                const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
+                while(ptr != end) {
+                    ptr->etha = std::pow(ptr->word->length(), BETA);
+                    ++ptr;
+                }}
+            iterToReload = ITER_TO_RELOAD;
+            // localBeta = DBETA_high;
+
             // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
             // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
             //     Edge *ptr = matrix[x].second.data();
@@ -147,6 +191,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                 ptr->prob = ptr->etha * std::pow(ptr->pheromone, ALPHA);
                 ++ptr;
             }}
+        --iterToReload;
     }
 
     return bestPathPair.second > prevPath.second ? bestPathPair.first : prevPath.first;
