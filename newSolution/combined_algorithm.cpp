@@ -148,7 +148,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                     ++ptr;
                 }}
             iterToReload = ITER_TO_RELOAD;
-            localBeta = DBETA_low;
+            // localBeta = DBETA_low;
 
             // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
             // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
