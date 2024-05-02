@@ -7,7 +7,7 @@
 Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath)
 {
 #define DBETA_low 0.0325f
-#define DBETA_high 0.987325f
+#define DBETA_high 0.7325f
 #define ITER_TO_RELOAD 100
 
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
@@ -90,8 +90,8 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                 const float target = randf(0.0001f, 0.9999f);
 
                 Edge *ptr = matrix[vertexNumber].second.data();
-                const Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
-                Edge *selectedEdge = nullptr;//end - 1;
+                Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
+                Edge *selectedEdge = end - 1;
                 while(ptr != end) {
                     Edge &edge = *ptr++;
                     if(edge.isPassed)
@@ -148,7 +148,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                     ++ptr;
                 }}
             iterToReload = ITER_TO_RELOAD;
-            // localBeta = DBETA_high;
+            localBeta = DBETA_low;
 
             // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
             // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
