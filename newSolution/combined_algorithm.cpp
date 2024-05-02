@@ -87,11 +87,11 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                 }
 
                 float currentProbability = 0.f;
-                const float target = randf(0.0001f, 0.9999f);
+                const float target = randf(0.00001f, 0.99999f);
 
                 Edge *ptr = matrix[vertexNumber].second.data();
-                Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
-                Edge *selectedEdge = end - 1;
+                const Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
+                Edge *selectedEdge = nullptr;//end - 1;
                 while(ptr != end) {
                     Edge &edge = *ptr++;
                     if(edge.isPassed)
@@ -148,7 +148,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                     ++ptr;
                 }}
             iterToReload = ITER_TO_RELOAD;
-            // localBeta = DBETA_low;
+            localBeta = DBETA_low;
 
             // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
             // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {

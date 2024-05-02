@@ -15,7 +15,7 @@
 
 #define BETA        0.7325f
 #define ITERATIONS  5'500
-#define EVAPORATION 0.45f
+#define EVAPORATION 0.3f
 
 using namespace std;
 
