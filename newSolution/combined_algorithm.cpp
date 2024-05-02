@@ -90,8 +90,8 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                 const float target = randf(0.00001f, 0.99999f);
 
                 Edge *ptr = matrix[vertexNumber].second.data();
-                const Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
-                Edge *selectedEdge = nullptr;//end - 1;
+                Edge * const end = matrix[vertexNumber].second.data() + matrix[vertexNumber].second.size();
+                Edge *selectedEdge = end - 1;
                 while(ptr != end) {
                     Edge &edge = *ptr++;
                     if(edge.isPassed)
