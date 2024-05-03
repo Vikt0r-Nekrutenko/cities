@@ -7,7 +7,6 @@
 Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath)
 {
 #define DBETA_low 0.0325f
-#define DBETA_high 0.7325f
 #define ITER_TO_RELOAD 100
 
     for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
@@ -22,12 +21,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
     int iterations = ITERATIONS;
     int iterToReload = ITER_TO_RELOAD;
     float localBeta = DBETA_low;
-
-    // #4904 [16657] [1332]	0.7325	1332 evp:0.45 ITR:500 - with reload the matrix
-    // #4201 [16640] [795]	0.7325 795  evp:0.45
-    // #4666/5500 [16650] [527]	 L:0.0325 B:0.73250 ITR:100  maxITR:531  evp:0.3
-    // #4201/5500 [16640] [795]	 L:0.0325 B:0.73250 ITR:100  maxITR:795  evp:0.45
-
 
     pair<Path, size_t> bestPathPair = prevPath;
     size_t bestLength = prevPath.second;
@@ -128,7 +121,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                     ptr->etha = std::pow(ptr->word->length(), localBeta);
                     ++ptr;
                 }}
-            localBeta = localBeta - DBETA_low < 0.001f ? DBETA_high : DBETA_low;
+            localBeta = localBeta - DBETA_low < 0.001f ? BETA : DBETA_low;
             iterToReload = ITER_TO_RELOAD;
         }
 
