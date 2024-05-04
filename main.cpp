@@ -9,8 +9,6 @@
 vector<string> combine_cities(vector<string> available_cities);
 vector<string> read_available_cities();
 size_t validate_city_list(vector<string> &resultCities, const Path &path);
-PathPair read_previous_result(Matrix2d &matrix);
-
 int write_to_file(vector<string> cities_list);
 
 int main()
@@ -19,12 +17,11 @@ int main()
 
     vector<string> cities_list = combine_cities(available_cities); // TODO implement this function
 
-    return 0;//write_to_file(cities_list);
+    return write_to_file(cities_list);
 }
 
 vector<string> combine_cities(vector<string> available_cities)
 {
-    // srand(time(nullptr));
     srand(1998);
 
     Matrix2d matrix(MATRIX_SIZE);
@@ -37,18 +34,9 @@ vector<string> combine_cities(vector<string> available_cities)
         matrix[city.front() - 'A'].second.push_back({&city, pheromone, etha, prob});
         ++edgeCount;
     }
-    // pullPheromonesIntoMatrix(matrix, "matrixes/16650.txt");
-    // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-    //     matrix[x].first = true;
-    //     Edge *ptr = matrix[x].second.data();
-    //     const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
-    //     while(ptr != end) {
-    //         ptr->prob = ptr->etha * std::pow(ptr->pheromone, ALPHA);
-    //         ++ptr;
-    //     }}
 
     auto algoBeginTime = chrono::high_resolution_clock::now();
-    auto path = combined_algorithm(matrix, edgeCount/*, read_previous_result(matrix)*/);
+    auto path = combined_algorithm(matrix, edgeCount);
     cout << "Elapsed time: [" << chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - algoBeginTime).count() / 1000.0 << "] seconds." << endl;
 
     vector<string> resultCities;
@@ -96,22 +84,4 @@ size_t validate_city_list(vector<string> &resultCities, const Path &path)
         resultCities.push_back(*edge->word);
     }
     return length;
-}
-
-PathPair read_previous_result(Matrix2d &matrix)
-{
-    string line;
-    ifstream input_file("output.txt");
-    vector<string> available_cities;
-    PathPair prevResult;
-    while (getline(input_file, line)) {
-        for(auto it = matrix[line.front() - 'A'].second.begin(); it != matrix[line.front() - 'A'].second.end(); ++it) {
-            if(*(*it).word == line) {
-                prevResult.first.push_back(&(*it));
-                prevResult.second += (*it).word->length();
-            }
-        }
-    }
-    input_file.close();
-    return prevResult;
 }
