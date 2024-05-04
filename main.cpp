@@ -1,3 +1,4 @@
+#include <cmath>
 #include <fstream>
 #include <iterator>
 #include <chrono>
@@ -30,11 +31,21 @@ vector<string> combine_cities(vector<string> available_cities)
     size_t edgeCount = 0;
     for(auto &city : available_cities) {
         matrix[city.front() - 'A'].first = true;
-        matrix[city.front() - 'A'].second.push_back({&city});
-        matrix[city.front() - 'A'].second.back().pheromone = float(city.length()) / 100.f;
+        float pheromone = float(city.length());
+        float etha = std::pow(city.length(), HIGH_BETA);
+        float prob = etha * std::pow(pheromone, ALPHA);
+        matrix[city.front() - 'A'].second.push_back({&city, pheromone, etha, prob});
         ++edgeCount;
     }
     // pullPheromonesIntoMatrix(matrix, "matrixes/16650.txt");
+    // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
+    //     matrix[x].first = true;
+    //     Edge *ptr = matrix[x].second.data();
+    //     const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
+    //     while(ptr != end) {
+    //         ptr->prob = ptr->etha * std::pow(ptr->pheromone, ALPHA);
+    //         ++ptr;
+    //     }}
 
     auto algoBeginTime = chrono::high_resolution_clock::now();
     auto path = combined_algorithm(matrix, edgeCount/*, read_previous_result(matrix)*/);

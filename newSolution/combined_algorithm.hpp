@@ -11,11 +11,12 @@
 #define MATRIX_SIZE             26
 #define REGULAR_ANT_COUNT       MATRIX_SIZE
 #define GLOBAL_ELITE_ANT_COUNT  7.5f
-#define ALPHA       2.25f
-
-#define BETA        0.7325f
-#define ITERATIONS  200'000
-#define EVAPORATION 0.3f
+#define ALPHA           2.25f
+#define HIGH_BETA       0.7325f
+#define LOW_BETA        0.0325f
+#define ITERATIONS      200'000
+#define EVAPORATION     0.3f
+#define ITERATIONS_TO_RELOAD_BETA  100
 
 using namespace std;
 

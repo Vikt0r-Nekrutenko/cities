@@ -6,21 +6,9 @@
 
 Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath)
 {
-#define DBETA_low 0.0325f
-#define ITER_TO_RELOAD 100
-
-    for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-        Edge *ptr = matrix[x].second.data();
-        const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
-        while(ptr != end) {
-            ptr->etha = std::pow(ptr->word->length(), BETA);
-            ptr->prob = ptr->etha * std::pow(ptr->pheromone, ALPHA);
-            ++ptr;
-        }}
-
     int iterations = ITERATIONS;
-    int iterToReload = ITER_TO_RELOAD;
-    float localBeta = DBETA_low;
+    int iterToReload = ITERATIONS_TO_RELOAD_BETA;
+    float localBeta = LOW_BETA;
 
     pair<Path, size_t> bestPathPair = prevPath;
     size_t bestLength = prevPath.second;
@@ -121,8 +109,8 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                     ptr->etha = std::pow(ptr->word->length(), localBeta);
                     ++ptr;
                 }}
-            localBeta = localBeta - DBETA_low < 0.001f ? BETA : DBETA_low;
-            iterToReload = ITER_TO_RELOAD;
+            localBeta = localBeta - LOW_BETA < 0.001f ? HIGH_BETA : LOW_BETA;
+            iterToReload = ITERATIONS_TO_RELOAD_BETA;
         }
 
         if(bestPathIndx != -1) {
@@ -137,11 +125,11 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                 Edge *ptr = matrix[x].second.data();
                 const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
                 while(ptr != end) {
-                    ptr->etha = std::pow(ptr->word->length(), BETA);
+                    ptr->etha = std::pow(ptr->word->length(), HIGH_BETA);
                     ++ptr;
                 }}
-            iterToReload = ITER_TO_RELOAD;
-            localBeta = DBETA_low;
+            iterToReload = ITERATIONS_TO_RELOAD_BETA;
+            localBeta = LOW_BETA;
 
             // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
             // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
