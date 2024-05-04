@@ -4,14 +4,14 @@
 
 #include "combined_algorithm.hpp"
 
-Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair &prevPath)
+Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount)
 {
     int iterations = ITERATIONS;
     int iterToReload = ITERATIONS_TO_RELOAD_BETA;
     float localBeta = LOW_BETA;
 
-    pair<Path, size_t> bestPathPair = prevPath;
-    size_t bestLength = prevPath.second;
+    pair<Path, size_t> bestPathPair;
+    size_t bestLength = 0;
 
     int lastBestIteration = ITERATIONS;
     int maxDiffWithBestIterations = 0;
@@ -130,16 +130,6 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
                 }}
             iterToReload = ITERATIONS_TO_RELOAD_BETA;
             localBeta = LOW_BETA;
-
-            // ofstream mtxFile("matrixes/" + to_string(bestPathPair.second) + ".txt", ios::trunc);
-            // for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-            //     Edge *ptr = matrix[x].second.data();
-            //     Edge *end = matrix[x].second.data() + matrix[x].second.size();
-            //     while(ptr != end) {
-            //         mtxFile << ptr->pheromone << " ";
-            //         ++ptr;
-            //     }}
-            // mtxFile.close();
         }
 
 
@@ -175,18 +165,5 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount, const PathPair
         --iterToReload;
     }
 
-    return bestPathPair.second > prevPath.second ? bestPathPair.first : prevPath.first;
-}
-
-void pullPheromonesIntoMatrix(Matrix2d &matrix, const string &fileName)
-{
-    ifstream mtxFile(fileName);
-    for(int x = MATRIX_SIZE - 1; x >= 0; --x) {
-        Edge *ptr = matrix[x].second.data();
-        const Edge * const end = matrix[x].second.data() + matrix[x].second.size();
-        while(ptr != end) {
-            mtxFile >> ptr->pheromone;
-            ++ptr;
-        }}
-    mtxFile.close();
+    return bestPathPair.first;
 }
