@@ -11,6 +11,13 @@ vector<string> read_available_cities();
 size_t validate_city_list(vector<string> &resultCities, const Path &path);
 int write_to_file(vector<string> cities_list);
 
+/**
+ * Old solution - 15961
+ * @syncreator  - 15480
+ * New solution - 16705
+ * BEST way     - 16715
+ */
+
 int main()
 {
     vector<string> available_cities = read_available_cities();
