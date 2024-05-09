@@ -1,0 +1,473 @@
+Azua
+Abu Ghraib
+Aurangabad
+Araure
+Al Qadarif
+Augsburg
+Azamgarh
+Avadi
+Arkhangelsk
+Asansol
+Artyom
+Aydin
+Ayacucho
+Antwerp
+Athi River
+Athens
+Asyut
+Atyrau
+Ajax
+Altay City
+Ahvaz
+Badalona
+Bacolod
+Bage
+Bani Suwayf
+Baicheng
+Bahadurgarh
+Baidyabati
+Bhuj
+Babruysk
+Babol
+Bafoussam
+Baghlan
+Bago
+Bottrop
+Bacoor
+Bandar Abbas
+Bagalkot
+Bacau
+Brasov
+Barysaw
+Bordeaux
+Bally
+Badajoz
+Cachoeirinha
+Cuauhtemoc
+Carlsbad
+Camaragibe
+Cardiff
+Calbayog
+Chandigarh
+Cagliari
+Chelyabinsk
+Cape Coral
+Cachoeiro de Itapemirim
+Cabanatuan
+Cabo de Santo Agostinho
+Chirchiq
+Calabar
+Cabimas
+Calumpit
+Cangzhou
+Chernihiv
+Chorzow
+Calgary
+Cadiz
+Dabrowa Gornicza
+Dahod
+Davangere
+Dusseldorf
+Da Nang
+Damoh
+Dali
+Depok
+Dezful
+Dabgram
+Daejeon
+Daito
+Dakar
+Dallas
+Da Lat
+Dadu
+Daly City
+Dasoguz
+Ebina
+El Khroub
+Ecatepec
+El-Obeid
+Eastbourne
+Elazig
+Edinburgh
+Enshi
+Elektrostal
+East Jerusalem
+Edmonton
+El Alto
+English Bazar
+Embu das Artes
+Eldoret
+Ebetsu
+Ekibastuz
+Facatativa
+Fairfield
+Fayetteville
+Fengcheng
+Fallujah
+Forli
+Funchal
+Fayyum
+Foshan
+Fargo
+Fatehpur
+Ferraz de Vasconcelos
+Flint
+Foz do Iguacu
+Fujin City
+Gagnoa
+Garland
+Gaborone
+Gharraf
+Gangneung
+Giridih
+Gadag-Betgeri
+Gangtok
+Gondal
+Gandhidham
+Gapan
+Gomez Palacio
+Gaziantep
+Gandhinagar
+Gabes
+Ghent
+Ganzhou
+Glasgow
+Gaza City
+General Mariano Alvarez
+Habra
+Hafizabad
+Hachinohe
+Hofuf
+Ha Long
+Hanumangarh
+Hachioji
+Ha'il
+Haarlem
+Hafar Al-Batin
+Habikino
+Haarlemmermeer
+Hathras
+Herat
+Haeju
+Halifax
+Hagonoy
+Huaraz
+Ibarra
+Idlib
+Inglewood
+Ibague
+Irving
+Ipoh
+Iasi
+Innsbruck
+Imphal
+Ilam
+Ibadan
+Ilopango
+Islam Shahr
+Ilheus
+Ingolstadt
+Igarassu
+Iloilo City
+Imperatriz
+Jakarta
+Jiutepec
+Jacobabad
+Jacksonville
+Jhang
+Jeddah
+Jacarei
+Jagtial
+Jahrom
+Jackson
+Jiaozuo
+Jeongeup
+Jabalpur
+Jaboatao dos Guarapes
+Jiroft
+Jammu
+Jersey City
+Kadapa
+Kragujevac
+Kaliningrad
+Kabwe
+Kaesong
+Kafr El Sheikh
+Kaili
+Karaj
+Kaolack
+Kabul
+Kanchipuram
+Kabankalan
+Kangundo
+Kalar
+Kahramanmaras
+Kecskemet
+Karatsu
+Kharkiv
+Krakow
+Kamensk-Uralsky
+Kalisz
+La Ceiba
+Leskovac
+La Trinidad
+Lafayette
+Laiyang
+Long Beach
+Lahti
+Limerick
+Laval
+La Union
+Labo
+Lakhimpur
+Lages
+Laghouat
+Laiwu
+Lviv
+Loikaw
+Leninsk-Kuznetsky
+La Paz
+Macapa
+Miandoab
+Metepec
+Madrid
+Macae
+Mazari Sharif
+Macheng
+Mahmoudiyah
+Madurai
+Magnitogorsk
+Malakal
+Machilipatnam
+Ma'anshan
+Maceio
+Maykop
+Mahbubnagar
+Machakos
+Maastricht
+Macau
+Mogilev
+Moscow
+Magway
+Mainz
+Nacala
+Naic
+Nadiad
+Naperville
+Najaf
+Nanchang
+Nasiriyah
+Nagasaki
+Narayanganj
+Nalchik
+Nagercoil
+Nagapattinam
+Nagaon
+Nagano
+Nabadwip
+Nador
+Nablus
+Nakhon Si Thammarat
+Nakuru
+Naypyidaw
+Naberezhnye Chelny
+Odawara
+Olomouc
+Oakland
+Oakville
+Oldenburg
+Osh
+Obuasi
+Obninsk
+Oral
+Oberhausen
+Obihiro
+Olmaliq
+Orleans
+Ordu
+Ocumare del Tuy
+Oaxaca de Juarez
+Pabna
+Porac
+Palakkad
+Palmdale
+Padang
+Perth
+Pali
+Prayagraj
+Pervouralsk
+Paarl
+Pallavaram
+Paderborn
+Palermo
+Palanpur
+Palmas
+Pakdasht
+Pakan Baru
+Plovdiv
+Phoenix
+Palm Bay
+Qena
+Qalyub
+Qitaihe
+Qatif
+Qianjiang
+Qamishli
+Qarchak
+Qom
+Qazvin
+Qingdao
+Qalat Sukkar
+Qods
+Qurayyat
+Qingzhou
+Quebec City
+Rach Gia
+Raigad
+Recife
+Reading
+Rafah
+Raebareli
+Raiganj
+Reykjavik
+Richmond Hill
+Radom
+Rafsanjan
+Reno
+Rustaq
+Raichur
+Reims
+Rabat
+Ranebennuru
+Rzeszow
+Rajahmundry
+Rodriguez
+Sabara
+Seam Reab
+San Juan Bautista Tuxtepec
+Sadiqabad
+Saint-Etienne
+Setif
+Saint Petersburg
+Saanich
+Safi
+Sanandaj
+Salihorsk
+Sabadell
+Saham
+Saarbrucken
+Saijo
+Sinop
+Suwayq
+S.A.S. Nagar
+Saint-Denis
+Sacrament
+Segou
+Saratov
+Sfax
+Sadr City
+San Pedro de la Paz
+Taboao da Serra
+Tepic
+Telford
+The Hague
+Taif
+Tacheng
+Titagarh
+Tadipatri
+Tabuk
+Tandil
+Tadepalligudem
+Tacloban
+Tabaco
+Tal Afar
+Targu-Mures
+Taourirt
+Taizhou
+Tambov
+Tarnow
+Tainan City
+Tabriz
+Uba
+Ulanqab
+Uzhhorod
+Ube
+Unaizah
+Ubon Ratchathani
+Ulyanovsk
+Ulm
+Ujjain
+Unnao
+Udaipur
+Ulan Hot
+Urayasu
+Vadodara
+Valladolid
+Varzea Grande
+Vinh
+Vapi
+Vitebsk
+Veraval
+Visakhapatnam
+Van
+Valle de Chalco
+Valledupar
+Valinhos
+Vung Tau
+Vacoas-Phoenix
+Volzhsky
+Veracruz
+Wakayama
+Westland
+Wuxue
+Weifang
+Walbrzych
+Wad Madani
+Windhoek
+Warangal
+Winston-Salem
+Wafangdian
+Waco
+Westminster
+Wichita Falls
+Wah Cantonment
+Wau
+Warsaw
+Waterbury
+Xalapa
+Xiangyang
+Xai-Xai
+Xiamen
+Xiantao
+Xilinhot
+Xinyu
+Yalova
+Yazd
+Yaounde
+Yancheng
+Yusufiyah
+Yakeshi
+Yasuj
+Yakutsk
+Yaroslavl
+Yan'an
+Yachiyo
+Yamuna Nagar
+Yelets
+Yaizu
+Zama
+Zagreb
+Zaanstad
+Zabrze
+Zagazig
+Zurich
+Zhuhai
+Zonguldak
+Zabol
+Zahedan
+Zamora de Hidalgo
+Zhytomyr
+Zacatecas
+Zlatoust
+Zhangjiakou
+Zamboanga City
