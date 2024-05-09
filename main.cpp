@@ -28,7 +28,7 @@ int main()
 
     vector<string> cities_list = combine_cities(available_cities); // TODO implement this function
 
-    return 0;//write_to_file(cities_list);
+    return write_to_file(cities_list);
 }
 
 vector<string> combine_cities(vector<string> available_cities)
