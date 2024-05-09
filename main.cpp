@@ -16,6 +16,10 @@ int write_to_file(vector<string> cities_list);
  * @syncreator  - 15480
  * New solution - 16705
  * BEST way     - 16715
+ * --------------------
+ * input_mini.txt max result 3155/3766
+ * evp: 0.625;
+ * iters: 100'000
  */
 
 int main()
@@ -24,7 +28,7 @@ int main()
 
     vector<string> cities_list = combine_cities(available_cities); // TODO implement this function
 
-    return write_to_file(cities_list);
+    return 0;//write_to_file(cities_list);
 }
 
 vector<string> combine_cities(vector<string> available_cities)

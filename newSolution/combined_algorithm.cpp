@@ -147,7 +147,7 @@ Path combined_algorithm(Matrix2d &matrix, const size_t edgeCount)
         }
 
         for(int j = bestPathPair.first.size() - 1; j >= 0; --j) {
-            const float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * GLOBAL_ELITE_ANT_COUNT;
+            const float newPheromone = bestPathPair.first[j]->pheromone + float(bestPathPair.second) / Q * GLOBAL_ELITE_ANT_MULTIPLIER;
             if(newPheromone >= MINIMUM_PHEROMONE_VALUE && newPheromone <= MAXIMUM_PHEROMONE_VALUE)
                 bestPathPair.first[j]->pheromone = newPheromone;
         }

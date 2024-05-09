@@ -9,7 +9,7 @@
 #define Q                       10'000.f
 #define MATRIX_SIZE             26
 #define REGULAR_ANT_COUNT       MATRIX_SIZE
-#define GLOBAL_ELITE_ANT_COUNT  7.5f
+#define GLOBAL_ELITE_ANT_MULTIPLIER  7.5f
 #define ALPHA           2.25f
 #define HIGH_BETA       0.7325f
 #define LOW_BETA        0.0325f
